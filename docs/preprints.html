@@ -16,13 +16,23 @@
   .gate-box input:focus { border-color:var(--accent); }
   .gate-box button { width:100%; padding:12px; border-radius:10px; border:none; background:linear-gradient(135deg,#0284c7,#2563eb); color:#fff; font-weight:700; font-size:14px; cursor:pointer; }
   .gate-box button:hover { filter:brightness(1.1); }
-  .gate-back { display:inline-block; margin-top:14px; font-size:12.5px; color:var(--accent); text-decoration:none; }
+  .gate-links { display:flex; justify-content:center; gap:10px; flex-wrap:wrap; margin-top:16px; }
   #err { color:#fb7185; font-size:12.5px; margin-top:10px; min-height:18px; }
   #portal { display:none; max-width:1300px; margin:0 auto; padding:28px 24px 64px; }
-  header { border-bottom:1px solid var(--border); padding-bottom:20px; margin-bottom:28px; display:flex; justify-content:space-between; align-items:flex-end; flex-wrap:wrap; gap:14px; }
+  header { border-bottom:1px solid var(--border); padding-bottom:20px; margin-bottom:28px; }
+  .head-top { display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:14px; }
   header h1 { font-size:25px; color:#f8fafc; }
-  header .sub { font-size:13.5px; color:var(--muted); max-width:900px; margin-top:6px; }
-  .badge { display:inline-block; padding:4px 10px; border-radius:999px; font-size:11.5px; font-weight:700; background:rgba(56,189,248,0.14); color:var(--accent); border:1px solid rgba(56,189,248,0.3); }
+  header .sub { font-size:13.5px; color:var(--muted); max-width:920px; margin-top:6px; }
+  .badge { display:inline-block; padding:4px 10px; border-radius:999px; font-size:11.5px; font-weight:700; background:rgba(56,189,248,0.14); color:var(--accent); border:1px solid rgba(56,189,248,0.3); margin-bottom:8px; }
+
+  .pill-bar { display:flex; flex-wrap:wrap; gap:9px; margin-top:16px; }
+  a.carrd-pill { display:inline-flex; align-items:center; gap:7px; padding:7px 14px; border-radius:999px; font-size:12.5px; font-weight:700; text-decoration:none; color:#cbd5e1; background:#0f172a; border:1px solid #334155; transition:all .16s ease; }
+  a.carrd-pill:hover { border-color:#38bdf8; color:#fff; transform:translateY(-1px); background:#16233d; }
+  a.carrd-pill.featured { background:linear-gradient(135deg,#0ea5e9,#2563eb); border-color:#38bdf8; color:#ffffff; box-shadow:0 4px 14px rgba(14,165,233,0.28); }
+  a.carrd-pill.featured:hover { filter:brightness(1.1); transform:translateY(-1px); }
+  a.carrd-pill.bio { border-color:rgba(16,185,129,0.45); color:#6ee7b7; background:rgba(6,78,59,0.28); }
+  a.carrd-pill.bio:hover { border-color:#10b981; color:#ecfdf5; background:rgba(6,95,70,0.48); }
+
   .grid2 { display:grid; grid-template-columns:repeat(auto-fit,minmax(380px,1fr)); gap:20px; margin-bottom:28px; }
   .card { background:var(--card); border:1px solid var(--border); border-radius:14px; padding:22px; }
   .card h2 { font-size:18px; color:#f8fafc; margin-bottom:6px; }
@@ -42,43 +52,55 @@
   table { width:100%; border-collapse:collapse; font-size:12.5px; margin-top:12px; }
   th,td { padding:9px 10px; border-bottom:1px solid #1e293b; text-align:left; vertical-align:top; }
   th { color:#38bdf8; font-size:11.5px; text-transform:uppercase; letter-spacing:0.04em; }
-  code { background:#020617; padding:2px 5px; border-radius:4px; color:#7dd3fc; font-size:12px; }
 </style>
 </head>
 <body>
 <div id="gate">
   <div class="gate-box">
-    <div class="badge" style="margin-bottom:12px">Private Preprint Review Portal</div>
+    <div class="badge">Private Preprint Review Portal</div>
     <h1>Phase-Partitioned Pharmacology</h1>
     <p>Matthew S. Yorek, M.S. (University of Virginia Anesthesiology). Enter the review passphrase to unlock both manuscripts, all interactive 3D PDB viewers, validation dockings, and open datasets.</p>
     <input type="password" id="pw" placeholder="Enter passphrase..." autocomplete="off" onkeydown="if(event.key==='Enter')unlock()">
     <button onclick="unlock()">Unlock Research Portal</button>
     <div id="err"></div>
-    <a class="gate-back" href="index.html">← Back to Public Research Link-Out Hub</a>
+    <div class="gate-links">
+      <a class="carrd-pill featured" href="https://my-scientist.carrd.co" target="_blank" rel="noopener">&#x1F310; my-scientist.carrd.co</a>
+      <a class="carrd-pill" href="index.html">← Research Hub</a>
+    </div>
   </div>
 </div>
 
 <div id="portal">
   <header>
-    <div>
-      <div class="badge">CALVADOS-2/3 GPU MD • 1,093 FDA Drugs • 1,097 Human IV V_d,ss • 122-Target AFDB v6 IDR Survey • 12 Experimental PDBs • AutoDock Vina 1.2.7</div>
-      <h1>Phase-Partitioned Allosteric Pharmacology &amp; Condensate Drug Design</h1>
-      <div class="sub"><strong>Matthew S. Yorek, M.S.</strong>, Research Scientist, Department of Anesthesiology, University of Virginia (ORCID: <code>0000-0002-4737-9367</code>) — Two companion preprints engineered for direct experimental falsification.</div>
+    <div class="head-top">
+      <div>
+        <div class="badge">CALVADOS-2/3 GPU MD • 1,093 FDA Drugs • 1,097 Human IV V_d,ss • Proteome &amp; 62-Channel AFDB v6 IDR Surveys • 12 Experimental PDBs</div>
+        <h1>Phase-Partitioned Allosteric Pharmacology &amp; Condensate Drug Design</h1>
+        <div class="sub"><strong>Matthew S. Yorek, M.S.</strong>, Research Scientist, Department of Anesthesiology, University of Virginia (ORCID: 0000-0002-4737-9367) — Two companion preprints engineered for direct experimental falsification.</div>
+      </div>
+      <div style="display:flex;gap:8px;align-items:center">
+        <button onclick="lock()" style="padding:8px 12px;border-radius:8px;border:1px solid #334155;background:#1e293b;color:#cbd5e1;cursor:pointer;font-size:12px;font-weight:600">Lock Portal</button>
+      </div>
     </div>
-    <div style="display:flex;gap:8px;align-items:center">
-      <a class="btn" href="index.html">← Research Hub</a>
-      <button onclick="lock()" style="padding:8px 12px;border-radius:8px;border:1px solid #334155;background:#1e293b;color:#cbd5e1;cursor:pointer;font-size:12px;font-weight:600">Lock Portal</button>
+    <div class="pill-bar">
+      <a class="carrd-pill featured" href="https://my-scientist.carrd.co" target="_blank" rel="noopener">&#x1F310; my-scientist.carrd.co</a>
+      <a class="carrd-pill" href="index.html">Research Hub</a>
+      <a class="carrd-pill bio" href="https://yorek-cancer-ai-primer.tasty-siren-3221.chatgpt.site/research-software/" target="_blank" rel="noopener">Seizure Bioinformatics Portal</a>
+      <a class="carrd-pill" href="https://my-scientific-software.carrd.co" target="_blank" rel="noopener">my-scientific-software.carrd.co</a>
+      <a class="carrd-pill" href="https://orcid.org/0000-0002-4737-9367" target="_blank" rel="noopener">ORCID: 0000-0002-4737-9367</a>
+      <a class="carrd-pill" href="https://www.ncbi.nlm.nih.gov/myncbi/1XAQAfuLLOMkz/bibliography/public/" target="_blank" rel="noopener">PubMed Bibliography</a>
+      <a class="carrd-pill" href="mailto:yorekms@gmail.com">yorekms@gmail.com</a>
     </div>
   </header>
 
   <div class="grid2">
     <section class="card" id="paper1">
-      <div class="meta">PAPER #1 • BIO-PHYSICS &amp; THEORETICAL PHARMACOLOGY PREPRINT (FIGURES 1–5)</div>
+      <div class="meta">PAPER #1 • BIOPHYSICS &amp; THEORETICAL PHARMACOLOGY PREPRINT (FIGURES 1–5)</div>
       <h2>Phase-Partitioned Allosteric Pharmacology: Brush-Insulated Signaling Complexes &amp; Phase-Gated PDE4D</h2>
       <div class="auth">Matthew S. Yorek, M.S. (UVA Anesthesiology) &amp; Johannes W. Hell, Ph.D.* (Invited Co-Author, UC Davis)</div>
       <p>Coupled Models I–IV (two-phase IC50 lever rule, HARBS/LARBS &amp; Zatolmilast 64× S_nano, Lumacaftor hormesis &amp; PEP_STAB28 binary fork, confined 3D spine reaction–diffusion PDE), PDB: 3G4G structural stratification, closed-loop med-chem paradox fixes, Old-vs-New paradigm kinetics, and multi-scale MD/Binodal/3D views.</p>
       <div class="btn-row">
-        <a class="btn primary" href="assets/paper1/Paper1_Theoretical_Pharmacology_Preprint.pdf" target="_blank">Download Paper #1 PDF</a>
+        <a class="btn primary" href="assets/paper1/Paper1_Theoretical_Pharmacology_Preprint.pdf" target="_blank">Download Paper #1 PDF (XeLaTeX)</a>
         <a class="btn green" href="assets/viewers/3g4g_3d_binding_pocket_viewer.html" target="_blank">Launch 3D PDB: 3G4G Viewer</a>
         <a class="btn" href="assets/viewers/phase_binding_kinetics_simulator.html" target="_blank">Launch Kinetic Cockpit</a>
       </div>
@@ -92,12 +114,12 @@
     </section>
 
     <section class="card" id="paper2">
-      <div class="meta">PAPER #2 • PHARMACOLOGICAL STRATEGY, PROTEOME IDR MODULATABILITY &amp; CLINICAL V_d,ss (FIGURES 1–6)</div>
-      <h2>Phase-Aware Pharmacological Strategy, Proteome-Wide IDR Targetability, 12-PDB Validation &amp; Human Clinical V_d,ss</h2>
+      <div class="meta">PAPER #2 • PHARMACOLOGICAL STRATEGY, PROTEOME &amp; CHANNELOME IDR MODULATABILITY &amp; CLINICAL V_d,ss</div>
+      <h2>Phase-Aware Pharmacological Strategy, Proteome &amp; Channelome IDR Targetability, 12-PDB Validation &amp; Human Clinical V_d,ss</h2>
       <div class="auth">Matthew S. Yorek, M.S. (Research Scientist, Department of Anesthesiology, University of Virginia)</div>
-      <p>Scales the Electrostatic Charge-Inversion Law across 61 flagship FDA drugs, pairs ClinVar-pathogenic condensate genetics with scoped gnomAD v4 modifiers, proves geometric orthogonality across 12 human experimental PDBs + 4-target AutoDock Vina (exh=32), extends LLPS pharmacology to volatile anesthetics, maps 122 druggable human targets into Stabilizable vs. Solubilizable vs. Brush archetypes, demonstrates CMGC kinome complex coacervation on GPU MD, and validates real clinical V_d,ss across 1,097 human IV drugs.</p>
+      <p>Scales the Electrostatic Charge-Inversion Law across 61 flagship FDA drugs, pairs ClinVar-pathogenic condensate genetics with scoped gnomAD v4 modifiers, proves geometric orthogonality across 12 human experimental PDBs + 4-target AutoDock Vina (exh=32), extends LLPS pharmacology to volatile anesthetics, maps 122 druggable targets + 62 cAMP/ATP/phospho human ion channels, demonstrates CMGC kinome &amp; channelome GPU MD, and validates real clinical V_d,ss across 1,097 human IV drugs.</p>
       <div class="btn-row">
-        <a class="btn primary" href="assets/paper2/Paper2_Pharmacological_Strategy_Condensate_Design.pdf" target="_blank">Download Paper #2 PDF</a>
+        <a class="btn primary" href="assets/paper2/Paper2_Pharmacological_Strategy_Condensate_Design.pdf" target="_blank">Download Paper #2 PDF (XeLaTeX)</a>
         <a class="btn rose" href="assets/viewers/multitarget_pdb_exit_vector_viewer.html" target="_blank">Launch 12-PDB Multi-Drug 3D Viewer</a>
       </div>
       <div class="fig-grid">
@@ -127,6 +149,7 @@
     <h2>Machine-Readable Datasets &amp; Audits</h2>
     <div class="btn-row" style="margin-top:10px">
       <a class="btn" href="assets/data/druggable_proteome_120_idr_modulatability.csv" target="_blank">122-Target Proteome IDR Modulatability CSV</a>
+      <a class="btn" href="assets/data/channelome_62_camp_atp_phospho_audit.csv" target="_blank">62-Channel cAMP/ATP/Phospho Audit CSV</a>
       <a class="btn" href="assets/data/lombardo_human_vdss_condensate_audit.csv" target="_blank">1,097 Human Clinical IV V_d,ss Audit CSV</a>
       <a class="btn" href="assets/data/calvados_exp11_cmgc_summary.csv" target="_blank">EXP_11 CMGC Kinome GPU MD CSV</a>
       <a class="btn" href="assets/data/multitarget_vina_validation.csv" target="_blank">4-Target Vina exh=32 Validation CSV</a>
@@ -147,7 +170,7 @@
       <thead><tr><th>#</th><th>Domain</th><th>Sharp Quantitative Prediction</th><th>Result That Falsifies Our Model</th></tr></thead>
       <tbody>
         <tr><td>1</td><td>PDE4D Thermal Cliff</td><td>Human PDE4D7 shows a non-Arrhenius activity break at 40–42 °C (melt) and 4 °C (collapse), whereas avian PDE4D &amp; ΔN-IDR PDE4D2 do not.</td><td>Linear identical Arrhenius slopes for Human PDE4D7, Chicken PDE4D, and PDE4D2 across 5–42 °C.</td></tr>
-        <tr><td>2</td><td>PEP_STAB28 Sign Test</td><td>Non-catalytic 28-aa peptide condenses PDE4D (3.7×) and shifts β2AR/Aβ→CaV1.2 cAMP opposite to Roflumilast (if facilitated) or same sign (if silenced).</td><td>PEP_STAB28 fails to shift PDE4D c_sat in vitro or has zero effect on PDE4D7 cAMP kinetics.</td></tr>
+        <tr><td>2</td><td>PEP_STAB28 Sign Test</td><td>Non-catalytic 28-aa peptide condenses PDE4D (3.7×) and shifts β₂AR/Aβ→CaV1.2 cAMP opposite to Roflumilast (if facilitated) or same sign (if silenced).</td><td>PEP_STAB28 fails to shift PDE4D c_sat in vitro or has zero effect on PDE4D7 cAMP kinetics.</td></tr>
         <tr><td>3</td><td>Cromolyn c_sat Cliff</td><td>Cromolyn IC50 against PDE4D7 drops ≥10× once [PDE4D7] crosses c_sat vs. dilute PDE4D2 (or R→K condensate-dead mutant).</td><td>Identical high-µM IC50 above and below c_sat (and identical on WT vs. R→K PDE4D7).</td></tr>
         <tr><td>4</td><td>Lumacaftor Acute Paradox</td><td>Lumacaftor binds PDE4D UCR2 (non-metal) and acutely modulates cAMP faster than CFTR trafficking; ortho-diMe LUMA_MOD2 weakens PDE4D without killing CFTR rescue.</td><td>Zero direct PDE4D7 binding/activity for Lumacaftor in cell-free SPR/enzymology at 0.1–10 µM.</td></tr>
         <tr><td>5</td><td>M7 Morpholine Kinases</td><td>IMAT_MOD1_MORPH &amp; ABEM_MOD1_MORPH retain WT biochemical Ki (ΔΔG ≈ 0) while dropping acidic/MED1/lysosomal partitioning ≥5× in cells.</td><td>&gt;5-fold loss in cell-free ABL1/CDK6 Ki OR zero reduction in cellular acidic-condensate/lysosomal trapping.</td></tr>

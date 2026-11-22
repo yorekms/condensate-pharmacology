@@ -1,3 +1,4 @@
 User-agent: *
 Disallow: /johannes-hell-brief-8f4b2c.html
+Disallow: /strategy-review-9d3a7e.html
 Disallow: /assets/

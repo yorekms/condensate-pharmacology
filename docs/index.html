@@ -13,10 +13,16 @@
   .eyebrow { display:inline-block; padding:4px 12px; border-radius:999px; font-size:11.5px; font-weight:700; letter-spacing:0.06em; text-transform:uppercase; background:rgba(56,189,248,0.12); color:var(--sky); border:1px solid rgba(56,189,248,0.3); margin-bottom:12px; }
   h1 { font-size:32px; color:#f8fafc; letter-spacing:-0.02em; margin-bottom:8px; }
   .cred { font-size:15.5px; color:#cbd5e1; font-weight:600; margin-bottom:10px; }
-  .sub { font-size:14px; color:var(--muted); max-width:860px; }
-  .id-links { display:flex; flex-wrap:wrap; gap:10px; margin-top:16px; }
-  .pill { display:inline-flex; align-items:center; gap:6px; padding:6px 12px; border-radius:8px; font-size:12.5px; font-weight:600; text-decoration:none; color:#cbd5e1; background:#0f172a; border:1px solid #334155; transition:.15s; }
-  .pill:hover { border-color:var(--sky); color:#fff; }
+  .sub { font-size:14px; color:var(--muted); max-width:880px; }
+
+  .pill-bar { display:flex; flex-wrap:wrap; gap:9px; margin-top:16px; }
+  a.carrd-pill { display:inline-flex; align-items:center; gap:7px; padding:7px 14px; border-radius:999px; font-size:12.5px; font-weight:700; text-decoration:none; color:#cbd5e1; background:#0f172a; border:1px solid #334155; transition:all .16s ease; }
+  a.carrd-pill:hover { border-color:#38bdf8; color:#fff; transform:translateY(-1px); background:#16233d; }
+  a.carrd-pill.featured { background:linear-gradient(135deg,#0ea5e9,#2563eb); border-color:#38bdf8; color:#ffffff; box-shadow:0 4px 14px rgba(14,165,233,0.28); }
+  a.carrd-pill.featured:hover { filter:brightness(1.1); transform:translateY(-1px); }
+  a.carrd-pill.bio { border-color:rgba(16,185,129,0.45); color:#6ee7b7; background:rgba(6,78,59,0.28); }
+  a.carrd-pill.bio:hover { border-color:#10b981; color:#ecfdf5; background:rgba(6,95,70,0.48); }
+
   .section-label { font-size:12px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; color:var(--sky); margin-bottom:14px; }
   .grid3 { display:grid; grid-template-columns:repeat(auto-fit,minmax(320px,1fr)); gap:22px; margin-bottom:30px; }
   .card { background:var(--card); border:1px solid var(--border); border-radius:16px; padding:24px; display:flex; flex-direction:column; justify-content:space-between; transition:.18s; }
@@ -37,8 +43,8 @@
   a.btn.rose { background:linear-gradient(135deg,#e11d48,#be123c); border:none; }
   a.btn.emerald { background:linear-gradient(135deg,#059669,#047857); border:none; }
   .lock-note { font-size:11.5px; color:var(--muted); text-align:center; margin-top:4px; }
-  footer { border-top:1px solid var(--border); padding-top:20px; margin-top:20px; font-size:12.5px; color:var(--muted); display:flex; justify-content:space-between; flex-wrap:wrap; gap:12px; }
-  footer a { color:var(--sky); text-decoration:none; }
+  footer { border-top:1px solid var(--border); padding-top:20px; margin-top:20px; font-size:12.5px; color:var(--muted); display:flex; justify-content:space-between; flex-wrap:wrap; gap:12px; align-items:center; }
+  footer a { color:var(--sky); text-decoration:none; font-weight:600; }
 </style>
 </head>
 <body>
@@ -48,12 +54,13 @@
     <h1>Matthew S. Yorek, M.S. — Research Preprints &amp; Software Hub</h1>
     <div class="cred">Research Scientist, Department of Anesthesiology, University of Virginia (Charlottesville, VA)</div>
     <p class="sub">Central link-out directory uniting two companion preprints on <strong>Phase-Partitioned Allosteric Pharmacology &amp; Condensate Drug Design</strong> (with interactive offline 3D PDB viewers and datasets) alongside our posted <strong>Seizure Transcriptomics &amp; Epilepsy Bioinformatics</strong> research suite.</p>
-    <div class="id-links">
-      <a class="pill" href="https://orcid.org/0000-0002-4737-9367" target="_blank" rel="noopener">ORCID: 0000-0002-4737-9367</a>
-      <a class="pill" href="https://www.ncbi.nlm.nih.gov/myncbi/1XAQAfuLLOMkz/bibliography/public/" target="_blank" rel="noopener">NCBI MyBibliography (PubMed)</a>
-      <a class="pill" href="https://my-scientific-software.carrd.co" target="_blank" rel="noopener">Scientific Software Portfolio</a>
-      <a class="pill" href="https://github.com/yorekms" target="_blank" rel="noopener">GitHub (@yorekms)</a>
-      <a class="pill" href="mailto:yorekms@gmail.com">yorekms@gmail.com</a>
+    <div class="pill-bar">
+      <a class="carrd-pill featured" href="https://my-scientist.carrd.co" target="_blank" rel="noopener">&#x1F310; my-scientist.carrd.co</a>
+      <a class="carrd-pill" href="https://my-scientific-software.carrd.co" target="_blank" rel="noopener">my-scientific-software.carrd.co</a>
+      <a class="carrd-pill" href="https://orcid.org/0000-0002-4737-9367" target="_blank" rel="noopener">ORCID: 0000-0002-4737-9367</a>
+      <a class="carrd-pill" href="https://www.ncbi.nlm.nih.gov/myncbi/1XAQAfuLLOMkz/bibliography/public/" target="_blank" rel="noopener">NCBI MyBibliography (PubMed)</a>
+      <a class="carrd-pill" href="https://github.com/yorekms" target="_blank" rel="noopener">GitHub (@yorekms)</a>
+      <a class="carrd-pill" href="mailto:yorekms@gmail.com">yorekms@gmail.com</a>
     </div>
   </header>
 
@@ -82,11 +89,11 @@
     <article class="card">
       <div>
         <span class="tag rose">Companion Paper #2 • Strategy &amp; Design (Passphrase-Protected)</span>
-        <h2>Phase-Aware Pharmacological Strategy, Proteome-Wide IDR Modulatability &amp; Generative Drug Design</h2>
+        <h2>Phase-Aware Pharmacological Strategy, Proteome &amp; Channelome IDR Modulatability &amp; Generative Drug Design</h2>
         <div class="authors">Matthew S. Yorek, M.S. (University of Virginia Anesthesiology)</div>
-        <p>Scales condensate pharmacology across 61 flagship clinical drugs, ClinVar-pathogenic condensate genetics, 12 experimental human PDBs + 4-target AutoDock Vina validation, a 122-target proteome-wide IDR Stabilizable-vs-Solubilizable map, CMGC kinome GPU MD, and 1,097 real human clinical IV drugs.</p>
+        <p>Scales condensate pharmacology across 61 flagship clinical drugs, ClinVar-pathogenic condensate genetics, 12 experimental human PDBs + 4-target AutoDock Vina validation, proteome &amp; 62-channel cAMP/ATP/phospho IDR targetability maps, CMGC kinome GPU MD, and 1,097 real human clinical IV drugs.</p>
         <ul class="highlights">
-          <li>122-target AlphaFold v6 survey: 50 Stabilizable, 11 Solubilizable, 18 Brush Shields, 15 Bipolar</li>
+          <li>122-target proteome + 62-channel cAMP/ATP/phospho AFDB v6 audit (direct ATP 0/9 vs. cAMP/phospho 36/53, p = 1.54×10⁻⁴)</li>
           <li>Lombardo 2018 human IV V_d,ss (n=1,097): +82% R² gain over classical PK, 17.4× matched-cLogP split</li>
           <li>Includes interactive 12-PDB multi-drug 3D exit-vector viewer &amp; gas-anesthetic Model V</li>
         </ul>
@@ -121,7 +128,10 @@
 
   <footer>
     <div>© 2026 Matthew S. Yorek, M.S. — Department of Anesthesiology, University of Virginia</div>
-    <div><a href="preprints.html">Direct Preprint Review Login →</a></div>
+    <div style="display:flex;gap:14px;flex-wrap:wrap">
+      <a href="https://my-scientist.carrd.co" target="_blank" rel="noopener">my-scientist.carrd.co ↗</a>
+      <a href="preprints.html">Direct Preprint Review Login →</a>
+    </div>
   </footer>
 </div>
 </body>
