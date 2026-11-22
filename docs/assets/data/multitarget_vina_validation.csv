@@ -1,0 +1,11 @@
+PDB_ID,Target,Compound,Role,Vina_kcal_mol,ddG_vs_Parent,Strain_kcal_mol,Strain_Gate,Core_RMSD_A,SMILES_pH74
+2HYY,ABL1 Kinase,IMAT_PARENT,Parent FDA (Q=+2),-12.32,0.0,15.79,REJECT,0.61,Cc1ccc(NC(=O)c2ccc(C[NH+]3CC[NH+](C)CC3)cc2)cc1Nc1nccc(-c2cccnc2)n1
+2HYY,ABL1 Kinase,IMAT_MOD1_MORPH,M7 Morpholine Exit (Q=0),-11.87,0.45,15.18,REJECT,0.33,Cc1ccc(NC(=O)c2ccc(CN3CCOCC3)cc2)cc1Nc1nccc(-c2cccnc2)n1
+2HYY,ABL1 Kinase,IMAT_NEG_HINGE,Neg Ctrl: Buried Thr315 N-iPr!,-10.15,2.17,14.59,REJECT,0.82,Cc1ccc(NC(=O)c2ccc(CN3CCOCC3)cc2)cc1N(C(C)C)c1nccc(-c2cccnc2)n1
+5L2S,CDK6 Kinase,ABEM_PARENT,Parent FDA (Q=+2),-11.2,0.0,25.2,REJECT,1.46,CC[NH+]1CC[NH+](Cc2ccc(Nc3ncc(F)c(-c4cc(F)c5nc(C)n(C(C)C)c5c4)n3)nc2)CC1
+5L2S,CDK6 Kinase,ABEM_MOD1_MORPH,M7 Morpholine Exit (Q=0),-10.99,0.2,9.75,REJECT,0.47,Cc1nc2c(n1C(C)C)cc(-c3c(F)cnc(Nc4ccc(CN5CCOCC5)cn4)n3)cc2F
+5L2S,CDK6 Kinase,ABEM_NEG_HINGE,Neg Ctrl: Buried Hinge N-Me!,-9.91,1.29,15.21,REJECT,1.39,Cc1nc2c(n1C(C)C)cc(-c3c(F)cnc(N(C)c4ccc(CN5CCOCC5)cn4)n3)cc2F
+3ERT,ER-alpha LBD,OHT_PARENT,Parent 4-OH-Tamoxifen (Q=+1),-9.66,0.0,0.49,PASS,1.16,CC/C(=C(\c1ccc(O)cc1)c1ccc(OCC[NH+](C)C)cc1)c1ccccc1
+3ERT,ER-alpha LBD,OHT_MOD1_CF3,M5 N-CH2CF3 Exit (Q=0),-10.38,-0.71,4.71,PASS,0.57,CC/C(=C(\c1ccc(O)cc1)c1ccc(OCCN(C)CC(F)(F)F)cc1)c1ccccc1
+4AGD,VEGFR2 Kinase,SUNIT_PARENT,Parent Sunitinib (Q=+1),-9.67,0.0,7.4,REJECT,1.93,CC[NH+](CC)CCNC(=O)c1c(C)[nH]c(/C=C2\C(=O)Nc3ccc(F)cc32)c1C
+4AGD,VEGFR2 Kinase,SUNIT_MOD1_MORPH,M7 Morpholine Exit (Q=0),-10.8,-1.13,11.57,REJECT,0.81,Cc1[nH]c(/C=C2\C(=O)Nc3ccc(F)cc32)c(C)c1C(=O)NCCN1CCOCC1

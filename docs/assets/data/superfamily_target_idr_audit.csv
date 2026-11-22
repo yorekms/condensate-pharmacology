@@ -1,0 +1,43 @@
+Gene,UniProt,Superfamily,Total_Len,IDR_Range,IDR_pLDDT,IDR_Len,Q,NCPR,FCR,Arg_frac,Arom_pct,His_pct,Mean_Lambda,Predicted_Phase_Class
+CDK2,P24941,1. CMGC Kinases (CDK/CLK/DYRK/SRPK),298,None,88.5,0,0,0.0,0.0,0.0,0.0,0.0,0.0,IDR-Free Folded Control
+CDK4,P11802,1. CMGC Kinases (CDK/CLK/DYRK/SRPK),303,None,86.8,0,0,0.0,0.0,0.0,0.0,0.0,0.0,IDR-Free Folded Control
+CDK6,Q00534,1. CMGC Kinases (CDK/CLK/DYRK/SRPK),326,None,85.4,0,0,0.0,0.0,0.0,0.0,0.0,0.0,IDR-Free Folded Control
+CDK7,P50613,1. CMGC Kinases (CDK/CLK/DYRK/SRPK),346,None,82.0,0,0,0.0,0.0,0.0,0.0,0.0,0.0,IDR-Free Folded Control
+CDK9,P50750,1. CMGC Kinases (CDK/CLK/DYRK/SRPK),372,333-372,39.9,40,2,0.05,0.2,0.8,10.0,0.0,0.439,IDR-Free Folded Control
+CDK12,Q9NYV4,1. CMGC Kinases (CDK/CLK/DYRK/SRPK),1490,1-399,35.4,399,51,0.1278,0.3434,0.553,4.76,4.51,0.436,Arg-Rich Cationic Condensate (ψ>0)
+CDK13,Q14004,1. CMGC Kinases (CDK/CLK/DYRK/SRPK),1512,1031-1512,38.4,482,-18,-0.0373,0.1826,0.486,4.98,2.9,0.4231,Polyanionic Acidic IDR (ψ<0)
+CLK1,P49759,1. CMGC Kinases (CDK/CLK/DYRK/SRPK),484,1-140,38.0,140,21,0.15,0.3786,0.622,9.29,10.71,0.4735,His-Rich pH-Gated Condensate
+CLK2,P49760,1. CMGC Kinases (CDK/CLK/DYRK/SRPK),499,1-142,36.0,142,32,0.2254,0.4507,0.917,11.97,5.63,0.5437,Arg-Rich Cationic Condensate (ψ>0)
+CLK3,P49761,1. CMGC Kinases (CDK/CLK/DYRK/SRPK),490,1-135,36.6,135,29,0.2148,0.4222,0.884,9.63,6.67,0.523,His-Rich pH-Gated Condensate
+CLK4,Q9HAZ1,1. CMGC Kinases (CDK/CLK/DYRK/SRPK),481,1-138,37.6,138,21,0.1522,0.3986,0.737,8.7,10.87,0.4803,His-Rich pH-Gated Condensate
+DYRK1A,Q13627,1. CMGC Kinases (CDK/CLK/DYRK/SRPK),763,481-763,36.5,283,-6,-0.0212,0.106,0.917,3.89,10.6,0.4272,His-Rich pH-Gated Condensate
+DYRK1B,Q9Y463,1. CMGC Kinases (CDK/CLK/DYRK/SRPK),629,433-629,37.8,197,0,0.0,0.1218,0.917,2.54,2.54,0.4413,Polar / Weak-Sticker IDR
+SRPK1,Q96SB4,1. CMGC Kinases (CDK/CLK/DYRK/SRPK),655,286-476,35.8,191,-25,-0.1309,0.2775,0.357,1.57,2.09,0.3553,Polyanionic Lys-Brush / Acidic (ψ<0)
+SRPK2,P78362,1. CMGC Kinases (CDK/CLK/DYRK/SRPK),688,303-506,36.4,204,-44,-0.2157,0.3431,0.231,5.39,1.47,0.3377,Polyanionic Lys-Brush / Acidic (ψ<0)
+ABL1,P00519,2. Clinical Oncology Kinases,1130,513-1025,36.4,513,25,0.0487,0.2632,0.463,2.14,1.75,0.4018,Polar / Weak-Sticker IDR
+EGFR,P00533,2. Clinical Oncology Kinases,1210,985-1210,33.4,226,-17,-0.0752,0.1991,0.571,8.85,2.65,0.4175,Polyanionic Acidic IDR (ψ<0)
+ALK,Q9UM73,2. Clinical Oncology Kinases,1620,1400-1620,32.1,221,4,0.0181,0.2172,0.385,4.98,2.71,0.4088,Polar / Weak-Sticker IDR
+VEGFR2,P35968,2. Clinical Oncology Kinases,1356,1165-1356,33.6,192,-20,-0.1042,0.25,0.286,4.69,1.04,0.3803,Polyanionic Lys-Brush / Acidic (ψ<0)
+BTK,Q06187,2. Clinical Oncology Kinases,659,168-216,40.5,49,2,0.0408,0.2857,0.25,0.0,2.04,0.3492,IDR-Free Folded Control
+BRAF,P15056,2. Clinical Oncology Kinases,766,281-448,35.1,168,-3,-0.0179,0.2321,0.667,4.17,2.38,0.4206,Polar / Weak-Sticker IDR
+JAK2,O60674,2. Clinical Oncology Kinases,1132,None,86.9,0,0,0.0,0.0,0.0,0.0,0.0,0.0,IDR-Free Folded Control
+BRD2,P25440,3. Epigenetics (BET / HDAC / PRC2),801,188-345,43.2,158,16,0.1013,0.1772,0.273,0.63,3.8,0.3853,Polar / Weak-Sticker IDR
+BRD3,Q15059,3. Epigenetics (BET / HDAC / PRC2),726,149-307,43.6,159,14,0.0881,0.1887,0.273,0.63,0.63,0.3577,Polar / Weak-Sticker IDR
+BRD4,O60885,3. Epigenetics (BET / HDAC / PRC2),1362,677-1224,39.4,548,14,0.0255,0.1533,0.286,2.01,5.66,0.3789,Polar / Weak-Sticker IDR
+EP300,Q09472,3. Epigenetics (BET / HDAC / PRC2),2414,1827-2414,35.3,588,15,0.0255,0.0629,0.846,1.7,3.23,0.4448,Arg-Rich Cationic Condensate (ψ>0)
+EZH2,Q15910,3. Epigenetics (BET / HDAC / PRC2),746,335-428,40.2,94,-1,-0.0106,0.3723,0.529,0.0,0.0,0.3538,Polar / Weak-Sticker IDR
+HDAC1,Q13547,3. Epigenetics (BET / HDAC / PRC2),482,415-482,44.5,68,-7,-0.1029,0.6029,0.118,2.94,0.0,0.2402,Polar / Weak-Sticker IDR
+HDAC2,Q92769,3. Epigenetics (BET / HDAC / PRC2),488,415-488,44.1,74,-6,-0.0811,0.5405,0.176,1.35,1.35,0.2823,Polar / Weak-Sticker IDR
+HDAC4,P56524,3. Epigenetics (BET / HDAC / PRC2),1084,186-649,39.6,464,0,0.0,0.1983,0.63,3.45,4.09,0.4181,Polar / Weak-Sticker IDR
+HDAC6,Q9UBN7,3. Epigenetics (BET / HDAC / PRC2),1215,836-1108,34.4,273,-24,-0.0879,0.1905,0.429,1.1,0.37,0.382,Polyanionic Lys-Brush / Acidic (ψ<0)
+HDAC7,Q8WUI4,3. Epigenetics (BET / HDAC / PRC2),952,99-515,37.5,417,8,0.0192,0.1966,0.756,2.4,3.36,0.4346,Arg-Rich Cationic Condensate (ψ>0)
+AR,P10275,4. Nuclear Receptors,920,76-559,35.7,484,-25,-0.0517,0.1674,0.536,6.2,1.65,0.4543,Polyanionic Acidic IDR (ψ<0)
+ESR1,P03372,4. Nuclear Receptors,595,1-181,36.3,181,-3,-0.0166,0.1602,0.615,8.29,2.21,0.4558,Aromatic / Polar Neutral Condensate
+NR3C1,P04150,4. Nuclear Receptors,777,1-416,35.6,416,-17,-0.0409,0.2043,0.294,5.05,0.96,0.4111,Polyanionic Lys-Brush / Acidic (ψ<0)
+PPARG,P37231,4. Nuclear Receptors,505,1-136,34.3,136,-17,-0.125,0.2279,0.143,11.03,2.94,0.3958,Polyanionic Lys-Brush / Acidic (ψ<0)
+PDE4D,Q08499,5. PDEs & cAMP Hubs (Benchmark),809,1-225,39.0,225,7,0.0311,0.2,0.808,6.67,5.33,0.4674,Arg-Rich Cationic Condensate (ψ>0)
+PDE7A,Q13946,5. PDEs & cAMP Hubs (Benchmark),482,1-141,40.4,141,7,0.0496,0.234,1.0,9.93,2.13,0.5026,Arg-Rich Cationic Condensate (ψ>0)
+PDE4B,Q07343,5. PDEs & cAMP Hubs (Benchmark),736,1-167,36.3,167,-1,-0.006,0.2216,0.722,5.39,1.8,0.443,Polar / Weak-Sticker IDR
+PDE5A,O76074,5. PDEs & cAMP Hubs (Benchmark),875,55-103,38.8,49,2,0.0408,0.2041,0.667,4.08,4.08,0.4296,IDR-Free Folded Control
+AKAP5,P24588,5. PDEs & cAMP Hubs (Benchmark),427,41-335,47.2,295,-12,-0.0407,0.3322,0.256,1.36,1.02,0.3416,Polyanionic Lys-Brush / Acidic (ψ<0)
+ADCY5,O95622,5. PDEs & cAMP Hubs (Benchmark),1261,1-219,32.3,219,4,0.0183,0.2374,0.75,4.11,0.91,0.4764,Aromatic / Polar Neutral Condensate

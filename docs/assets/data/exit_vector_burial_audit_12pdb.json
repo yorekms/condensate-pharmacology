@@ -1,0 +1,110 @@
+[
+  {
+    "pdb_id": "2HYY",
+    "ligand": "STI",
+    "exit_label": "N-Me-Piperazine -> M7 Morpholine",
+    "core_contacts_per_atom_4p5A": 6.9,
+    "exit_contacts_per_atom_4p5A": 5.3,
+    "n_core_atoms": 30,
+    "n_exit_atoms": 7
+  },
+  {
+    "pdb_id": "5L2S",
+    "ligand": "6ZV",
+    "exit_label": "N-Et-Piperazine -> M7 Morpholine",
+    "core_contacts_per_atom_4p5A": 5.8,
+    "exit_contacts_per_atom_4p5A": 1.1,
+    "n_core_atoms": 29,
+    "n_exit_atoms": 8
+  },
+  {
+    "pdb_id": "3ERT",
+    "ligand": "OHT",
+    "exit_label": "Basic Tail -> M5 N-CH2CF3",
+    "core_contacts_per_atom_4p5A": 5.4,
+    "exit_contacts_per_atom_4p5A": 3.3,
+    "n_core_atoms": 23,
+    "n_exit_atoms": 6
+  },
+  {
+    "pdb_id": "6O0K",
+    "ligand": "LBM",
+    "exit_label": "Solvent-Rim Piperazine -> M7/M5",
+    "core_contacts_per_atom_4p5A": 4.5,
+    "exit_contacts_per_atom_4p5A": 4.2,
+    "n_core_atoms": 55,
+    "n_exit_atoms": 6
+  },
+  {
+    "pdb_id": "1HWK",
+    "ligand": "117",
+    "exit_label": "Outer Phenylamide -> Fsp3 Ring Trim",
+    "core_contacts_per_atom_4p5A": 4.9,
+    "exit_contacts_per_atom_4p5A": 4.9,
+    "n_core_atoms": 34,
+    "n_exit_atoms": 7
+  },
+  {
+    "pdb_id": "7SVD",
+    "ligand": "VX8",
+    "exit_label": "Benzoic Acid (LUMA_MOD2 Bump)",
+    "core_contacts_per_atom_4p5A": 5.3,
+    "exit_contacts_per_atom_4p5A": 2.1,
+    "n_core_atoms": 23,
+    "n_exit_atoms": 10
+  },
+  {
+    "pdb_id": "4ZAU",
+    "ligand": "YY3",
+    "exit_label": "DMAE Tail -> M5 N-CH2CF3",
+    "core_contacts_per_atom_4p5A": 3.9,
+    "exit_contacts_per_atom_4p5A": 0.2,
+    "n_core_atoms": 31,
+    "n_exit_atoms": 6
+  },
+  {
+    "pdb_id": "4AGD",
+    "ligand": "B49",
+    "exit_label": "DEAE Tail -> M7 Morpholine",
+    "core_contacts_per_atom_4p5A": 6.8,
+    "exit_contacts_per_atom_4p5A": 0.1,
+    "n_core_atoms": 22,
+    "n_exit_atoms": 7
+  },
+  {
+    "pdb_id": "2XP2",
+    "ligand": "VGH",
+    "exit_label": "Piperidine -> M5 N-CH2CF3",
+    "core_contacts_per_atom_4p5A": 5.4,
+    "exit_contacts_per_atom_4p5A": 2.0,
+    "n_core_atoms": 24,
+    "n_exit_atoms": 6
+  },
+  {
+    "pdb_id": "1ERR",
+    "ligand": "RAL",
+    "exit_label": "Piperidino Tail -> M5/M7",
+    "core_contacts_per_atom_4p5A": 5.8,
+    "exit_contacts_per_atom_4p5A": 4.4,
+    "n_core_atoms": 25,
+    "n_exit_atoms": 9
+  },
+  {
+    "pdb_id": "4COX",
+    "ligand": "IMN",
+    "exit_label": "p-Cl-Benzoyl -> Fsp3 Ring Trim",
+    "core_contacts_per_atom_4p5A": 7.0,
+    "exit_contacts_per_atom_4p5A": 8.4,
+    "n_core_atoms": 18,
+    "n_exit_atoms": 7
+  },
+  {
+    "pdb_id": "1Z95",
+    "ligand": "198",
+    "exit_label": "Sulfonyl-Aryl Rim (M4 AR-NTD)",
+    "core_contacts_per_atom_4p5A": 7.1,
+    "exit_contacts_per_atom_4p5A": 6.1,
+    "n_core_atoms": 19,
+    "n_exit_atoms": 10
+  }
+]

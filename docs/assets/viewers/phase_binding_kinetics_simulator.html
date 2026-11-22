@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Phase-Partitioned Drug-Binding Kinetics Simulator — Single-Screen Cockpit</title>
+<style>
+  :root {
+    --bg: #070b14;
+    --panel: #0e1626;
+    --border: #1e2d47;
+    --text: #e2e8f0;
+    --muted: #94a3b8;
+    --cyan: #38bdf8;
+    --emerald: #10b981;
+    --amber: #f59e0b;
+    --coral: #fb7185;
+    --violet: #a78bfa;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body {
+    height: 100vh;
+    overflow: hidden;
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Inter, sans-serif;
+    display: flex;
+    flex-direction: column;
+  }
+  header {
+    padding: 7px 14px;
+    border-bottom: 1px solid var(--border);
+    background: linear-gradient(90deg, #0b1222 0%, #111c33 100%);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-shrink: 0;
+  }
+  header h1 { font-size: 14.5px; font-weight: 700; color: #f8fafc; }
+  header .sub { font-size: 11px; color: var(--muted); }
+  .badge {
+    font-size: 10.5px; font-weight: 600; padding: 3px 9px; border-radius: 999px;
+    background: rgba(56, 189, 248, 0.14); border: 1px solid rgba(56, 189, 248, 0.35); color: var(--cyan);
+  }
+  /* Zero-scroll 3-column cockpit: [Drug Presets | Arena + Big Moving Trace Window | Controls & Live Metrics] */
+  main {
+    flex: 1;
+    min-height: 0;
+    display: grid;
+    grid-template-columns: 205px 1fr 275px;
+    gap: 10px;
+    padding: 10px;
+  }
+  .col-box {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    min-height: 0;
+  }
+  .sec-title {
+    font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.8px;
+    color: var(--cyan); font-weight: 700; flex-shrink: 0;
+  }
+  /* Left Rail: All 9 drugs right next to the visual, zero scroll! */
+  .preset-list {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    flex: 1;
+    justify-content: space-between;
+  }
+  button.preset {
+    background: #131f36;
+    border: 1px solid #243554;
+    color: #dbeafe;
+    border-radius: 7px;
+    padding: 6px 8px;
+    font-size: 11.2px;
+    font-weight: 700;
+    text-align: left;
+    cursor: pointer;
+    transition: all 0.12s ease;
+    line-height: 1.2;
+  }
+  button.preset:hover { border-color: var(--cyan); background: #182947; }
+  button.preset.active {
+    border-color: var(--amber);
+    background: rgba(245, 158, 11, 0.18);
+    color: #fef3c7;
+    box-shadow: inset 3px 0 0 var(--amber);
+  }
+  button.preset small { display: block; font-size: 9.6px; color: var(--muted); font-weight: 400; margin-top: 1px; }
+
+  /* Center Column: Arena (55%) + Prominent Moving Kinetic Trace Window (45%) */
+  .center-col {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    min-height: 0;
+  }
+  .arena-wrap {
+    flex: 1.18;
+    min-height: 0;
+    position: relative;
+    border-radius: 9px;
+    overflow: hidden;
+    border: 1px solid #1b2840;
+    background: radial-gradient(circle at 50% 42%, #0f1a30 0%, #060a12 100%);
+  }
+  canvas#simCanvas { width: 100%; height: 100%; display: block; }
+  .trace-wrap {
+    flex: 0.92;
+    min-height: 0;
+    background: #080e1b;
+    border: 1px solid #223455;
+    border-radius: 9px;
+    padding: 7px 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .trace-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 11px;
+    color: var(--muted);
+    flex-shrink: 0;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  .trace-canvas-holder { flex: 1; min-height: 0; position: relative; }
+  canvas#traceCanvas { width: 100%; height: 100%; display: block; }
+
+  /* Right Column: Phase Controls + Live Metrics + Note */
+  .slider-row { display: flex; justify-content: space-between; font-size: 11.5px; color: #cbd5e1; }
+  input[type="range"] { width: 100%; accent-color: var(--cyan); cursor: pointer; }
+  select {
+    width: 100%; background: #131f36; color: #f1f5f9; border: 1px solid #2a3e63;
+    border-radius: 6px; padding: 6px 7px; font-size: 11.3px;
+  }
+  .toggle-row { display: grid; grid-template-columns: 1fr 1fr; gap: 5px; }
+  button.pill {
+    padding: 6px 4px; border-radius: 6px; border: 1px solid #2a3e63;
+    background: #131f36; color: var(--muted); font-size: 10.6px; font-weight: 600; cursor: pointer;
+  }
+  button.pill.active { background: rgba(16, 185, 129, 0.20); border-color: var(--emerald); color: #d1fae5; }
+  button.pill.warn.active { background: rgba(251, 113, 133, 0.20); border-color: var(--coral); color: #ffe4e6; }
+  .metrics-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+  .metric {
+    background: #090f1d; border: 1px solid #1c2a44; border-radius: 7px; padding: 6px 8px;
+  }
+  .metric .mlbl { font-size: 9.2px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.4px; }
+  .metric .mval { font-size: 17px; font-weight: 700; margin-top: 1px; font-variant-numeric: tabular-nums; }
+  .info-box {
+    background: #0a1222; border-left: 3px solid var(--amber); border-radius: 6px;
+    padding: 7px 9px; font-size: 11px; line-height: 1.36; color: #cbd5e1; flex: 1; overflow-y: auto;
+  }
+  .btn-row { display: flex; gap: 6px; flex-shrink: 0; }
+  button.action {
+    flex: 1; padding: 7px; border-radius: 7px; border: 1px solid #334155;
+    background: #1e293b; color: #f8fafc; font-size: 11.5px; font-weight: 600; cursor: pointer;
+  }
+  button.action:hover { background: #29384e; }
+</style>
+</head>
+<body>
+<header>
+  <div>
+    <h1>Phase-Partitioned Drug-Binding Kinetics Cockpit</h1>
+    <div class="sub">Zero-Scroll Live Comparison: Click Any Drug on the Left and Watch the Moving Kinetic Window &amp; Fading Residency Rings Jump Immediately</div>
+  </div>
+  <span class="badge">CALVADOS-2/3 (111 Runs) × PDB: 3G4G (0.47 Å RMSD)</span>
+</header>
+
+<main>
+  <!-- LEFT RAIL: Drug Presets Right Next to Visual -->
+  <aside class="col-box">
+    <div class="sec-title">1. Click Drug / Redesign</div>
+    <div class="preset-list" id="presetGrid"></div>
+  </aside>
+
+  <!-- CENTER: Arena + Prominent Moving Kinetic Line Window -->
+  <section class="col-box center-col">
+    <div class="arena-wrap">
+      <canvas id="simCanvas"></canvas>
+    </div>
+    <div class="trace-wrap">
+      <div class="trace-head">
+        <span><b style="color:#f8fafc">Moving Kinetic Window</b> (vertical markers show drug/state switches!)</span>
+        <span>
+          <span style="color:#f59e0b">━ Target Condensed (%)</span> &nbsp;
+          <span style="color:#fb7185">━ Soluble Off-Target / Emesis (%)</span> &nbsp;
+          <span style="color:#38bdf8">━ CaV1.2 PKA Activity (%)</span>
+        </span>
+      </div>
+      <div class="trace-canvas-holder">
+        <canvas id="traceCanvas"></canvas>
+      </div>
+    </div>
+  </section>
+
+  <!-- RIGHT RAIL: Controls + Telemetry + Explanation -->
+  <aside class="col-box">
+    <div class="sec-title">2. Phase &amp; Thermal State</div>
+    <select id="envSelect">
+      <option value="pka_pser2" selected>PKA pSer2 Condensed (37 °C, 30.5×)</option>
+      <option value="intact_wt">Intact Human WT (37 °C, 4.3×)</option>
+      <option value="dilute_homog">Dilute Homogenate (&lt; c_sat, Dispersed)</option>
+      <option value="rk_ko">Condensate-Dead R→K KO (1.4×)</option>
+      <option value="chicken_41">Chicken PDE4D (41 °C, Tyr196, 12.8×)</option>
+    </select>
+    <div class="slider-row"><span>Temperature</span><strong id="tempVal">37 °C</strong></div>
+    <input type="range" id="tempSlider" min="5" max="42" step="1" value="37" />
+    <div class="slider-row"><span>Bulk Drug / Peptide Dose</span><strong id="doseVal">3.0 µM</strong></div>
+    <input type="range" id="doseSlider" min="-2" max="2" step="0.05" value="0.48" />
+
+    <div class="sec-title" style="margin-top:2px">3. Experimental Fork (η_cond)</div>
+    <div class="toggle-row">
+      <button class="pill active" id="btnBranchA">Br. A: Facilitated Sink</button>
+      <button class="pill warn" id="btnBranchB">Br. B: Crowded Silencer</button>
+    </div>
+
+    <div class="metrics-grid">
+      <div class="metric"><div class="mlbl">Target Occ</div><div class="mval" id="mTgt" style="color:#f59e0b">0%</div></div>
+      <div class="metric"><div class="mlbl">Soluble Off-Tgt</div><div class="mval" id="mOff" style="color:#fb7185">0%</div></div>
+      <div class="metric"><div class="mlbl">CaV1.2 PKA</div><div class="mval" id="mPka" style="color:#38bdf8">0%</div></div>
+      <div class="metric"><div class="mlbl">Residence τ</div><div class="mval" id="mTau" style="color:#a78bfa">0.0 s</div></div>
+    </div>
+
+    <div class="info-box" id="infoBox"></div>
+
+    <div class="btn-row">
+      <button class="action" id="btnPause">Pause</button>
+      <button class="action" id="btnReset">Reset</button>
+    </div>
+  </aside>
+</main>
+
+<script>
+const DRUGS = [
+  {
+    id: "cromolyn", name: "Cromolyn", sub: "Q=-2 | 55-yr Paradox",
+    q: -2, kpD: 35, kdCond: 12.0, kdDil: 400.0, tauS: 4.5, imax: 0.85, stabBoost: 1.15, isPep: false, isPhe196: true,
+    colorFree: "#94a3b8", colorEnrich: "#c084fc",
+    note: "<b>Cromolyn (Q=-2):</b> Compare <i>PKA Condensed</i> (~85% Target, ~2% Soluble) vs <i>Dilute Homogenate</i> (drops straight to ~1% — the 55-year test-tube paradox!)."
+  },
+  {
+    id: "crom_mod", name: "CROM_MOD3_MONO", sub: "Q=-1 | TPSA 119 Fix",
+    q: -1, kpD: 24, kdCond: 12.0, kdDil: 220.0, tauS: 3.9, imax: 0.85, stabBoost: 1.10, isPep: false, isPhe196: true,
+    colorFree: "#94a3b8", colorEnrich: "#e879f9",
+    note: "<b>CROM_MOD3_MONO (Strain 3.84 PASS):</b> Cuts TPSA 60 Å² (179→119 Å², Veber oral pass) while preserving high condensed occupancy & tightening Phe196 to 3.27 Å."
+  },
+  {
+    id: "roflumilast", name: "Roflumilast", sub: "Q=0 | Emetic Bulk",
+    q: 0, kpD: 1.4, kdCond: 0.5, kdDil: 0.5, tauS: 5.0, imax: 1.0, stabBoost: 1.0, isPep: false, isPhe196: false,
+    colorFree: "#60a5fa", colorEnrich: "#3b82f6",
+    note: "<b>Roflumilast (Q=0, S_nano=1.3×):</b> Watch the RED Soluble Off-Target line shoot up to ~85% alongside Target (driving emesis) while BLUE CaV1.2 PKA surges to ~90%!"
+  },
+  {
+    id: "rofl_mod", name: "ROFL_MOD5_PYR", sub: "Q=-1 | Anti-Emesis Fix",
+    q: -1, kpD: 16, kdCond: 2.5, kdDil: 45.0, tauS: 4.4, imax: 0.85, stabBoost: 1.08, isPep: false, isPhe196: true,
+    colorFree: "#94a3b8", colorEnrich: "#38bdf8",
+    note: "<b>ROFL_MOD5_PYR_CH2 (Strain 3.95 PASS):</b> Pyridine-acetic tail drops the RED Soluble Off-Target line dramatically while keeping Target Condensed occupancy high!"
+  },
+  {
+    id: "zatolmilast", name: "Zatolmilast", sub: "Q=-1 | Ph3 64× Safe",
+    q: -1, kpD: 24, kdCond: 1.6, kdDil: 70.0, tauS: 6.5, imax: 0.85, stabBoost: 1.12, isPep: false, isPhe196: true,
+    colorFree: "#94a3b8", colorEnrich: "#f59e0b",
+    note: "<b>Zatolmilast (BPN14770, 64× Selective):</b> High GOLD Target trace (~92%) while RED Soluble Off-Target stays near floor (~5%). Switch to Chicken Tyr196 to see pocket selectivity!"
+  },
+  {
+    id: "lumacaftor", name: "Lumacaftor", sub: "Q=-1 | Acute Hormesis",
+    q: -1, kpD: 26, kdCond: 14.0, kdDil: 160.0, tauS: 5.2, imax: 0.82, stabBoost: 3.0, isPep: false, isPhe196: true,
+    colorFree: "#94a3b8", colorEnrich: "#fb923c",
+    note: "<b>Lumacaftor (#1 3G4G hit -12.65):</b> Sweep Dose from <b>0.3 µM</b> (stabilizes sink → BLUE PKA drops!) to <b>30 µM</b> (UCR2 caps → BLUE PKA rises!): the Acute CFTR Paradox!"
+  },
+  {
+    id: "irbe_mod", name: "IRBE_MOD1_NONMET", sub: "Q=-1 | Pure UCR2 Cap",
+    q: -1, kpD: 18, kdCond: 4.5, kdDil: 85.0, tauS: 4.8, imax: 0.85, stabBoost: 1.10, isPep: false, isPhe196: true,
+    colorFree: "#94a3b8", colorEnrich: "#2dd4bf",
+    note: "<b>IRBE_MOD1_NONMET (Strain 1.54 PASS):</b> Meta-carboxylate lifts completely off Mg802 (2.38→4.68 Å) while keeping Phe196 locked & maintaining high nanodomain selectivity."
+  },
+  {
+    id: "pep_stab28", name: "PEP_STAB28", sub: "Q=-12 | Beta-Blocker",
+    q: -12, kpD: 18, kdCond: 2.0, kdDil: 500.0, tauS: 7.0, imax: 0.0, stabBoost: 3.7, isPep: true, isPhe196: false,
+    colorFree: "#a78bfa", colorEnrich: "#c084fc",
+    note: "<b>PEP_STAB28 ($150 28-aa Peptide):</b> Watch BLUE CaV1.2 PKA plunge under <i>Branch A</i> (Condensate Beta-Blocker!) — then click <i>Branch B</i> to watch it jump UP!"
+  },
+  {
+    id: "carvedilol", name: "Carvedilol", sub: "Q=+1 | Repelled!",
+    q: +1, kpD: 0.20, kdCond: 999.0, kdDil: 999.0, tauS: 0.4, imax: 0.0, stabBoost: 1.0, isPep: false, isPhe196: false,
+    colorFree: "#64748b", colorEnrich: "#ef4444",
+    note: "<b>Carvedilol (Q=+1, Strain 14.7 REJECTED):</b> Repelled from +7 Arg-rich PDE4D — both GOLD Target and RED Off-Target drop straight to 0%!"
+  },
+];
+
+let activeDrug = DRUGS[4];
+let envMode = "pka_pser2";
+let tempC = 37;
+let doseUM = 3.0;
+let branchA = true;
+let paused = false;
+let simTime = 0;
+
+const canvas = document.getElementById("simCanvas");
+const ctx = canvas.getContext("2d");
+const tCanvas = document.getElementById("traceCanvas");
+const tCtx = tCanvas.getContext("2d");
+
+let W = 800, H = 320, DROP_CX = 400, DROP_CY = 140, MEM_Y = 292;
+function resizeCanvases() {
+  const ar = canvas.parentElement.getBoundingClientRect();
+  canvas.width = Math.max(400, Math.floor(ar.width));
+  canvas.height = Math.max(220, Math.floor(ar.height));
+  W = canvas.width; H = canvas.height;
+  DROP_CX = W * 0.50; DROP_CY = H * 0.44; MEM_Y = H - 26;
+
+  const tr = tCanvas.parentElement.getBoundingClientRect();
+  tCanvas.width = Math.max(400, Math.floor(tr.width));
+  tCanvas.height = Math.max(110, Math.floor(tr.height));
+}
+
+let pdeNodes = [], drugs = [], camps = [], flashes = [];
+let histTgt = [], histOff = [], histPka = [], eventMarkers = [];
+let smoothTgt = 0, smoothOff = 0, smoothPka = 40;
+const MAX_HIST = 280;
+
+function pushMarker(label) {
+  eventMarkers.push({ idx: histTgt.length, label });
+}
+
+function getEffectiveKpE() {
+  if (envMode === "dilute_homog") return 1.0;
+  if (envMode === "rk_ko") return 1.4;
+  let base = (envMode === "pka_pser2") ? 30.5 : (envMode === "chicken_41" ? 18.0 : 4.3);
+  base *= (envMode === "chicken_41") ? Math.exp(-0.045 * (tempC - 37)) : Math.exp(-0.14 * (tempC - 37));
+  const stab = 1.0 + (activeDrug.stabBoost - 1.0) * (doseUM / (1.0 + doseUM));
+  return Math.max(1.0, Math.min(374, base * stab));
+}
+
+function getDropRadius(kpE) {
+  if (kpE <= 1.6) return 0;
+  return Math.min(H * 0.34, 42 + 40 * Math.min(1.0, Math.log10(kpE) / 2.2));
+}
+
+function initSimulation() {
+  resizeCanvases();
+  pdeNodes = []; drugs = []; camps = []; flashes = [];
+  histTgt = []; histOff = []; histPka = []; eventMarkers = [];
+  simTime = 0;
+
+  for (let i = 0; i < 26; i++) {
+    const isCore = i < 18;
+    const ang = (i / 18) * Math.PI * 2;
+    const rad = isCore ? (14 + Math.random() * 52) : (140 + Math.random() * 140);
+    pdeNodes.push({
+      x: isCore ? DROP_CX + Math.cos(ang) * rad : (i % 2 === 0 ? 45 + Math.random() * 110 : W - 155 + Math.random() * 110),
+      y: isCore ? DROP_CY + Math.sin(ang) * rad * 0.8 : 42 + Math.random() * (MEM_Y - 120),
+      vx: 0, vy: 0, isCore, boundDrug: null, resTime: 0, maxRes: 1,
+    });
+  }
+  for (let i = 0; i < 120; i++) {
+    drugs.push({
+      x: Math.random() * (W - 30) + 15,
+      y: Math.random() * (MEM_Y - 60) + 20,
+      vx: (Math.random() - 0.5) * 2.0, vy: (Math.random() - 0.5) * 2.0,
+      state: "free", boundNode: null, resLeft: 0, resMax: 1, enrichHeat: 0, trail: [],
+    });
+  }
+  pushMarker(activeDrug.name);
+}
+
+function residencyColor(frac) {
+  if (frac > 0.6) {
+    const t = (frac - 0.6) / 0.4;
+    return `rgb(255,${Math.round(165 + 90 * t)},${Math.round(45 + 195 * t)})`;
+  }
+  const t = frac / 0.6;
+  return `rgb(${Math.round(210 + 45 * t)},${Math.round(55 + 110 * t)},${Math.round(135 - 90 * t)})`;
+}
+
+function stepPhysics(dt) {
+  simTime += dt;
+  const kpE = getEffectiveKpE();
+  const dropR = getDropRadius(kpE);
+  const condensed = dropR > 10;
+  const speciesKdMult = (envMode === "chicken_41" && activeDrug.isPhe196) ? 20.0 : 1.0;
+
+  // Analytical target expectations so the Moving Kinetic Window responds crisply & faithfully to Models I-IV!
+  const fCond = condensed ? Math.min(0.92, (kpE - 1.5) / (kpE + 2.5)) : 0.0;
+  const dDense = doseUM * activeDrug.kpD;
+  const occCondEq = (dDense / (activeDrug.kdCond * speciesKdMult + dDense)) * 100;
+  const occDilEq  = (doseUM / (activeDrug.kdDil * speciesKdMult + doseUM)) * 100;
+  const targetEq  = condensed ? occCondEq : occDilEq;
+  const offEq     = occDilEq;
+
+  // Analytical CaV1.2 PKA activation from Model III + IV (shows Hormesis, Beta-Blocker, Fever Melt, Roflumilast surge!)
+  const etaCond = branchA ? 2.5 : 0.25;
+  const effClear = (1 - fCond) * (1 - activeDrug.imax * occDilEq / 100) +
+                   fCond * etaCond * (1 - activeDrug.imax * occCondEq / 100) * Math.min(2.2, 0.5 + 0.55 * Math.log10(kpE + 1));
+  const cCav = 1.45 / (0.65 + 1.35 * Math.max(0.05, effClear));
+  const pkaEq = (cCav * cCav) / (0.25 + cCav * cCav) * 100;
+
+  // Update PDE nodes
+  for (const n of pdeNodes) {
+    n.vx += (Math.random() - 0.5) * (0.2 + tempC / 90);
+    n.vy += (Math.random() - 0.5) * (0.2 + tempC / 90);
+    if (n.isCore && condensed) {
+      const dx = DROP_CX - n.x, dy = DROP_CY - n.y, d = Math.hypot(dx, dy) + 1e-3;
+      const pull = 0.01 * Math.min(3, Math.log10(kpE + 1)) * (d > dropR * 0.78 ? 2.4 : 0.7);
+      n.vx += (dx / d) * pull * d * 0.04; n.vy += (dy / d) * pull * d * 0.04;
+    } else if (!n.isCore && condensed && Math.hypot(n.x - DROP_CX, n.y - DROP_CY) < dropR + 65) {
+      n.vx += (n.x < DROP_CX ? -0.45 : 0.45);
+    }
+    n.vx *= 0.89; n.vy *= 0.89;
+    n.x = Math.max(22, Math.min(W - 22, n.x + n.vx));
+    n.y = Math.max(24, Math.min(MEM_Y - 52, n.y + n.vy));
+    if (n.boundDrug && n.resTime > 0) n.resTime -= dt;
+  }
+
+  // Update Drug molecules
+  for (const m of drugs) {
+    if (m.state === "bound" && m.boundNode) {
+      m.x = m.boundNode.x; m.y = m.boundNode.y;
+      m.resLeft -= dt;
+      m.boundNode.resTime = Math.max(0, m.resLeft);
+      if (m.resLeft <= 0) {
+        m.boundNode.boundDrug = null; m.boundNode = null; m.state = "free";
+        const a = Math.random() * Math.PI * 2;
+        m.vx = Math.cos(a) * 2.1; m.vy = Math.sin(a) * 2.1;
+      }
+      continue;
+    }
+    const dx = DROP_CX - m.x, dy = DROP_CY - m.y, dist = Math.hypot(dx, dy) + 1e-3;
+    const inDrop = condensed && dist < dropR;
+    if (condensed) {
+      if (activeDrug.kpD > 2.0 && dist < dropR * 2.3) {
+        const pull = 0.09 * Math.log10(activeDrug.kpD) * (inDrop ? 0.35 : 1.0);
+        m.vx += (dx / dist) * pull; m.vy += (dy / dist) * pull;
+      } else if (activeDrug.kpD < 0.6 && dist < dropR * 1.2) {
+        m.vx -= (dx / dist) * 0.6; m.vy -= (dy / dist) * 0.6;
+      }
+    }
+    const damp = (inDrop && activeDrug.kpD > 2) ? 0.85 : 0.95;
+    m.vx = (m.vx + (Math.random() - 0.5) * 0.65) * damp;
+    m.vy = (m.vy + (Math.random() - 0.5) * 0.65) * damp;
+    m.x += m.vx; m.y += m.vy;
+    if (m.x < 12 || m.x > W - 12) { m.vx *= -1; m.x = Math.max(12, Math.min(W - 12, m.x)); }
+    if (m.y < 12 || m.y > MEM_Y - 40) { m.vy *= -1; m.y = Math.max(12, Math.min(MEM_Y - 40, m.y)); }
+    m.enrichHeat += (((inDrop && activeDrug.kpD > 2) ? 1 : 0) - m.enrichHeat) * 0.14;
+    m.trail.push({ x: m.x, y: m.y });
+    if (m.trail.length > 9) m.trail.shift();
+
+    for (const n of pdeNodes) {
+      if (n.boundDrug) continue;
+      if (Math.hypot(m.x - n.x, m.y - n.y) < 16) {
+        const inD = condensed && Math.hypot(n.x - DROP_CX, n.y - DROP_CY) < dropR;
+        const pEq = (inD ? occCondEq : occDilEq) / 100;
+        if (Math.random() < pEq * 0.35) {
+          m.state = "bound"; m.boundNode = n;
+          const tau = Math.max(0.5, activeDrug.tauS * (0.7 + Math.random() * 0.6) * (inD ? 1.0 : 0.6));
+          m.resLeft = tau; m.resMax = tau; n.boundDrug = m; n.resTime = tau; n.maxRes = tau;
+          flashes.push({ x: n.x, y: n.y, r: 5, alpha: 0.95, color: activeDrug.isPep ? "#c084fc" : "#fde047" });
+          break;
+        }
+      }
+    }
+  }
+
+  // cAMP sparks
+  if (Math.random() < 0.60) {
+    camps.push({ x: DROP_CX + (Math.random() - 0.5) * 160, y: MEM_Y - 4, vx: (Math.random() - 0.5) * 1.2, vy: -(1.5 + Math.random() * 1.4), life: 1.0 });
+  }
+  for (let i = camps.length - 1; i >= 0; i--) {
+    const c = camps[i];
+    c.x += c.vx + (Math.random() - 0.5) * 0.5; c.y += c.vy; c.life -= 0.011;
+    let kill = false;
+    for (const n of pdeNodes) {
+      if (Math.hypot(c.x - n.x, c.y - n.y) < 18) {
+        const inD = condensed && Math.hypot(n.x - DROP_CX, n.y - DROP_CY) < dropR;
+        const blk = (n.boundDrug && activeDrug.imax > 0) ? activeDrug.imax : 0;
+        if (Math.random() < Math.min(0.95, 0.25 * (inD ? etaCond : 1.0) * (1 - blk))) { kill = true; break; }
+      }
+    }
+    if (kill || c.life <= 0 || c.y < 12) camps.splice(i, 1);
+  }
+  for (let i = flashes.length - 1; i >= 0; i--) {
+    flashes[i].r += 0.9; flashes[i].alpha -= 0.045;
+    if (flashes[i].alpha <= 0) flashes.splice(i, 1);
+  }
+
+  // Smooth kinetic ODE relaxation toward exact equilibrium + realistic stochastic noise
+  const kRelax = dt * (1.8 / Math.max(1.2, activeDrug.tauS * 0.45));
+  smoothTgt += (targetEq - smoothTgt) * Math.min(0.25, kRelax) + (Math.random() - 0.5) * 1.1;
+  smoothOff += (offEq - smoothOff) * Math.min(0.25, kRelax) + (Math.random() - 0.5) * 0.9;
+  smoothPka += (pkaEq - smoothPka) * Math.min(0.22, dt * 1.8) + (Math.random() - 0.5) * 1.0;
+  smoothTgt = Math.max(0, Math.min(100, smoothTgt));
+  smoothOff = Math.max(0, Math.min(100, smoothOff));
+  smoothPka = Math.max(5, Math.min(99, smoothPka));
+
+  histTgt.push(smoothTgt); histOff.push(smoothOff); histPka.push(smoothPka);
+  if (histTgt.length > MAX_HIST) {
+    histTgt.shift(); histOff.shift(); histPka.shift();
+    for (let i = eventMarkers.length - 1; i >= 0; i--) {
+      eventMarkers[i].idx -= 1;
+      if (eventMarkers[i].idx < 0) eventMarkers.splice(i, 1);
+    }
+  }
+
+  document.getElementById("mTgt").textContent = `${smoothTgt.toFixed(0)}%`;
+  document.getElementById("mOff").textContent = `${smoothOff.toFixed(0)}%`;
+  document.getElementById("mPka").textContent = `${smoothPka.toFixed(0)}%`;
+  document.getElementById("mTau").textContent = `${activeDrug.tauS.toFixed(1)} s`;
+}
+
+function drawArena() {
+  ctx.clearRect(0, 0, W, H);
+  const kpE = getEffectiveKpE();
+  const dropR = getDropRadius(kpE);
+  const condensed = dropR > 10;
+
+  // CaV1.2 glow
+  const cg = Math.min(1, smoothPka / 90);
+  const cavGrad = ctx.createLinearGradient(0, MEM_Y - 90, 0, MEM_Y);
+  cavGrad.addColorStop(0, "rgba(56,189,248,0)");
+  cavGrad.addColorStop(1, `rgba(${Math.round(56 + 190 * cg)},${Math.round(189 - 45 * cg)},${Math.round(248 - 200 * cg)},0.22)`);
+  ctx.fillStyle = cavGrad;
+  ctx.fillRect(DROP_CX - 180, MEM_Y - 90, 360, 90);
+
+  // Emerald AKAP5 brush
+  ctx.strokeStyle = "rgba(16,185,129,0.50)"; ctx.lineWidth = 1.8;
+  for (let i = -7; i <= 7; i++) {
+    const bx = DROP_CX + i * 20, sway = Math.sin(simTime * 2.2 + i * 0.7) * 6;
+    ctx.beginPath(); ctx.moveTo(bx, MEM_Y); ctx.quadraticCurveTo(bx + sway, MEM_Y - 24, bx - sway * 0.5, MEM_Y - 46); ctx.stroke();
+  }
+  ctx.fillStyle = "#1e293b"; ctx.fillRect(0, MEM_Y, W, H - MEM_Y);
+  ctx.strokeStyle = "#38bdf8"; ctx.lineWidth = 2.0;
+  ctx.beginPath(); ctx.moveTo(0, MEM_Y); ctx.lineTo(W, MEM_Y); ctx.stroke();
+
+  ctx.font = "600 10.5px -apple-system, sans-serif";
+  ctx.fillStyle = "#10b981"; ctx.fillText("AKAP5 Brush (Soluble)", 12, MEM_Y - 8);
+  ctx.fillStyle = "#93c5fd"; ctx.fillText(`CaV1.2 Shelf • PKA=${smoothPka.toFixed(0)}%`, W - 165, MEM_Y - 8);
+  ctx.fillStyle = "#94a3b8"; ctx.fillText("Plasma Membrane + ADCY5 cAMP Source", DROP_CX - 108, H - 8);
+
+  if (condensed) {
+    const tint = activeDrug.isPep ? "167,139,250" : "245,158,11";
+    const g = ctx.createRadialGradient(DROP_CX, DROP_CY, 8, DROP_CX, DROP_CY, dropR * 1.15);
+    g.addColorStop(0, `rgba(${tint},0.26)`); g.addColorStop(0.75, `rgba(${tint},0.11)`); g.addColorStop(1, `rgba(${tint},0)`);
+    ctx.fillStyle = g; ctx.beginPath(); ctx.arc(DROP_CX, DROP_CY, dropR * 1.15, 0, Math.PI * 2); ctx.fill();
+    ctx.setLineDash([4, 4]); ctx.strokeStyle = `rgba(${tint},0.60)`; ctx.lineWidth = 1.4;
+    ctx.beginPath(); ctx.arc(DROP_CX, DROP_CY, dropR, 0, Math.PI * 2); ctx.stroke(); ctx.setLineDash([]);
+    ctx.fillStyle = "#fde68a"; ctx.font = "700 11px -apple-system, sans-serif";
+    ctx.fillText(`PDE4D Condensate (K_p=${kpE.toFixed(1)}×)`, DROP_CX - 78, Math.max(18, DROP_CY - dropR - 6));
+  } else {
+    ctx.fillStyle = "#94a3b8"; ctx.font = "700 11px -apple-system, sans-serif";
+    ctx.fillText(`DISPERSED PDE4D PHASE (K_p=${kpE.toFixed(1)}× — Below c_sat / Melted)`, DROP_CX - 155, 22);
+  }
+  ctx.fillStyle = "#64748b"; ctx.font = "600 10px -apple-system, sans-serif";
+  ctx.fillText("Peripheral Soluble PDE4 (Emesis Pool)", 12, 18);
+
+  for (const c of camps) {
+    ctx.fillStyle = `rgba(56,189,248,${Math.max(0, c.life * 0.9)})`;
+    ctx.beginPath(); ctx.arc(c.x, c.y, 2.4, 0, Math.PI * 2); ctx.fill();
+  }
+  for (const n of pdeNodes) {
+    if (n.boundDrug) {
+      const frac = Math.max(0, Math.min(1, n.resTime / n.maxRes));
+      const col = activeDrug.isPep ? `rgba(192,132,252,${0.4 + 0.6 * frac})` : residencyColor(frac);
+      ctx.strokeStyle = col; ctx.lineWidth = 1.5 + 2.0 * frac; ctx.globalAlpha = 0.25 + 0.75 * frac;
+      ctx.beginPath(); ctx.arc(n.x, n.y, 9 + (1 - frac) * 8, 0, Math.PI * 2); ctx.stroke();
+      ctx.fillStyle = col; ctx.beginPath(); ctx.arc(n.x, n.y, 6.2, 0, Math.PI * 2); ctx.fill();
+      ctx.globalAlpha = 1.0;
+    } else {
+      ctx.fillStyle = "#1e293b"; ctx.strokeStyle = "#64748b"; ctx.lineWidth = 1.3;
+      ctx.beginPath(); ctx.arc(n.x, n.y, 5.5, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
+    }
+  }
+  for (const m of drugs) {
+    if (m.state === "bound") continue;
+    if (m.trail.length > 2) {
+      for (let i = 1; i < m.trail.length; i++) {
+        ctx.strokeStyle = m.enrichHeat > 0.35 ? activeDrug.colorEnrich : activeDrug.colorFree;
+        ctx.globalAlpha = (i / m.trail.length) * (0.14 + 0.34 * m.enrichHeat);
+        ctx.lineWidth = 1.1 + m.enrichHeat;
+        ctx.beginPath(); ctx.moveTo(m.trail[i - 1].x, m.trail[i - 1].y); ctx.lineTo(m.trail[i].x, m.trail[i].y); ctx.stroke();
+      }
+      ctx.globalAlpha = 1.0;
+    }
+    ctx.fillStyle = m.enrichHeat > 0.35 ? activeDrug.colorEnrich : activeDrug.colorFree;
+    ctx.globalAlpha = 0.55 + 0.45 * m.enrichHeat;
+    ctx.beginPath(); ctx.arc(m.x, m.y, 2.3 + 1.3 * m.enrichHeat, 0, Math.PI * 2); ctx.fill();
+    ctx.globalAlpha = 1.0;
+  }
+  for (const f of flashes) {
+    ctx.strokeStyle = f.color; ctx.globalAlpha = Math.max(0, f.alpha); ctx.lineWidth = 1.4;
+    ctx.beginPath(); ctx.arc(f.x, f.y, f.r, 0, Math.PI * 2); ctx.stroke(); ctx.globalAlpha = 1.0;
+  }
+}
+
+function drawTrace() {
+  const tw = tCanvas.width, th = tCanvas.height;
+  tCtx.clearRect(0, 0, tw, th);
+  // Gridlines + Y-axis labels (0%, 50%, 100%)
+  tCtx.font = "600 9.5px -apple-system, sans-serif";
+  for (const pct of [0, 25, 50, 75, 100]) {
+    const y = th - 14 - (pct / 100) * (th - 24);
+    tCtx.strokeStyle = pct === 50 ? "#243554" : "#152036";
+    tCtx.lineWidth = 1;
+    tCtx.beginPath(); tCtx.moveTo(30, y); tCtx.lineTo(tw - 6, y); tCtx.stroke();
+    if (pct % 50 === 0) {
+      tCtx.fillStyle = "#64748b";
+      tCtx.fillText(`${pct}%`, 2, y + 3);
+    }
+  }
+  // Vertical drug/state switch event markers right on the moving window!
+  for (const ev of eventMarkers) {
+    const x = 32 + (ev.idx / MAX_HIST) * (tw - 40);
+    tCtx.strokeStyle = "rgba(148,163,184,0.45)";
+    tCtx.setLineDash([3, 3]); tCtx.lineWidth = 1;
+    tCtx.beginPath(); tCtx.moveTo(x, 8); tCtx.lineTo(x, th - 12); tCtx.stroke();
+    tCtx.setLineDash([]);
+    tCtx.fillStyle = "#cbd5e1";
+    tCtx.fillText(ev.label, x + 3, 16);
+  }
+  const plot = (arr, col, lw) => {
+    if (arr.length < 2) return;
+    tCtx.strokeStyle = col; tCtx.lineWidth = lw;
+    tCtx.beginPath();
+    for (let i = 0; i < arr.length; i++) {
+      const x = 32 + (i / MAX_HIST) * (tw - 40);
+      const y = th - 14 - (arr[i] / 100) * (th - 24);
+      if (i === 0) tCtx.moveTo(x, y); else tCtx.lineTo(x, y);
+    }
+    tCtx.stroke();
+  };
+  plot(histOff, "#fb7185", 2.3);
+  plot(histPka, "#38bdf8", 2.3);
+  plot(histTgt, "#f59e0b", 2.8);
+}
+
+// Build Left-Rail Drug Preset List
+const grid = document.getElementById("presetGrid");
+DRUGS.forEach(d => {
+  const btn = document.createElement("button");
+  btn.className = "preset" + (d.id === activeDrug.id ? " active" : "");
+  btn.innerHTML = `${d.name}<small>${d.sub}</small>`;
+  btn.onclick = () => {
+    activeDrug = d;
+    document.querySelectorAll("button.preset").forEach(b => b.classList.remove("active"));
+    btn.classList.add("active");
+    document.getElementById("infoBox").innerHTML = d.note;
+    pushMarker(d.name);
+  };
+  grid.appendChild(btn);
+});
+document.getElementById("infoBox").innerHTML = activeDrug.note;
+
+document.getElementById("envSelect").onchange = (e) => {
+  envMode = e.target.value;
+  if (envMode === "chicken_41") {
+    tempC = 41; document.getElementById("tempSlider").value = 41;
+    document.getElementById("tempVal").textContent = "41 °C";
+  }
+  pushMarker(e.target.options[e.target.selectedIndex].text.split(" ")[0]);
+};
+document.getElementById("tempSlider").oninput = (e) => {
+  tempC = Number(e.target.value);
+  document.getElementById("tempVal").textContent = `${tempC} °C`;
+};
+document.getElementById("doseSlider").oninput = (e) => {
+  doseUM = Math.pow(10, Number(e.target.value));
+  document.getElementById("doseVal").textContent = doseUM < 1 ? `${doseUM.toFixed(2)} µM` : `${doseUM.toFixed(1)} µM`;
+};
+document.getElementById("btnBranchA").onclick = () => {
+  branchA = true;
+  document.getElementById("btnBranchA").classList.add("active");
+  document.getElementById("btnBranchB").classList.remove("active");
+  pushMarker("Branch A");
+};
+document.getElementById("btnBranchB").onclick = () => {
+  branchA = false;
+  document.getElementById("btnBranchB").classList.add("active");
+  document.getElementById("btnBranchA").classList.remove("active");
+  pushMarker("Branch B");
+};
+document.getElementById("btnPause").onclick = (e) => {
+  paused = !paused; e.target.textContent = paused ? "Resume" : "Pause";
+};
+document.getElementById("btnReset").onclick = () => initSimulation();
+window.addEventListener("resize", resizeCanvases);
+
+initSimulation();
+let last = performance.now();
+function loop(now) {
+  const dt = Math.min(0.05, (now - last) / 1000);
+  last = now;
+  if (!paused) stepPhysics(dt);
+  drawArena();
+  drawTrace();
+  requestAnimationFrame(loop);
+}
+requestAnimationFrame(loop);
+</script>
+</body>
+</html>

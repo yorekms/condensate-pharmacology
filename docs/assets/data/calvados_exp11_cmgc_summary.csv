@@ -1,0 +1,5 @@
+case_label,run_tag,species,pH,beads,whole_box_mg_mL,com_rmsd_z_nm,order_h2,order_end,tau_025_ns,central_mg_mL,outer_mg_mL,Kp_h2,peak_mg_mL
+CLK2_Solo,exp11_clk2_solo_50ns_seed11001,CLK2_IDR,7.4,7810,91.23,20.34,0.062,0.071,3.25,100.17,82.42,1.215,105.5
+SRPK2_Solo,exp11_srpk2_solo_50ns_seed11002,SRPK2_IDR,7.4,8160,82.87,24.15,0.028,0.051,1.25,83.12,80.99,1.026,91.4
+CLK2+SRPK2_Mix,exp11_clk2_srpk2_mix_50ns_seed11003,CLK2_IDR,7.4,8340,91.19,3.78,0.943,0.953,>50,238.83,0.0,999.0,296.0
+CLK2+SRPK2_Mix,exp11_clk2_srpk2_mix_50ns_seed11003,SRPK2_IDR,7.4,8340,91.19,3.78,0.916,0.916,>50,181.92,0.0,999.0,212.5

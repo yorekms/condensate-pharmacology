@@ -1,0 +1,12 @@
+Gene,Variant_ID,rsID,Protein_Change,IDR_Domain,dQ,dArom,AlphaMissense,Max_Ancestry,Max_AF_pct,Min_Ancestry,Min_AF_pct,AFR_pct,AMR_pct,EAS_pct,NFE_pct,SAS_pct,FIN_pct,ASJ_pct,Predicted_Phase_Effect
+AKAP5,14-64468957-G-A,rs61740636,p.R188Q,AKAP79 Brush (Q=-30),-1,0,likely_benign (0.057),AFR,10.269,ASJ,0.0034,10.269,0.698,0.011,0.024,0.025,0.005,0.003,Removes Arg in Lys-brush (Q:-30->-31); alters 2D PDE4D admittance
+AKAP5,14-64469334-G-A,rs34433837,p.E314K,AKAP79 Brush (Q=-30),2,0,likely_benign (0.088),AFR,2.729,EAS,0.0,2.729,0.198,0.0,0.002,0.0,0.0,0.0,+2 charge reversal weakens brush repulsion (23 AFR homozygotes!)
+AKAP5,14-64469265-G-A,rs138067674,p.G291R,AKAP79 Brush (Q=-30),1,0,likely_benign (0.086),EAS,1.165,NFE,0.0,0.017,0.002,1.165,0.0,0.0,0.0,0.0,Inserts new Arg sticker into Lys-dominated AKAP79 brush
+CACNA1C,12-2685827-C-T,rs185788586,p.R1924S,CaV1.2 C-tail (near S1928),-1,0,None (unscored exon),AMR,5.688,EAS,0.0,0.067,5.688,0.0,0.062,0.023,0.003,0.003,4 aa from PKA S1928! Removes Arg in CaV1.2 condensate C-tail
+CACNA1C,12-2679735-G-A,rs111298509,p.G1795R,CaV1.2 C-tail IDR,1,0,None (unscored exon),AFR,5.298,EAS,0.0,5.298,0.388,0.0,0.013,0.011,0.0,0.0,Adds Arg sticker in CaV1.2 C-tail; strengthens PDE4D co-condensation
+PDE4D,5-59430359-G-C,rs139967640,p.S20R,PDE4D N-IDR (isoform),1,0,None (alt N-IDR exon),FIN,1.203,EAS,0.0032,0.067,0.232,0.003,0.364,0.037,1.203,0.106,Adds Arg sticker to PDE4D N-IDR; shifts c_sat & c-Mod potency
+PDE4D,5-59768451-C-T,rs201360779,p.C20Y,PDE4D N-IDR (isoform),0,1,None (alt N-IDR exon),FIN,0.893,AFR,0.0,0.0,0.002,0.007,0.036,0.0,0.893,0.0,Adds avian-like Tyr sticker (right next to BB2 S18Y!)
+PDE4D,5-59356776-C-T,rs371285569,p.R24H,PDE4D N-IDR (isoform),-1,0,None (alt N-IDR exon),ASJ,0.558,FIN,0.0,0.015,0.006,0.107,0.016,0.023,0.0,0.558,Replaces permanent Arg with pH-gated His (pKa~6.5) in N-IDR!
+MED1,17-39408721-G-A,rs150979306,p.S1167F,MED1 IDR (Klein'20),0,1,likely_benign (0.263),ASJ,0.571,EAS,0.0,0.021,0.015,0.0,0.183,0.141,0.445,0.571,Adds Phe aromatic sticker in Tamoxifen/Cisplatin MED1 condensate!
+MED1,17-39408503-T-C,rs35668211,p.S1240G,MED1 IDR (Klein'20),0,0,likely_benign (0.054),AFR,2.804,SAS,0.0,2.804,0.162,0.002,0.002,0.0,0.0,0.0,Removes polar/phospho Ser inside MED1 transcriptional IDR
+AR,X-67545792-G-A,rs199554641,p.G216R,AR NTD Condensate IDR,1,0,likely_benign (0.148),SAS,1.25,AMR,0.0,0.002,0.0,0.003,0.001,1.25,0.0,0.0,Adds Arg sticker in Enzalutamide-resistance AR NTD IDR
