@@ -1,0 +1,9 @@
+case_label,gene,state,run_tag,beads,whole_box_mg_mL,sim_ns,com_rmsd_z_nm,order_h2,order_end,tau_025_ns,central_mg_mL,outer_mg_mL,Kp_h2,peak_mg_mL
+CFTR_WT,CFTR,WT (Q=0),exp12_cftr_wt_30ns_seed12001,6132,63.89,8.8,10.63,0.631,0.545,>8.8,130.75,5.5,23.784,181.0
+CFTR_9pS,CFTR,+9 pS/T (Q=-18),exp12_cftr_9pS_30ns_seed12002,6132,63.89,8.5,19.0,0.184,0.056,5.75,81.04,45.2,1.793,96.7
+HCN2_WT,HCN2,WT (Q=+13),exp12_hcn2_wt_30ns_seed12003,6290,56.91,10.5,17.2,0.292,0.176,9.5,82.54,28.31,2.916,89.2
+HCN2_6pS,HCN2,+6 pS (Q=+1),exp12_hcn2_6pS_30ns_seed12004,6290,56.91,10.0,13.05,0.587,0.474,>10.0,127.46,9.99,12.76,143.7
+SCN2A_WT,SCN2A,WT (Q=+8),exp12_scn2a_wt_30ns_seed12005,6153,63.69,13.0,5.83,0.839,0.839,>13.0,212.49,0.0,999.0,246.4
+SCN2A_17pS,SCN2A,+17 pS (Q=-26),exp12_scn2a_17pS_30ns_seed12006,6153,63.69,10.3,10.46,0.587,0.467,>10.3,94.44,0.85,111.549,178.5
+CACNA1A_WT,CACNA1A,WT (Q=+24),exp12_cacna1a_wt_30ns_seed12007,6444,65.42,8.3,4.83,0.775,0.728,>8.3,183.09,0.18,999.0,223.1
+CACNA1A_7pS,CACNA1A,+7 pS/T (Q=+10),exp12_cacna1a_7pS_30ns_seed12008,6444,65.42,8.3,4.35,0.841,0.798,>8.3,231.23,0.12,999.0,254.6
