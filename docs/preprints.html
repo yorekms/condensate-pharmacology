@@ -8,17 +8,7 @@
   :root { --bg:#0b1120; --card:#111827; --border:#1e293b; --text:#e2e8f0; --muted:#94a3b8; --accent:#38bdf8; --gold:#f59e0b; --green:#10b981; --rose:#f43f5e; }
   * { box-sizing:border-box; margin:0; padding:0; }
   body { font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif; background:var(--bg); color:var(--text); min-height:100vh; line-height:1.55; }
-  #gate { position:fixed; inset:0; background:radial-gradient(circle at top,#1e293b 0%,#0b1120 70%); display:flex; align-items:center; justify-content:center; z-index:999; padding:20px; }
-  .gate-box { background:#0f172a; border:1px solid #334155; border-radius:16px; padding:32px; max-width:450px; width:100%; box-shadow:0 24px 60px rgba(0,0,0,0.6); text-align:center; }
-  .gate-box h1 { font-size:20px; margin-bottom:8px; color:#f8fafc; }
-  .gate-box p { font-size:13px; color:var(--muted); margin-bottom:20px; }
-  .gate-box input { width:100%; padding:12px 14px; border-radius:10px; border:1px solid #334155; background:#020617; color:#f8fafc; font-size:14px; outline:none; margin-bottom:12px; }
-  .gate-box input:focus { border-color:var(--accent); }
-  .gate-box button { width:100%; padding:12px; border-radius:10px; border:none; background:linear-gradient(135deg,#0284c7,#2563eb); color:#fff; font-weight:700; font-size:14px; cursor:pointer; }
-  .gate-box button:hover { filter:brightness(1.1); }
-  .gate-links { display:flex; justify-content:center; gap:10px; flex-wrap:wrap; margin-top:16px; }
-  #err { color:#fb7185; font-size:12.5px; margin-top:10px; min-height:18px; }
-  #portal { display:none; max-width:1300px; margin:0 auto; padding:28px 24px 64px; }
+  #portal { display:block; max-width:1300px; margin:0 auto; padding:28px 24px 64px; }
   header { border-bottom:1px solid var(--border); padding-bottom:20px; margin-bottom:28px; }
   .head-top { display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:14px; }
   header h1 { font-size:25px; color:#f8fafc; }
@@ -64,39 +54,20 @@
 </style>
 </head>
 <body>
-<div id="gate">
-  <div class="gate-box">
-    <div class="badge">Private Preprint Review Portal</div>
-    <h1>Phase-Partitioned Pharmacology</h1>
-    <p>Matthew S. Yorek, M.S. (University of Virginia Anesthesiology). Enter the review passphrase to unlock both manuscripts, all interactive 3D PDB viewers, validation dockings, and open datasets.</p>
-    <input type="password" id="pw" placeholder="Enter passphrase..." autocomplete="off" onkeydown="if(event.key==='Enter')unlock()">
-    <button onclick="unlock()">Unlock Research Portal</button>
-    <div id="err"></div>
-    <div class="gate-links">
-      <a class="carrd-pill featured" href="atlas-book.html">Open-Access Monograph Book &rarr;</a>
-      <a class="carrd-pill" href="index.html">← Research Hub</a>
-      <a class="carrd-pill" href="https://my-scientist.carrd.co" target="_blank" rel="noopener">&#x1F310; my-scientist.carrd.co</a>
-    </div>
-  </div>
-</div>
-
 <div id="portal">
   <nav class="site-tabs" aria-label="Portal sections">
     <a class="site-tab" href="index.html">Research Hub</a>
     <a class="site-tab book" href="atlas-book.html">Monograph Book: IDR &amp; LLPS Cell Atlas (Open Access)</a>
-    <a class="site-tab active" href="preprints.html">Unpublished Preprints Portal (Papers #1–#2)</a>
+    <a class="site-tab active" href="preprints.html">Open Preprints Portal (Papers #1–#2)</a>
     <a class="site-tab bio" href="https://yorekms.github.io/seizure-transcriptomics-workbench/" target="_blank" rel="noopener">Seizure Bioinformatics Portal &nearr;</a>
   </nav>
 
   <header>
     <div class="head-top">
       <div>
-        <div class="badge">CALVADOS-2/3 GPU MD • 1,093 FDA Drugs • 1,097 Human IV V_d,ss • Proteome &amp; 62-Channel AFDB v6 IDR Surveys • 12 Experimental PDBs</div>
+        <div class="badge">OPEN ACCESS PREPRINTS &bull; CALVADOS-2/3 GPU MD &bull; 1,093 FDA Drugs &bull; 1,097 Human IV V_d,ss &bull; 62-Channel AFDB v6 &bull; 12 Experimental PDBs</div>
         <h1>Phase-Partitioned Allosteric Pharmacology &amp; Condensate Drug Design</h1>
-        <div class="sub"><strong>Matthew S. Yorek, M.S.</strong>, Research Scientist, Department of Anesthesiology, University of Virginia (ORCID: 0000-0002-4737-9367) — Two companion preprints engineered for direct experimental falsification.</div>
-      </div>
-      <div style="display:flex;gap:8px;align-items:center">
-        <button onclick="lock()" style="padding:8px 12px;border-radius:8px;border:1px solid #334155;background:#1e293b;color:#cbd5e1;cursor:pointer;font-size:12px;font-weight:600">Lock Portal</button>
+        <div class="sub"><strong>Matthew S. Yorek, M.S.</strong>, Research Scientist, Department of Anesthesiology, University of Virginia (ORCID: 0000-0002-4737-9367) — Open-access companion preprints engineered for direct experimental falsification (preparing for bioRxiv deposition).</div>
       </div>
     </div>
     <div class="pill-bar">
@@ -114,10 +85,10 @@
     <section class="card" id="paper1">
       <div class="meta">PAPER #1 • BIOPHYSICS &amp; THEORETICAL PHARMACOLOGY PREPRINT (FIGURES 1–5)</div>
       <h2>Phase-Partitioned Allosteric Pharmacology: Brush-Insulated Signaling Complexes &amp; Phase-Gated PDE4D</h2>
-      <div class="auth">Matthew S. Yorek, M.S. (UVA Anesthesiology) &amp; Johannes W. Hell, Ph.D.* (Invited Co-Author, UC Davis)</div>
+      <div class="auth">Matthew S. Yorek, M.S. (Department of Anesthesiology, University of Virginia)</div>
       <p>Coupled Models I–IV (two-phase IC50 lever rule, HARBS/LARBS &amp; Zatolmilast 64× S_nano, Lumacaftor hormesis &amp; PEP_STAB28 binary fork, confined 3D spine reaction–diffusion PDE), PDB: 3G4G structural stratification, closed-loop med-chem paradox fixes, Old-vs-New paradigm kinetics, and multi-scale MD/Binodal/3D views.</p>
       <div class="btn-row">
-        <a class="btn primary" href="assets/paper1/Paper1_Theoretical_Pharmacology_Preprint.pdf" target="_blank">Download Paper #1 PDF (XeLaTeX)</a>
+        <a class="btn primary" href="assets/paper1/Paper1_Theoretical_Pharmacology_Open_Preprint.pdf" target="_blank">Download Paper #1 PDF (Open Preprint)</a>
         <a class="btn green" href="assets/viewers/3g4g_3d_binding_pocket_viewer.html" target="_blank">Launch 3D PDB: 3G4G Viewer</a>
         <a class="btn" href="assets/viewers/phase_binding_kinetics_simulator.html" target="_blank">Launch Kinetic Cockpit</a>
       </div>
@@ -207,69 +178,4 @@
     </table>
   </section>
 </div>
-
-<script>
-const TARGET_HASH = "080f23a441a3bedceb70c9d81d827e62a07a98b0d333a9f9db45c35b0f130088";
-function sha256(ascii) {
-  function rr(v, a) { return (v >>> a) | (v << (32 - a)); }
-  const maxWord = Math.pow(2, 32), l = ascii.length;
-  let i, j, res = '', words = [], bitLen = l * 8;
-  const hash = [], k = []; let primeCounter = 0, isComposite = {};
-  for (let c = 2; primeCounter < 64; c++) {
-    if (!isComposite[c]) {
-      for (i = 0; i < 313; i += c) isComposite[i] = c;
-      hash[primeCounter] = (Math.pow(c, 0.5) * maxWord) | 0;
-      k[primeCounter++] = (Math.pow(c, 1 / 3) * maxWord) | 0;
-    }
-  }
-  ascii += '\x80';
-  while (ascii.length % 64 - 56) ascii += '\x00';
-  for (i = 0; i < ascii.length; i++) {
-    j = ascii.charCodeAt(i);
-    words[i >> 2] |= j << ((3 - i) % 4) * 8;
-  }
-  words[words.length] = ((bitLen / maxWord) | 0);
-  words[words.length] = (bitLen);
-  for (j = 0; j < words.length;) {
-    const w = words.slice(j, j += 16), oldHash = hash.slice(0);
-    for (i = 0; i < 64; i++) {
-      const w15 = w[i - 15], w2 = w[i - 2];
-      const a = hash[0], e = hash[4];
-      const t1 = hash[7] + (rr(e, 6) ^ rr(e, 11) ^ rr(e, 25)) + ((e & hash[5]) ^ ((~e) & hash[6])) + k[i]
-        + (w[i] = (i < 16) ? w[i] : (w[i - 16] + (rr(w15, 7) ^ rr(w15, 18) ^ (w15 >>> 3)) + w[i - 7] + (rr(w2, 17) ^ rr(w2, 19) ^ (w2 >>> 10))) | 0);
-      const t2 = (rr(a, 2) ^ rr(a, 13) ^ rr(a, 22)) + ((a & hash[1]) ^ (a & hash[2]) ^ (hash[1] & hash[2]));
-      hash.unshift((t1 + t2) | 0); hash[4] = (hash[4] + t1) | 0; hash.pop();
-    }
-    for (i = 0; i < 8; i++) hash[i] = (hash[i] + oldHash[i]) | 0;
-  }
-  for (i = 0; i < 8; i++) {
-    for (j = 3; j + 1; j--) {
-      const b = (hash[i] >> (j * 8)) & 255;
-      res += ((b < 16) ? 0 : '') + b.toString(16);
-    }
-  }
-  return res;
-}
-function unlock() {
-  const val = document.getElementById("pw").value.trim().toLowerCase();
-  if (sha256(val) === TARGET_HASH) {
-    sessionStorage.setItem("pp_unlocked", "1");
-    document.getElementById("gate").style.display = "none";
-    document.getElementById("portal").style.display = "block";
-    document.getElementById("err").textContent = "";
-  } else {
-    document.getElementById("err").textContent = "Incorrect passphrase. Please try again.";
-  }
-}
-function lock() {
-  sessionStorage.removeItem("pp_unlocked");
-  document.getElementById("pw").value = "";
-  document.getElementById("portal").style.display = "none";
-  document.getElementById("gate").style.display = "flex";
-}
-if (sessionStorage.getItem("pp_unlocked") === "1") {
-  document.getElementById("gate").style.display = "none";
-  document.getElementById("portal").style.display = "block";
-}
-</script>
 </body></html>
