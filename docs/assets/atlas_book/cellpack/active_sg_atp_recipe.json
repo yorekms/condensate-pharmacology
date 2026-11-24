@@ -1,0 +1,546 @@
+{
+  "format_version": "2.1",
+  "version": "2.0",
+  "name": "active_stress_granule_atp_zwicker",
+  "title": "Active ATP-Regulated Cytosolic Stress Granule (G3BP1 + FUS + TARDBP + TIA1 + mRNA)",
+  "description": "Reality-grounded cellPACK v2 mesoscale recipe contrasting a cytosolic Stress Granule under physiological ATP (3.5 mM: Zwicker active chemical turnover k_turn=0.075 arrests Ostwald coarsening into ~19 dynamic nanodroplets, mean R=8.59 nm) versus energy starvation (0.1 mM ATP: hydrotrope depletion + loss of active disassembly drives runaway coarsening into 2 giant solidifying granules, mean R=38.38 nm).",
+  "units": {
+    "length": "nm",
+    "concentration": "uM",
+    "temperature": "K",
+    "energy": "kBT"
+  },
+  "bounding_box": [
+    [
+      0.0,
+      0.0,
+      0.0
+    ],
+    [
+      160.0,
+      160.0,
+      160.0
+    ]
+  ],
+  "randomness_seed": 42,
+  "grid_file_path": null,
+  "packing_constraints": {
+    "avoid_overlap": true,
+    "use_periodicity": false,
+    "packing_method": "active_droplet_emulsion",
+    "max_attempts": 5000,
+    "temperature_K": 310.15,
+    "ph_homeostasis": 7.25,
+    "ph_starvation": 6.75,
+    "zwicker_2d_pde_regimes": {
+      "physiological_3.5mM_ATP": {
+        "atp_mM": 3.5,
+        "k_turn": 0.075,
+        "final_n_droplets": 19,
+        "final_mean_radius_nm": 8.59,
+        "final_max_radius_nm": 12.13,
+        "regime": "Active Arrested Micro-Emulsion"
+      },
+      "starved_0.1mM_ATP": {
+        "atp_mM": 0.1,
+        "k_turn": 0.0025,
+        "final_n_droplets": 2,
+        "final_mean_radius_nm": 38.38,
+        "final_max_radius_nm": 43.86,
+        "regime": "Runaway Ostwald Coarsening / Aging Risk"
+      }
+    }
+  },
+  "objects": {
+    "stress_granule_core_volume": {
+      "type": "mesh",
+      "name": "Cytosolic Stress Granule Dense Core",
+      "geometry": {
+        "shape": "sphere",
+        "center_nm": [
+          80.0,
+          80.0,
+          80.0
+        ],
+        "radius_physio_atp_nm": 8.59,
+        "radius_starved_atp_nm": 38.38
+      },
+      "color": [
+        0.9843,
+        0.5725,
+        0.2353
+      ],
+      "color_hex": "#fb923c"
+    },
+    "cytosolic_atp_shell_volume": {
+      "type": "mesh",
+      "name": "Surrounding Cytosol (ATP Hydrotrope Reservoir)",
+      "geometry": {
+        "shape": "box",
+        "min_nm": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "max_nm": [
+          160.0,
+          160.0,
+          160.0
+        ]
+      },
+      "color": [
+        0.0588,
+        0.0902,
+        0.1647
+      ],
+      "color_hex": "#0f172a"
+    },
+    "G3BP1": {
+      "type": "single_sphere",
+      "name": "G3BP1",
+      "role": "Core Stress Granule NTF2L-Dimer Scaffold & RNA-Dependent Switch",
+      "radius": 3.5,
+      "hydrodynamic_radius_nm": 3.5,
+      "idr_rg_nm": 2.99,
+      "oligomer_valency": 2.0,
+      "color": [
+        0.2196,
+        0.7412,
+        0.9725
+      ],
+      "color_hex": "#38bdf8",
+      "placement_mode": "interior",
+      "principal_vector": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "jitter_max": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "molarity_uM": 4.277,
+      "physiological_molarities": {
+        "hela_sg_homeostasis_uM": 4.277,
+        "hela_sg_homeostasis_S": 427.66,
+        "hela_sg_atp_starvation_S": 427.66,
+        "neuron_sg_homeostasis_uM": 0.461,
+        "neuron_sg_homeostasis_S": 46.11,
+        "neuron_sg_atp_starvation_S": 46.11
+      },
+      "copy_count_physio_atp": 48,
+      "copy_count_starved_atp": 64,
+      "packing_priority": 1,
+      "representations": {
+        "packing": {
+          "type": "sphere",
+          "radius_nm": 3.5,
+          "chain_beads": 1
+        },
+        "atomic": {
+          "uniprot_accession": "Q13283",
+          "alphafold_model_id": "AF-Q13283-F1",
+          "alphafold_version": "v6",
+          "mmcif_relpath": "data/structures/Q13283/AF-Q13283-F1-model_v6.cif",
+          "local_mmcif_exists": true,
+          "remote_mmcif_url": "https://alphafold.ebi.ac.uk/files/AF-Q13283-F1-model_v6.cif",
+          "remote_pdb_url": "https://alphafold.ebi.ac.uk/files/AF-Q13283-F1-model_v6.pdb",
+          "format": "mmcif"
+        }
+      },
+      "uniprot_accession": "Q13283",
+      "alphafold_model_id": "AF-Q13283-F1"
+    },
+    "FUS": {
+      "type": "single_sphere",
+      "name": "FUS",
+      "role": "Prion-Like QGSY + RGG RNA-Binding Client/Co-Scaffold (ALS-Linked)",
+      "radius": 3.1,
+      "hydrodynamic_radius_nm": 3.1,
+      "idr_rg_nm": 2.74,
+      "oligomer_valency": 1.0,
+      "color": [
+        0.9255,
+        0.2824,
+        0.6
+      ],
+      "color_hex": "#ec4899",
+      "placement_mode": "interior",
+      "principal_vector": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "jitter_max": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "molarity_uM": 13.513,
+      "physiological_molarities": {
+        "hela_sg_homeostasis_uM": 13.513,
+        "hela_sg_homeostasis_S": 1351.3,
+        "hela_sg_atp_starvation_S": 1351.3,
+        "neuron_sg_homeostasis_uM": 5.182,
+        "neuron_sg_homeostasis_S": 518.16,
+        "neuron_sg_atp_starvation_S": 518.16
+      },
+      "copy_count_physio_atp": 36,
+      "copy_count_starved_atp": 58,
+      "packing_priority": 2,
+      "representations": {
+        "packing": {
+          "type": "sphere",
+          "radius_nm": 3.1,
+          "chain_beads": 1
+        },
+        "atomic": {
+          "uniprot_accession": "P35637",
+          "alphafold_model_id": "AF-P35637-F1",
+          "alphafold_version": "v6",
+          "mmcif_relpath": "data/structures/P35637/AF-P35637-F1-model_v6.cif",
+          "local_mmcif_exists": true,
+          "remote_mmcif_url": "https://alphafold.ebi.ac.uk/files/AF-P35637-F1-model_v6.cif",
+          "remote_pdb_url": "https://alphafold.ebi.ac.uk/files/AF-P35637-F1-model_v6.pdb",
+          "format": "mmcif"
+        }
+      },
+      "uniprot_accession": "P35637",
+      "alphafold_model_id": "AF-P35637-F1"
+    },
+    "TARDBP": {
+      "type": "single_sphere",
+      "name": "TARDBP",
+      "role": "TDP-43 C-Terminal PLD + RRM Client (ALS/FTD Maturation Risk)",
+      "radius": 2.8,
+      "hydrodynamic_radius_nm": 2.8,
+      "idr_rg_nm": 2.21,
+      "oligomer_valency": 2.0,
+      "color": [
+        0.9765,
+        0.451,
+        0.0863
+      ],
+      "color_hex": "#f97316",
+      "placement_mode": "interior",
+      "principal_vector": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "jitter_max": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "molarity_uM": 4.483,
+      "physiological_molarities": {
+        "hela_sg_homeostasis_uM": 4.483,
+        "hela_sg_homeostasis_S": 448.32,
+        "hela_sg_atp_starvation_S": 448.32,
+        "neuron_sg_homeostasis_uM": 1.914,
+        "neuron_sg_homeostasis_S": 191.4,
+        "neuron_sg_atp_starvation_S": 191.4
+      },
+      "copy_count_physio_atp": 30,
+      "copy_count_starved_atp": 52,
+      "packing_priority": 2,
+      "representations": {
+        "packing": {
+          "type": "sphere",
+          "radius_nm": 2.8,
+          "chain_beads": 1
+        },
+        "atomic": {
+          "uniprot_accession": "Q13148",
+          "alphafold_model_id": "AF-Q13148-F1",
+          "alphafold_version": "v6",
+          "mmcif_relpath": "data/structures/Q13148/AF-Q13148-F1-model_v6.cif",
+          "local_mmcif_exists": true,
+          "remote_mmcif_url": "https://alphafold.ebi.ac.uk/files/AF-Q13148-F1-model_v6.cif",
+          "remote_pdb_url": "https://alphafold.ebi.ac.uk/files/AF-Q13148-F1-model_v6.pdb",
+          "format": "mmcif"
+        }
+      },
+      "uniprot_accession": "Q13148",
+      "alphafold_model_id": "AF-Q13148-F1"
+    },
+    "TIA1": {
+      "type": "single_sphere",
+      "name": "TIA1",
+      "role": "RRM + Q/N-Rich Prion-Like Stress Granule Nucleator",
+      "radius": 2.6,
+      "hydrodynamic_radius_nm": 2.6,
+      "idr_rg_nm": 1.54,
+      "oligomer_valency": 1.0,
+      "color": [
+        0.1333,
+        0.7725,
+        0.3686
+      ],
+      "color_hex": "#22c55e",
+      "placement_mode": "surface",
+      "principal_vector": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "jitter_max": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "molarity_uM": 2.874,
+      "physiological_molarities": {
+        "hela_sg_homeostasis_uM": 2.874,
+        "hela_sg_homeostasis_S": 4.79,
+        "hela_sg_atp_starvation_S": 287.41,
+        "neuron_sg_homeostasis_uM": 0.949,
+        "neuron_sg_homeostasis_S": 1.58,
+        "neuron_sg_atp_starvation_S": 94.88
+      },
+      "copy_count_physio_atp": 28,
+      "copy_count_starved_atp": 42,
+      "packing_priority": 3,
+      "representations": {
+        "packing": {
+          "type": "sphere",
+          "radius_nm": 2.6,
+          "chain_beads": 1
+        },
+        "atomic": {
+          "uniprot_accession": "P31483",
+          "alphafold_model_id": "AF-P31483-F1",
+          "alphafold_version": "v6",
+          "mmcif_relpath": "data/structures/P31483/AF-P31483-F1-model_v6.cif",
+          "local_mmcif_exists": true,
+          "remote_mmcif_url": "https://alphafold.ebi.ac.uk/files/AF-P31483-F1-model_v6.cif",
+          "remote_pdb_url": "https://alphafold.ebi.ac.uk/files/AF-P31483-F1-model_v6.pdb",
+          "format": "mmcif"
+        }
+      },
+      "uniprot_accession": "P31483",
+      "alphafold_model_id": "AF-P31483-F1"
+    },
+    "mRNA": {
+      "type": "multi_sphere",
+      "name": "mRNA",
+      "role": "Untranslated Polysome-Released mRNA Polyanion Scaffold",
+      "radius": 2.2,
+      "hydrodynamic_radius_nm": 2.2,
+      "idr_rg_nm": null,
+      "oligomer_valency": 1.0,
+      "color": [
+        0.6588,
+        0.3333,
+        0.9686
+      ],
+      "color_hex": "#a855f7",
+      "placement_mode": "interior",
+      "principal_vector": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "jitter_max": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "molarity_uM": 12.0,
+      "physiological_molarities": {
+        "stress_granule_untranslated_mrna_uM": 12.0,
+        "physio_cytosol_free_mrna_ng_uL": 350.0,
+        "starved_stress_granule_mrna_ng_uL": 1800.0
+      },
+      "copy_count_physio_atp": 40,
+      "copy_count_starved_atp": 64,
+      "packing_priority": 1,
+      "representations": {
+        "packing": {
+          "type": "sphere",
+          "radius_nm": 2.2,
+          "chain_beads": 6
+        }
+      }
+    }
+  },
+  "compartments": {
+    "stress_granule_core": {
+      "object": "stress_granule_core_volume",
+      "placement_mode": "interior",
+      "surface": [
+        {
+          "object": "TIA1",
+          "count": 42,
+          "count_physio_atp_3.5mM": 28,
+          "count_starved_atp_0.1mM": 42,
+          "molarity_uM": 2.874,
+          "placement_mode": "surface",
+          "packing_mode": "close_partner",
+          "avoid_overlap": true
+        }
+      ],
+      "interior": [
+        {
+          "object": "G3BP1",
+          "count": 64,
+          "count_physio_atp_3.5mM": 48,
+          "count_starved_atp_0.1mM": 64,
+          "molarity_uM": 4.277,
+          "placement_mode": "interior",
+          "packing_mode": "gradient",
+          "avoid_overlap": true
+        },
+        {
+          "object": "FUS",
+          "count": 58,
+          "count_physio_atp_3.5mM": 36,
+          "count_starved_atp_0.1mM": 58,
+          "molarity_uM": 13.513,
+          "placement_mode": "interior",
+          "packing_mode": "close_partner",
+          "avoid_overlap": true
+        },
+        {
+          "object": "TARDBP",
+          "count": 52,
+          "count_physio_atp_3.5mM": 30,
+          "count_starved_atp_0.1mM": 52,
+          "molarity_uM": 4.483,
+          "placement_mode": "interior",
+          "packing_mode": "close_partner",
+          "avoid_overlap": true
+        },
+        {
+          "object": "mRNA",
+          "count": 64,
+          "count_physio_atp_3.5mM": 40,
+          "count_starved_atp_0.1mM": 64,
+          "molarity_uM": 12.0,
+          "placement_mode": "interior",
+          "packing_mode": "gradient",
+          "avoid_overlap": true
+        }
+      ],
+      "microenvironment": {
+        "compartment_id": "stress_granule",
+        "ph_physio": 7.25,
+        "ph_starved": 6.75,
+        "rna_ng_uL": 1800.0,
+        "crowding_phi": 0.36
+      }
+    },
+    "cytosolic_atp_shell": {
+      "object": "cytosolic_atp_shell_volume",
+      "placement_mode": "surface",
+      "surface": [
+        {
+          "object": "TIA1",
+          "count": 42,
+          "count_physio_atp_3.5mM": 28,
+          "count_starved_atp_0.1mM": 42,
+          "molarity_uM": 2.874,
+          "placement_mode": "surface",
+          "packing_mode": "close_partner",
+          "avoid_overlap": true
+        }
+      ],
+      "interior": [],
+      "microenvironment": {
+        "compartment_id": "cytosol",
+        "atp_physio_mM": 3.5,
+        "atp_starved_mM": 0.1,
+        "ionic_strength_mM": 150.0
+      }
+    }
+  },
+  "composition": {
+    "space": {
+      "regions": {
+        "interior": [
+          "stress_granule_core"
+        ],
+        "surface": [
+          "cytosolic_atp_shell"
+        ]
+      },
+      "total_explicit_molecules_physio": 182,
+      "total_explicit_molecules_starved": 280,
+      "core_ingredients": [
+        {
+          "object": "G3BP1",
+          "count": 64,
+          "count_physio_atp_3.5mM": 48,
+          "count_starved_atp_0.1mM": 64,
+          "molarity_uM": 4.277,
+          "placement_mode": "interior",
+          "packing_mode": "gradient",
+          "avoid_overlap": true
+        },
+        {
+          "object": "FUS",
+          "count": 58,
+          "count_physio_atp_3.5mM": 36,
+          "count_starved_atp_0.1mM": 58,
+          "molarity_uM": 13.513,
+          "placement_mode": "interior",
+          "packing_mode": "close_partner",
+          "avoid_overlap": true
+        },
+        {
+          "object": "TARDBP",
+          "count": 52,
+          "count_physio_atp_3.5mM": 30,
+          "count_starved_atp_0.1mM": 52,
+          "molarity_uM": 4.483,
+          "placement_mode": "interior",
+          "packing_mode": "close_partner",
+          "avoid_overlap": true
+        },
+        {
+          "object": "mRNA",
+          "count": 64,
+          "count_physio_atp_3.5mM": 40,
+          "count_starved_atp_0.1mM": 64,
+          "molarity_uM": 12.0,
+          "placement_mode": "interior",
+          "packing_mode": "gradient",
+          "avoid_overlap": true
+        }
+      ],
+      "shell_ingredients": [
+        {
+          "object": "TIA1",
+          "count": 42,
+          "count_physio_atp_3.5mM": 28,
+          "count_starved_atp_0.1mM": 42,
+          "molarity_uM": 2.874,
+          "placement_mode": "surface",
+          "packing_mode": "close_partner",
+          "avoid_overlap": true
+        }
+      ]
+    }
+  },
+  "provenance": {
+    "atlas_version": "3.0",
+    "source_files": [
+      "data/processed/supersaturation_atlas.json",
+      "data/processed/hell_signalosome_atlas.json",
+      "data/processed/structural_atlas.json"
+    ],
+    "databases": [
+      "UniProt",
+      "AlphaFold DB v6",
+      "HPA",
+      "GTEx v10"
+    ],
+    "references": [
+      "Zwicker et al. 2015 PRE / 2017 Nature Physics (Active Chemically Driven Droplets)",
+      "Patel et al. 2017 Science (ATP as a Biological Hydrotrope)",
+      "Yang et al. 2020 Cell (G3BP1 Molecular Switch for Stress Granule Assembly)"
+    ]
+  }
+}

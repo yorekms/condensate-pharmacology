@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Cross-Species IDR &amp; LLPS Cell Atlas — Open Monograph &amp; 3D Simularium Lab</title>
+<style>
+  :root { --bg:#070d19; --card:#0f172a; --card2:#111c33; --border:#1e293b; --text:#e2e8f0; --muted:#94a3b8; --sky:#38bdf8; --emerald:#10b981; --amber:#f59e0b; --rose:#f43f5e; --violet:#a78bfa; }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  body { font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif; background:radial-gradient(circle at 20% 0%,#14223d 0%,#070d19 60%); color:var(--text); min-height:100vh; line-height:1.6; }
+  .wrap { max-width:1240px; margin:0 auto; padding:32px 24px 72px; }
+
+  /* Top Site Tab Bar */
+  .site-tabs { display:flex; flex-wrap:wrap; gap:8px; margin-bottom:24px; padding-bottom:16px; border-bottom:1px solid var(--border); }
+  a.site-tab { display:inline-flex; align-items:center; gap:7px; padding:8px 15px; border-radius:10px; font-size:13px; font-weight:700; text-decoration:none; color:#cbd5e1; background:#0f172a; border:1px solid #334155; transition:all .15s ease; }
+  a.site-tab:hover { border-color:var(--sky); color:#fff; background:#16233d; }
+  a.site-tab.active { background:linear-gradient(135deg,#7c3aed,#2563eb); border-color:#a78bfa; color:#fff; box-shadow:0 4px 16px rgba(124,58,237,0.32); }
+  a.site-tab.bio { border-color:rgba(16,185,129,0.45); color:#6ee7b7; background:rgba(6,78,59,0.28); }
+  a.site-tab.bio:hover { border-color:#10b981; color:#ecfdf5; background:rgba(6,95,70,0.48); }
+
+  header { border-bottom:1px solid var(--border); padding-bottom:24px; margin-bottom:26px; }
+  .eyebrow { display:inline-block; padding:4px 12px; border-radius:999px; font-size:11.5px; font-weight:700; letter-spacing:0.06em; text-transform:uppercase; background:rgba(167,139,250,0.14); color:#c4b5fd; border:1px solid rgba(167,139,250,0.35); margin-bottom:12px; }
+  h1 { font-size:31px; color:#f8fafc; letter-spacing:-0.02em; margin-bottom:8px; line-height:1.2; }
+  .sub { font-size:14.5px; color:#cbd5e1; max-width:960px; margin-bottom:14px; }
+
+  .auth-box { background:rgba(15,23,42,0.85); border:1px solid #334155; border-left:4px solid var(--violet); border-radius:10px; padding:14px 18px; margin:16px 0 18px; font-size:13px; color:#cbd5e1; }
+  .auth-box strong { color:#f8fafc; }
+
+  .kpi-row { display:grid; grid-template-columns:repeat(auto-fit,minmax(175px,1fr)); gap:12px; margin:18px 0 20px; }
+  .kpi { background:var(--card); border:1px solid var(--border); border-top:3px solid var(--sky); border-radius:10px; padding:12px 14px; }
+  .kpi .v { font-size:20px; font-weight:800; color:#f8fafc; }
+  .kpi .l { font-size:11.5px; color:var(--muted); margin-top:2px; }
+
+  .btn-row { display:flex; flex-wrap:wrap; gap:10px; margin-top:14px; }
+  a.btn, button.btn { display:inline-flex; align-items:center; justify-content:center; gap:6px; padding:10px 16px; border-radius:10px; text-decoration:none; font-size:13px; font-weight:700; border:1px solid #334155; background:#1e293b; color:#f8fafc; cursor:pointer; transition:.15s; }
+  a.btn:hover, button.btn:hover { filter:brightness(1.12); transform:translateY(-1px); }
+  a.btn.violet { background:linear-gradient(135deg,#7c3aed,#2563eb); border:none; }
+  a.btn.primary { background:linear-gradient(135deg,#0284c7,#2563eb); border:none; }
+  a.btn.emerald { background:linear-gradient(135deg,#059669,#047857); border:none; }
+  a.btn.rose { background:linear-gradient(135deg,#e11d48,#be123c); border:none; }
+
+  .card { background:var(--card); border:1px solid var(--border); border-radius:16px; padding:24px; margin-bottom:24px; }
+  .card-meta { font-size:11.5px; font-weight:700; text-transform:uppercase; letter-spacing:0.07em; color:var(--sky); margin-bottom:6px; }
+  .card h2 { font-size:20px; color:#f8fafc; margin-bottom:8px; }
+  .card .desc { font-size:13.5px; color:var(--muted); margin-bottom:16px; max-width:960px; }
+
+  /* Simularium Launch Cards */
+  .sim-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(310px,1fr)); gap:16px; margin-bottom:18px; }
+  .sim-card { background:#0b1325; border:1px solid #1e293b; border-radius:12px; padding:16px; display:flex; flex-direction:column; justify-content:space-between; gap:12px; }
+  .sim-card h3 { font-size:15.5px; color:#f8fafc; margin-bottom:4px; }
+  .sim-card p { font-size:12.8px; color:var(--muted); }
+  .sim-meta { font-size:11.5px; color:#7dd3fc; font-family:Consolas,monospace; margin-top:6px; }
+
+  .gif-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(340px,1fr)); gap:16px; margin-top:16px; }
+  .gif-box { background:#050914; border:1px solid #1e293b; border-radius:12px; overflow:hidden; }
+  .gif-box img { width:100%; height:auto; display:block; }
+  .gif-box .gcap { padding:10px 14px; font-size:12.5px; color:#cbd5e1; border-top:1px solid #1e293b; }
+
+  /* Chapter & Ledger Tables */
+  .table-wrap { overflow-x:auto; }
+  table { width:100%; border-collapse:collapse; font-size:12.8px; margin-top:8px; }
+  th, td { padding:9px 10px; border-bottom:1px solid #1e293b; text-align:left; vertical-align:top; }
+  th { color:var(--sky); font-size:11px; text-transform:uppercase; letter-spacing:0.05em; background:#0b1325; }
+  tr:hover td { background:rgba(30,41,59,0.35); }
+  .mono { font-family:Consolas,"Courier New",monospace; font-size:12px; }
+  .sky { color:var(--sky); }
+
+  a.mini-btn { display:inline-block; padding:4px 10px; border-radius:6px; text-decoration:none; font-size:11.8px; font-weight:700; border:1px solid #334155; background:#1e293b; color:#e2e8f0; }
+  a.mini-btn.primary { background:#0284c7; border-color:#0284c7; color:#fff; }
+  a.mini-btn:hover { filter:brightness(1.14); }
+
+  /* Plates Gallery */
+  .fig-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(260px,1fr)); gap:14px; margin-top:12px; }
+  .fig-thumb { background:#020617; border:1px solid #1e293b; border-radius:12px; overflow:hidden; display:flex; flex-direction:column; transition:.16s; }
+  .fig-thumb:hover { border-color:var(--sky); transform:translateY(-2px); }
+  .fig-thumb img { width:100%; height:168px; object-fit:contain; background:#ffffff; padding:4px; display:block; }
+  .fig-cap { padding:10px 12px; display:flex; flex-direction:column; gap:7px; flex:1; justify-content:space-between; }
+  .fig-title { font-size:12px; font-weight:700; color:#e2e8f0; line-height:1.35; }
+  .fig-links { display:flex; justify-content:space-between; font-size:11.5px; }
+  .fig-links a { color:var(--sky); text-decoration:none; font-weight:600; }
+  .fig-links a:hover { text-decoration:underline; }
+
+  /* Epistemic Tier Pills & Filter Bar */
+  .filter-bar { display:flex; flex-wrap:wrap; gap:8px; margin-bottom:12px; }
+  .f-pill { padding:6px 12px; border-radius:999px; font-size:12px; font-weight:700; border:1px solid #334155; background:#0b1325; color:#cbd5e1; cursor:pointer; }
+  .f-pill.active, .f-pill:hover { background:var(--sky); color:#070d19; border-color:var(--sky); }
+  .tier-pill { display:inline-block; padding:2px 8px; border-radius:999px; font-size:11px; font-weight:700; white-space:nowrap; }
+  .tier-a { background:rgba(16,185,129,0.18); color:#34d399; border:1px solid rgba(16,185,129,0.4); }
+  .tier-b { background:rgba(56,189,248,0.18); color:#7dd3fc; border:1px solid rgba(56,189,248,0.4); }
+  .tier-c { background:rgba(245,158,11,0.18); color:#fcd34d; border:1px solid rgba(245,158,11,0.4); }
+  .tier-f { background:rgba(244,63,94,0.18); color:#fda4af; border:1px solid rgba(244,63,94,0.4); }
+
+  /* Embedded Reader Toggle */
+  #readerBox { display:none; margin-top:16px; }
+  #readerBox iframe { width:100%; height:780px; border:1px solid #334155; border-radius:12px; background:#ffffff; }
+
+  footer { border-top:1px solid var(--border); padding-top:20px; margin-top:28px; font-size:12px; color:var(--muted); display:flex; justify-content:space-between; flex-wrap:wrap; gap:12px; }
+  footer a { color:var(--sky); text-decoration:none; font-weight:600; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <!-- UNIFIED TOP SITE NAVIGATION TABS -->
+  <nav class="site-tabs" aria-label="Portal sections">
+    <a class="site-tab" href="index.html">Research Hub</a>
+    <a class="site-tab active" href="atlas-book.html">Monograph Book: IDR &amp; LLPS Cell Atlas (Open Access)</a>
+    <a class="site-tab" href="preprints.html">Unpublished Preprints Portal (Papers #1–#2)</a>
+    <a class="site-tab bio" href="https://yorekms.github.io/seizure-transcriptomics-workbench/" target="_blank" rel="noopener">Seizure Bioinformatics Portal &nearr;</a>
+  </nav>
+
+  <header>
+    <div class="eyebrow">Open Working Monograph (v3.1) &bull; 14 Chapters &bull; 13 Print-Light Plates &bull; Live 3D Simularium</div>
+    <h1>The Cross-Species IDR &amp; LLPS Cell Atlas</h1>
+    <p class="sub"><em>Polymer Physics, Cellular Microenvironments, Multicomponent Active Condensates, Out-of-Sample Falsification &amp; Spatiotemporal Signalosomes</em> — an open biophysical survey and theoretical synthesis asking whether multicomponent, non-equilibrium phase-separation equations provide the most coherent mathematical grammar for intracellular organization.</p>
+
+    <div class="auth-box">
+      <strong>Authorship, Collaboration &amp; Epistemic Transparency:</strong> Conceived, questioned, and scientifically directed by <strong>Matthew S. Yorek, M.S.</strong> (Department of Anesthesiology, University of Virginia); computationally synthesized, stress-tested, and drafted in collaboration with <strong>Google Antigravity (AI-Assisted Research Monograph)</strong>. Posted openly as a living working draft for reading, iterative editing, peer critique, and experimental falsification. Every claim is graded honestly in Chapter 12 (Tier A–F), including three explicit model limits / falsifications (Tier F).
+    </div>
+
+    <div class="kpi-row">
+      <div class="kpi"><div class="v">93,793</div><div class="l">Reviewed UniProt proteins across 16 proteomes</div></div>
+      <div class="kpi"><div class="v">70,184</div><div class="l">Strict MobiDB-lite IDRs (&ge; 25 aa)</div></div>
+      <div class="kpi"><div class="v">14 Chapters</div><div class="l">62-page Master PDF + Interactive HTML</div></div>
+      <div class="kpi"><div class="v">13 Plates</div><div class="l">300-DPI Print-Light figures + Review Sheet</div></div>
+      <div class="kpi"><div class="v">3 Live 3D Runs</div><div class="l">One-click Simularium WebGL + cellPACK v2</div></div>
+    </div>
+
+    <div class="btn-row">
+      <a class="btn violet" href="assets/atlas_book/output/IDR_LLPS_Cell_Atlas_Book.html" target="_blank">Read Full Interactive HTML Book &nearr;</a>
+      <a class="btn primary" href="assets/atlas_book/pdf/IDR_LLPS_Cell_Atlas_Complete_Book.pdf" target="_blank">Download Complete Book PDF (62 pp &middot; 17.63 MB)</a>
+      <a class="btn emerald" href="assets/atlas_book/output/figure_review_sheet.html" target="_blank">Editorial Figure Review Workbench (13 Plates) &nearr;</a>
+      <button class="btn" id="toggleReaderBtn" onclick="toggleInlineReader()">Preview Book Inline Below</button>
+    </div>
+
+    <div id="readerBox">
+      <iframe id="bookInlineFrame" src="" title="The Cross-Species IDR &amp; LLPS Cell Atlas HTML Reader"></iframe>
+    </div>
+  </header>
+
+  <!-- SECTION 1: ONE-CLICK LIVE 3D SIMULARIUM & CELLPACK -->
+  <section class="card" id="simularium">
+    <div class="card-meta">INTERACTIVE 3D MESOSCALE SIMULATIONS &bull; ALLEN INSTITUTE SIMULARIUM WEBGL &amp; CELLPACK V2</div>
+    <h2>One-Click Live 3D Simularium Trajectories &amp; Previews</h2>
+    <p class="desc">Click any <strong>Launch in Simularium 3D</strong> button below to stream the official binary <code>.simularium</code> trajectory directly into Allen Cell's WebGL GPU viewer (<code>simularium.allencell.org</code>) with 3D AKAP5 / rRNA fiber tethers, calibrated nanometer scale bars, and live kinetic plots — zero software installation or drag-and-drop required.</p>
+
+    <div class="sim-grid">
+      <div class="sim-card">
+        <div>
+          <h3>1. Hell Signalosome — WT Intact Nanodomain</h3>
+          <p>Neuronal postsynaptic spine PIP2 membrane patch (&beta;<sub>2</sub>AR, Ca<sub>v</sub>1.2, AC5, AKAP5, PKA RI&alpha;/RII&beta;/C&alpha;, PDE4D, Calcineurin, cAMP). Demonstrates 8.2&times; cAMP confinement and 13.3&times; local Ser1928 specificity.</p>
+          <div class="sim-meta">160&times;160&times;120 nm &bull; 90 frames &bull; 240 molecules + 30 AKAP5 fibers &bull; 2 plots</div>
+        </div>
+        <div class="btn-row" style="margin-top:4px;">
+          <a class="btn primary" href="https://simularium.allencell.org/viewer?trajUrl=https://yorekms.github.io/condensate-pharmacology/assets/atlas_book/simularium/hell_signalosome_wt.simularium" target="_blank" rel="noopener">Launch in Simularium 3D &nearr;</a>
+          <a class="btn" href="assets/atlas_book/simularium/hell_signalosome_wt.simularium" download>Download .simularium</a>
+        </div>
+      </div>
+
+      <div class="sim-card">
+        <div>
+          <h3>2. DNAJB1–PRKACA Oncogenic Ablation Control</h3>
+          <p>Fibrolamellar carcinoma fusion disrupts PKA RI&alpha; nanodroplet condensation and AKAP anchoring, collapsing spatial cAMP confinement (8.2&times; &rarr; 1.06&times;) and causing bulk phosphorylation spillover.</p>
+          <div class="sim-meta">160&times;160&times;120 nm &bull; 90 frames &bull; 240 molecules + 30 fibers &bull; 2 plots</div>
+        </div>
+        <div class="btn-row" style="margin-top:4px;">
+          <a class="btn rose" href="https://simularium.allencell.org/viewer?trajUrl=https://yorekms.github.io/condensate-pharmacology/assets/atlas_book/simularium/hell_signalosome_dnajb1_ablation.simularium" target="_blank" rel="noopener">Launch in Simularium 3D &nearr;</a>
+          <a class="btn" href="assets/atlas_book/simularium/hell_signalosome_dnajb1_ablation.simularium" download>Download .simularium</a>
+        </div>
+      </div>
+
+      <div class="sim-card">
+        <div>
+          <h3>3. Multiphase Nucleolus Core–Shell (FBL / NPM1 / rRNA)</h3>
+          <p>Immiscible two-phase demixing: high-surface-tension Fibrillarin (FBL, DFC core, r = 21.0 nm) + nascent rRNA strands nested inside a pentameric Nucleophosmin (NPM1, GC outer shell, r = 35.2 nm).</p>
+          <div class="sim-meta">160&times;160&times;160 nm &bull; 90 frames &bull; 240 molecules + 48 rRNA fibers &bull; 1 plot</div>
+        </div>
+        <div class="btn-row" style="margin-top:4px;">
+          <a class="btn emerald" href="https://simularium.allencell.org/viewer?trajUrl=https://yorekms.github.io/condensate-pharmacology/assets/atlas_book/simularium/nucleolus_npm1_fbl_coreshell.simularium" target="_blank" rel="noopener">Launch in Simularium 3D &nearr;</a>
+          <a class="btn" href="assets/atlas_book/simularium/nucleolus_npm1_fbl_coreshell.simularium" download>Download .simularium</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="btn-row" style="margin-top:0;">
+      <a class="btn" href="assets/atlas_book/cellpack/hell_signalosome_wt_recipe.json" target="_blank">cellPACK v2 Recipe: Hell WT (.json)</a>
+      <a class="btn" href="assets/atlas_book/cellpack/nucleolus_coreshell_recipe.json" target="_blank">cellPACK v2 Recipe: Nucleolus Core–Shell (.json)</a>
+      <a class="btn" href="assets/atlas_book/cellpack/active_sg_atp_recipe.json" target="_blank">cellPACK v2 Recipe: Active ATP Stress Granule (.json)</a>
+    </div>
+
+    <div class="gif-grid">
+      <div class="gif-box">
+        <img src="assets/atlas_book/previews/hell_signalosome_wt.gif" alt="Hell Signalosome WT 3D Animated Preview" loading="lazy"/>
+        <div class="gcap"><strong>Preview 1 — Hell WT Signalosome:</strong> 3D cAMP burst &amp; PKA RI&alpha; nanodomain confinement over the z = 0 PIP<sub>2</sub> bilayer.</div>
+      </div>
+      <div class="gif-box">
+        <img src="assets/atlas_book/previews/nucleolus_coreshell.gif" alt="Multiphase Nucleolus Core-Shell 3D Animated Preview" loading="lazy"/>
+        <div class="gcap"><strong>Preview 2 — Multiphase Nucleolus:</strong> Ruby FBL DFC core + nascent rRNA chains condensing inside the enveloping cyan NPM1 GC shell.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 2: 14-CHAPTER DIRECTORY (HTML + INDIVIDUAL CHAPTER PDFs) -->
+  <section class="card" id="chapters">
+    <div class="card-meta">COMPLETE 14-CHAPTER MONOGRAPH DIRECTORY (CHAPTERS 00–13)</div>
+    <h2>Browse Online by Chapter or Download Individual Chapter PDFs</h2>
+    <p class="desc">Jump directly into any chapter in the interactive HTML book or open/download its standalone press-ready PDF (with 300-DPI Print-Light figures, clean math typography, and paginated tables).</p>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr><th>Ch.</th><th>Chapter Title</th><th>Plates</th><th>Tables</th><th>Pages</th><th>Read / Download</th></tr>
+        </thead>
+        <tbody>
+          <tr><td class="mono sky">Ch 00</td><td><strong>Atlas Overview: Visualizing the Cell as a Phase-State Landscape</strong></td><td class="mono">0</td><td class="mono">1</td><td class="mono">3 pp</td><td style="white-space:nowrap;"><a class="mini-btn" href="assets/atlas_book/output/IDR_LLPS_Cell_Atlas_Book.html#ch-00" target="_blank">Read HTML &nearr;</a> <a class="mini-btn primary" href="assets/atlas_book/pdf/chapters/Chapter_00_Atlas_Overview.pdf" target="_blank">PDF (228.8 KB)</a></td></tr><tr><td class="mono sky">Ch 01</td><td><strong>IDR Taxonomy &amp; Sequence Grammar</strong></td><td class="mono">0</td><td class="mono">1</td><td class="mono">3 pp</td><td style="white-space:nowrap;"><a class="mini-btn" href="assets/atlas_book/output/IDR_LLPS_Cell_Atlas_Book.html#ch-01" target="_blank">Read HTML &nearr;</a> <a class="mini-btn primary" href="assets/atlas_book/pdf/chapters/Chapter_01_IDR_Taxonomy_and_Sequence_Grammar.pdf" target="_blank">PDF (246.7 KB)</a></td></tr><tr><td class="mono sky">Ch 02</td><td><strong>Polymer Physics &amp; Quantitative LLPS Theory</strong></td><td class="mono">1</td><td class="mono">0</td><td class="mono">4 pp</td><td style="white-space:nowrap;"><a class="mini-btn" href="assets/atlas_book/output/IDR_LLPS_Cell_Atlas_Book.html#ch-02" target="_blank">Read HTML &nearr;</a> <a class="mini-btn primary" href="assets/atlas_book/pdf/chapters/Chapter_02_Polymer_Physics_and_LLPS_Theory.pdf" target="_blank">PDF (1076.8 KB)</a></td></tr><tr><td class="mono sky">Ch 03</td><td><strong>Cellular Compartment Microenvironments &amp; Resident IDR Co-Evolution</strong></td><td class="mono">1</td><td class="mono">1</td><td class="mono">4 pp</td><td style="white-space:nowrap;"><a class="mini-btn" href="assets/atlas_book/output/IDR_LLPS_Cell_Atlas_Book.html#ch-03" target="_blank">Read HTML &nearr;</a> <a class="mini-btn primary" href="assets/atlas_book/pdf/chapters/Chapter_03_Cellular_Compartment_Microenvironments.pdf" target="_blank">PDF (1001.7 KB)</a></td></tr><tr><td class="mono sky">Ch 04</td><td><strong>Substrate Availability &amp; Metabolic Gating of IDR Phase Behavior</strong></td><td class="mono">1</td><td class="mono">1</td><td class="mono">4 pp</td><td style="white-space:nowrap;"><a class="mini-btn" href="assets/atlas_book/output/IDR_LLPS_Cell_Atlas_Book.html#ch-04" target="_blank">Read HTML &nearr;</a> <a class="mini-btn primary" href="assets/atlas_book/pdf/chapters/Chapter_04_Substrate_Availability_and_Metabolic_Gating.pdf" target="_blank">PDF (1263.6 KB)</a></td></tr><tr><td class="mono sky">Ch 05</td><td><strong>Cross-Species Evolutionary Survey of Proteome Disorder</strong></td><td class="mono">2</td><td class="mono">1</td><td class="mono">3 pp</td><td style="white-space:nowrap;"><a class="mini-btn" href="assets/atlas_book/output/IDR_LLPS_Cell_Atlas_Book.html#ch-05" target="_blank">Read HTML &nearr;</a> <a class="mini-btn primary" href="assets/atlas_book/pdf/chapters/Chapter_05_Cross_Species_Evolutionary_Survey.pdf" target="_blank">PDF (2757.5 KB)</a></td></tr><tr><td class="mono sky">Ch 06</td><td><strong>Cross-Species Landmark IDR Compendium (67 Reference Entries)</strong></td><td class="mono">0</td><td class="mono">1</td><td class="mono">4 pp</td><td style="white-space:nowrap;"><a class="mini-btn" href="assets/atlas_book/output/IDR_LLPS_Cell_Atlas_Book.html#ch-06" target="_blank">Read HTML &nearr;</a> <a class="mini-btn primary" href="assets/atlas_book/pdf/chapters/Chapter_06_Landmark_IDR_Compendium.pdf" target="_blank">PDF (511.4 KB)</a></td></tr><tr><td class="mono sky">Ch 07</td><td><strong>Reassessing Cell Biology Through the Physics of Liquid–Liquid Phase Separation</strong></td><td class="mono">2</td><td class="mono">2</td><td class="mono">10 pp</td><td style="white-space:nowrap;"><a class="mini-btn" href="assets/atlas_book/output/IDR_LLPS_Cell_Atlas_Book.html#ch-07" target="_blank">Read HTML &nearr;</a> <a class="mini-btn primary" href="assets/atlas_book/pdf/chapters/Chapter_07_Reassessing_Cell_Biology_via_LLPS_Physics.pdf" target="_blank">PDF (2731.8 KB)</a></td></tr><tr><td class="mono sky">Ch 08</td><td><strong>Cellular Supersaturation &amp; Cell-Type Vulnerability (Track 1)</strong></td><td class="mono">1</td><td class="mono">2</td><td class="mono">6 pp</td><td style="white-space:nowrap;"><a class="mini-btn" href="assets/atlas_book/output/IDR_LLPS_Cell_Atlas_Book.html#ch-08" target="_blank">Read HTML &nearr;</a> <a class="mini-btn primary" href="assets/atlas_book/pdf/chapters/Chapter_08_Cellular_Supersaturation_and_Vulnerability.pdf" target="_blank">PDF (1271.9 KB)</a></td></tr><tr><td class="mono sky">Ch 09</td><td><strong>Multicomponent Co-Condensation, Multiphase Demixing &amp; Active Droplets (Track 2)</strong></td><td class="mono">1</td><td class="mono">4</td><td class="mono">7 pp</td><td style="white-space:nowrap;"><a class="mini-btn" href="assets/atlas_book/output/IDR_LLPS_Cell_Atlas_Book.html#ch-09" target="_blank">Read HTML &nearr;</a> <a class="mini-btn primary" href="assets/atlas_book/pdf/chapters/Chapter_09_Multicomponent_Co_Condensation_and_Active_Droplets.pdf" target="_blank">PDF (1915.9 KB)</a></td></tr><tr><td class="mono sky">Ch 10</td><td><strong>3D Structural Coupling, AlphaFold DB v6 &amp; Star-Polymer Oligomer Valency (Track 3)</strong></td><td class="mono">1</td><td class="mono">1</td><td class="mono">5 pp</td><td style="white-space:nowrap;"><a class="mini-btn" href="assets/atlas_book/output/IDR_LLPS_Cell_Atlas_Book.html#ch-10" target="_blank">Read HTML &nearr;</a> <a class="mini-btn primary" href="assets/atlas_book/pdf/chapters/Chapter_10_Structural_Valency_and_Alphafold_Coupling.pdf" target="_blank">PDF (1349.3 KB)</a></td></tr><tr><td class="mono sky">Ch 11</td><td><strong>Expanded 15-Proteome Tree of Life &amp; Clinical IDR Variant Biophysics (Track 4)</strong></td><td class="mono">2</td><td class="mono">4</td><td class="mono">7 pp</td><td style="white-space:nowrap;"><a class="mini-btn" href="assets/atlas_book/output/IDR_LLPS_Cell_Atlas_Book.html#ch-11" target="_blank">Read HTML &nearr;</a> <a class="mini-btn primary" href="assets/atlas_book/pdf/chapters/Chapter_11_Expanded_Tree_of_Life_and_Variant_Biophysics.pdf" target="_blank">PDF (2123.3 KB)</a></td></tr><tr><td class="mono sky">Ch 12</td><td><strong>Out-of-Sample Empirical Validation, Adversarial Falsification &amp; Epistemic Confidence Ledger (Track V3-1)</strong></td><td class="mono">1</td><td class="mono">4</td><td class="mono">8 pp</td><td style="white-space:nowrap;"><a class="mini-btn" href="assets/atlas_book/output/IDR_LLPS_Cell_Atlas_Book.html#ch-12" target="_blank">Read HTML &nearr;</a> <a class="mini-btn primary" href="assets/atlas_book/pdf/chapters/Chapter_12_Empirical_Validation_and_Falsification.pdf" target="_blank">PDF (1990.4 KB)</a></td></tr><tr><td class="mono sky">Ch 13</td><td><strong>Beyond Mean-Field: The Johannes W. Hell $\beta_2$AR–AKAP5–PKA–PDE4D–$\text{Ca}_v1.2$ Active Nanodomain Signalosome &amp; Explicit 3D Mesoscale Packing (Tracks V3-2 &amp; V3-3)</strong></td><td class="mono">2</td><td class="mono">4</td><td class="mono">9 pp</td><td style="white-space:nowrap;"><a class="mini-btn" href="assets/atlas_book/output/IDR_LLPS_Cell_Atlas_Book.html#ch-13" target="_blank">Read HTML &nearr;</a> <a class="mini-btn primary" href="assets/atlas_book/pdf/chapters/Chapter_13_Hell_Signalosome_and_Mesoscale_3D_Simulation.pdf" target="_blank">PDF (3893.5 KB)</a></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- SECTION 3: 13-PLATE PUBLICATION GALLERY -->
+  <section class="card" id="plates">
+    <div class="card-meta">PRINT-LIGHT 300-DPI PUBLICATION PLATES (PLATES 01–13)</div>
+    <h2>Publication Plate Gallery</h2>
+    <p class="desc">Click any plate to inspect the full-resolution 300-DPI PNG, or open the <a href="assets/atlas_book/output/figure_review_sheet.html" target="_blank" style="color:var(--sky); font-weight:700;">Editorial Figure Review Workbench &nearr;</a> for dimensions, palette specs, and captions.</p>
+    <div class="fig-grid">
+      <div class="fig-thumb">  <a href="assets/atlas_book/figures/print_light/fig01_cross_species_disorder_landscape.png" target="_blank" title="Open full-resolution 300-DPI Print-Light Plate 01">    <img src="assets/atlas_book/figures/print_light/fig01_cross_species_disorder_landscape.png" alt="Plate 01: Cross-Species Full-Proteome IDR Architecture Across the Tree of Life" loading="lazy"/>  </a>  <div class="fig-cap">    <div class="fig-title">Plate 01 (Chapter 05) — Cross-Species Full-Proteome IDR Architecture Across the Tree of Life</div>    <div class="fig-links">      <a href="assets/atlas_book/figures/print_light/fig01_cross_species_disorder_landscape.png" target="_blank">300-DPI PNG &nearr;</a>      <a href="assets/atlas_book/output/IDR_LLPS_Cell_Atlas_Book.html#plate-fig01" target="_blank">Book Context &rarr;</a>    </div>  </div></div><div class="fig-thumb">  <a href="assets/atlas_book/figures/print_light/fig02_das_pappu_and_flory_scaling.png" target="_blank" title="Open full-resolution 300-DPI Print-Light Plate 02">    <img src="assets/atlas_book/figures/print_light/fig02_das_pappu_and_flory_scaling.png" alt="Plate 02: Human Proteome IDR Ensemble Landscape: Das–Pappu Diagram &amp; Flory Scaling" loading="lazy"/>  </a>  <div class="fig-cap">    <div class="fig-title">Plate 02 (Chapter 05) — Human Proteome IDR Ensemble Landscape: Das–Pappu Diagram &amp; Flory Scaling</div>    <div class="fig-links">      <a href="assets/atlas_book/figures/print_light/fig02_das_pappu_and_flory_scaling.png" target="_blank">300-DPI PNG &nearr;</a>      <a href="assets/atlas_book/output/IDR_LLPS_Cell_Atlas_Book.html#plate-fig02" target="_blank">Book Context &rarr;</a>    </div>  </div></div><div class="fig-thumb">  <a href="assets/atlas_book/figures/print_light/fig03_compartment_idr_biophysics_heatmap.png" target="_blank" title="Open full-resolution 300-DPI Print-Light Plate 03">    <img src="assets/atlas_book/figures/print_light/fig03_compartment_idr_biophysics_heatmap.png" alt="Plate 03: Cellular Compartment Microenvironments vs. Resident Proteome IDR Biophysics" loading="lazy"/>  </a>  <div class="fig-cap">    <div class="fig-title">Plate 03 (Chapter 03) — Cellular Compartment Microenvironments vs. Resident Proteome IDR Biophysics</div>    <div class="fig-links">      <a href="assets/atlas_book/figures/print_light/fig03_compartment_idr_biophysics_heatmap.png" target="_blank">300-DPI PNG &nearr;</a>      <a href="assets/atlas_book/output/IDR_LLPS_Cell_Atlas_Book.html#plate-fig03" target="_blank">Book Context &rarr;</a>    </div>  </div></div><div class="fig-thumb">  <a href="assets/atlas_book/figures/print_light/fig04_substrate_phase_diagrams.png" target="_blank" title="Open full-resolution 300-DPI Print-Light Plate 04">    <img src="assets/atlas_book/figures/print_light/fig04_substrate_phase_diagrams.png" alt="Plate 04: Quantitative Substrate &amp; Microenvironment Phase-Boundary Titration Curves" loading="lazy"/>  </a>  <div class="fig-cap">    <div class="fig-title">Plate 04 (Chapter 02) — Quantitative Substrate &amp; Microenvironment Phase-Boundary Titration Curves</div>    <div class="fig-links">      <a href="assets/atlas_book/figures/print_light/fig04_substrate_phase_diagrams.png" target="_blank">300-DPI PNG &nearr;</a>      <a href="assets/atlas_book/output/IDR_LLPS_Cell_Atlas_Book.html#plate-fig04" target="_blank">Book Context &rarr;</a>    </div>  </div></div><div class="fig-thumb">  <a href="assets/atlas_book/figures/print_light/fig05_metabolic_perturbation_shifts.png" target="_blank" title="Open full-resolution 300-DPI Print-Light Plate 05">    <img src="assets/atlas_book/figures/print_light/fig05_metabolic_perturbation_shifts.png" alt="Plate 05: Cross-Species Landmark IDR Phase-Driving Margin Across 12 Substrate Regimes" loading="lazy"/>  </a>  <div class="fig-cap">    <div class="fig-title">Plate 05 (Chapter 04) — Cross-Species Landmark IDR Phase-Driving Margin Across 12 Substrate Regimes</div>    <div class="fig-links">      <a href="assets/atlas_book/figures/print_light/fig05_metabolic_perturbation_shifts.png" target="_blank">300-DPI PNG &nearr;</a>      <a href="assets/atlas_book/output/IDR_LLPS_Cell_Atlas_Book.html#plate-fig05" target="_blank">Book Context &rarr;</a>    </div>  </div></div><div class="fig-thumb">  <a href="assets/atlas_book/figures/print_light/fig06_celltype_supersaturation_landscape.png" target="_blank" title="Open full-resolution 300-DPI Print-Light Plate 06">    <img src="assets/atlas_book/figures/print_light/fig06_celltype_supersaturation_landscape.png" alt="Plate 06: Cell-Type-Specific Supersaturation Landscape (S = c_cell / c_sat) Across 6 Human Cell Types" loading="lazy"/>  </a>  <div class="fig-cap">    <div class="fig-title">Plate 06 (Chapter 08) — Cell-Type-Specific Supersaturation Landscape (S = c_cell / c_sat) Across 6 Human Cell Types</div>    <div class="fig-links">      <a href="assets/atlas_book/figures/print_light/fig06_celltype_supersaturation_landscape.png" target="_blank">300-DPI PNG &nearr;</a>      <a href="assets/atlas_book/output/IDR_LLPS_Cell_Atlas_Book.html#plate-fig06" target="_blank">Book Context &rarr;</a>    </div>  </div></div><div class="fig-thumb">  <a href="assets/atlas_book/figures/print_light/fig07_multicomponent_kp_and_active_droplets.png" target="_blank" title="Open full-resolution 300-DPI Print-Light Plate 07">    <img src="assets/atlas_book/figures/print_light/fig07_multicomponent_kp_and_active_droplets.png" alt="Plate 07: Multicomponent Co-Condensation, Multiphase Demixing &amp; Zwicker Active ATP-Driven Droplet Arrest" loading="lazy"/>  </a>  <div class="fig-cap">    <div class="fig-title">Plate 07 (Chapter 09) — Multicomponent Co-Condensation, Multiphase Demixing &amp; Zwicker Active ATP-Driven Droplet Arrest</div>    <div class="fig-links">      <a href="assets/atlas_book/figures/print_light/fig07_multicomponent_kp_and_active_droplets.png" target="_blank">300-DPI PNG &nearr;</a>      <a href="assets/atlas_book/output/IDR_LLPS_Cell_Atlas_Book.html#plate-fig07" target="_blank">Book Context &rarr;</a>    </div>  </div></div><div class="fig-thumb">  <a href="assets/atlas_book/figures/print_light/fig08_alphafold_plddt_and_oligomer_valency.png" target="_blank" title="Open full-resolution 300-DPI Print-Light Plate 08">    <img src="assets/atlas_book/figures/print_light/fig08_alphafold_plddt_and_oligomer_valency.png" alt="Plate 08: AlphaFold DB v6 Per-Residue Structural Boundaries &amp; Star-Polymer Oligomer Valency Coupling" loading="lazy"/>  </a>  <div class="fig-cap">    <div class="fig-title">Plate 08 (Chapter 10) — AlphaFold DB v6 Per-Residue Structural Boundaries &amp; Star-Polymer Oligomer Valency Coupling</div>    <div class="fig-links">      <a href="assets/atlas_book/figures/print_light/fig08_alphafold_plddt_and_oligomer_valency.png" target="_blank">300-DPI PNG &nearr;</a>      <a href="assets/atlas_book/output/IDR_LLPS_Cell_Atlas_Book.html#plate-fig08" target="_blank">Book Context &rarr;</a>    </div>  </div></div><div class="fig-thumb">  <a href="assets/atlas_book/figures/print_light/fig09_15_proteomes_tree_of_life_extremophiles.png" target="_blank" title="Open full-resolution 300-DPI Print-Light Plate 09">    <img src="assets/atlas_book/figures/print_light/fig09_15_proteomes_tree_of_life_extremophiles.png" alt="Plate 09: Expanded Tree of Life: Proteome-Wide IDR Prevalence &amp; Extremophile Electrostatic Evolution" loading="lazy"/>  </a>  <div class="fig-cap">    <div class="fig-title">Plate 09 (Chapter 11) — Expanded Tree of Life: Proteome-Wide IDR Prevalence &amp; Extremophile Electrostatic Evolution</div>    <div class="fig-links">      <a href="assets/atlas_book/figures/print_light/fig09_15_proteomes_tree_of_life_extremophiles.png" target="_blank">300-DPI PNG &nearr;</a>      <a href="assets/atlas_book/output/IDR_LLPS_Cell_Atlas_Book.html#plate-fig09" target="_blank">Book Context &rarr;</a>    </div>  </div></div><div class="fig-thumb">  <a href="assets/atlas_book/figures/print_light/fig10_clinical_idr_variant_phase_shifts.png" target="_blank" title="Open full-resolution 300-DPI Print-Light Plate 10">    <img src="assets/atlas_book/figures/print_light/fig10_clinical_idr_variant_phase_shifts.png" alt="Plate 10: Clinical Human IDR Variant Phase Perturbations (1,010 Variants; ClinVar GRCh38) &amp; 12-Landmark DMS" loading="lazy"/>  </a>  <div class="fig-cap">    <div class="fig-title">Plate 10 (Chapter 11) — Clinical Human IDR Variant Phase Perturbations (1,010 Variants; ClinVar GRCh38) &amp; 12-Landmark DMS</div>    <div class="fig-links">      <a href="assets/atlas_book/figures/print_light/fig10_clinical_idr_variant_phase_shifts.png" target="_blank">300-DPI PNG &nearr;</a>      <a href="assets/atlas_book/output/IDR_LLPS_Cell_Atlas_Book.html#plate-fig10" target="_blank">Book Context &rarr;</a>    </div>  </div></div><div class="fig-thumb">  <a href="assets/atlas_book/figures/print_light/fig11_wetlab_benchmarks_and_falsification.png" target="_blank" title="Open full-resolution 300-DPI Print-Light Plate 11">    <img src="assets/atlas_book/figures/print_light/fig11_wetlab_benchmarks_and_falsification.png" alt="Plate 11: Out-of-Sample Wet-Lab Benchmarks, Adversarial Falsification &amp; 15-Claim Epistemic Confidence Ledger" loading="lazy"/>  </a>  <div class="fig-cap">    <div class="fig-title">Plate 11 (Chapter 12) — Out-of-Sample Wet-Lab Benchmarks, Adversarial Falsification &amp; 15-Claim Epistemic Confidence Ledger</div>    <div class="fig-links">      <a href="assets/atlas_book/figures/print_light/fig11_wetlab_benchmarks_and_falsification.png" target="_blank">300-DPI PNG &nearr;</a>      <a href="assets/atlas_book/output/IDR_LLPS_Cell_Atlas_Book.html#plate-fig11" target="_blank">Book Context &rarr;</a>    </div>  </div></div><div class="fig-thumb">  <a href="assets/atlas_book/figures/print_light/fig12_hell_signalosome_nanodomain_ablations.png" target="_blank" title="Open full-resolution 300-DPI Print-Light Plate 12">    <img src="assets/atlas_book/figures/print_light/fig12_hell_signalosome_nanodomain_ablations.png" alt="Plate 12: Johannes W. Hell β2AR–AKAP5–PKA–PDE4D–Cav1.2 Signalosome: 2D Active PDE Ablations &amp; Ostwald Arrest" loading="lazy"/>  </a>  <div class="fig-cap">    <div class="fig-title">Plate 12 (Chapter 13) — Johannes W. Hell β2AR–AKAP5–PKA–PDE4D–Cav1.2 Signalosome: 2D Active PDE Ablations &amp; Ostwald Arrest</div>    <div class="fig-links">      <a href="assets/atlas_book/figures/print_light/fig12_hell_signalosome_nanodomain_ablations.png" target="_blank">300-DPI PNG &nearr;</a>      <a href="assets/atlas_book/output/IDR_LLPS_Cell_Atlas_Book.html#plate-fig12" target="_blank">Book Context &rarr;</a>    </div>  </div></div><div class="fig-thumb">  <a href="assets/atlas_book/figures/print_light/fig13_mesoscale_3d_cellpack_storyboards.png" target="_blank" title="Open full-resolution 300-DPI Print-Light Plate 13">    <img src="assets/atlas_book/figures/print_light/fig13_mesoscale_3d_cellpack_storyboards.png" alt="Plate 13: Explicit 3D Brownian/Langevin Mesoscale Packing Storyboards: Hell Signalosome &amp; Nucleolar Core–Shell" loading="lazy"/>  </a>  <div class="fig-cap">    <div class="fig-title">Plate 13 (Chapter 13) — Explicit 3D Brownian/Langevin Mesoscale Packing Storyboards: Hell Signalosome &amp; Nucleolar Core–Shell</div>    <div class="fig-links">      <a href="assets/atlas_book/figures/print_light/fig13_mesoscale_3d_cellpack_storyboards.png" target="_blank">300-DPI PNG &nearr;</a>      <a href="assets/atlas_book/output/IDR_LLPS_Cell_Atlas_Book.html#plate-fig13" target="_blank">Book Context &rarr;</a>    </div>  </div></div>
+    </div>
+  </section>
+
+  <!-- SECTION 4: 15-CLAIM EPISTEMIC CONFIDENCE & FALSIFICATION LEDGER -->
+  <section class="card" id="ledger">
+    <div class="card-meta">CHAPTER 12 &bull; ADVERSARIAL VALIDATION, NULL CONTROLS &amp; EPISTEMIC CONFIDENCE LEDGER</div>
+    <h2>15 Graded Atlas Claims — What Survived Wet-Lab Tests &amp; What Failed</h2>
+    <p class="desc">Filter the monograph's central claims by epistemic tier. Tier F entries document explicit out-of-sample scale or ClinVar benign-control limits where uncalibrated heuristic predictions fail.</p>
+    <div class="filter-bar" id="tierFilters">
+      <button class="f-pill active" onclick="filterTier('all', this)">All Claims (15)</button>
+      <button class="f-pill" onclick="filterTier('Tier A', this)">Tier A · Empirically Verified (4)</button>
+      <button class="f-pill" onclick="filterTier('Tier B', this)">Tier B · Directionally Robust (6)</button>
+      <button class="f-pill" onclick="filterTier('Tier C', this)">Tier C · Hypothesis (2)</button>
+      <button class="f-pill" onclick="filterTier('Tier F', this)">Tier F · Falsified / Model Limit (3)</button>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Tier</th>
+            <th>Chapter</th>
+            <th>Atlas Claim</th>
+            <th>Empirical Benchmark Statistic</th>
+            <th>Exposed Failure Mode</th>
+            <th>Decisive Wet-Lab Falsifier</th>
+          </tr>
+        </thead>
+        <tbody id="ledgerBody">
+          <tr data-tier="Tier B"><td class="mono sky" style="font-weight:700;">C01</td><td><span class="tier-pill tier-b">Tier B · Directional</span></td><td class="mono" style="white-space:nowrap;">Ch. 02 / Ch. 06</td><td style="color:#f8fafc;">Analytical polymer physics accurately ranks single-chain IDR conformational dimensions (Rg and Flory nu) across diverse sequences.</td><td style="color:#cbd5e1;">SAXS/smFRET benchmark (n=46): Rg Spearman rho=0.852 (p=6.32e-14), Flory nu Spearman rho=0.841, fixed-length A1-LCD r=0.835; HOWEVER Rg RMSE=1.03 nm (median error 25.1%).</td><td style="color:#fecaca;">Nu sensitivity slope is 1.79x too steep relative to experiment, over-compacting sticky R1 coils and over-expanding R4/R5 polyelectrolytes; Tyr vs Phe stickiness is also lumped in f_aro.</td><td style="color:#6ee7b7;">SEC-SAXS + smFRET measurement of 20 designed R1/R4/R5 IDRs at fixed N=120 across 20-500 mM NaCl comparing analytical nu against CALVADOS-2 coarse-grained MD.</td></tr><tr data-tier="Tier F"><td class="mono sky" style="font-weight:700;">C02</td><td><span class="tier-pill tier-f">Tier F · Falsified/Limit</span></td><td class="mono" style="white-space:nowrap;">Ch. 02 / Ch. 04</td><td style="color:#f8fafc;">Raw mean-field Flory-Huggins+RPA equations predict absolute in-vitro saturation concentrations c_sat (uM) without empirical recalibration.</td><td style="color:#cbd5e1;">Wet-lab c_sat benchmark (n=35): raw log10 RMSE=4.02 dex (mean bias -2.51 dex, 26/35 outliers &gt;1 dex; 17/35 saturate phi_sat=1e-8 grid floor). 5-fold CV calibration improves RMSE to 0.77 dex (r=0.400).</td><td style="color:#fecaca;">Additive chi_eff overshoots chi_crit by +0.3-0.8 -&gt; exponential Flory-Huggins c_sat collapse to sub-nM; FG/GF regex leaks onto Gly-rich A1-LCD inverting AllY vs AllF; uncoupled sidechain pKa misses Sup35 pH 6.0; allosteric cAMP gating of PKA RIalpha is unmodeled.</td><td style="color:#6ee7b7;">Re-parameterize chi_eff with distinct Tyr/Phe weights and context-gated FG motifs against a held-out 50-variant droplet-centrifugation c_sat panel; require raw RMSE &lt; 0.6 dex.</td></tr><tr data-tier="Tier B"><td class="mono sky" style="font-weight:700;">C03</td><td><span class="tier-pill tier-b">Tier B · Directional</span></td><td class="mono" style="white-space:nowrap;">Ch. 02 / Ch. 04</td><td style="color:#f8fafc;">Directional phase-boundary shifts under major sticker/PTM/cosolute perturbations (Aro+/Aro-, R-&gt;K, Y-&gt;S, 12E phospho, salt, LCST heat, 5 mM ATP, Met-ox) match wet-lab experiments.</td><td style="color:#cbd5e1;">14/19 (73.7%) paired wet-lab perturbations match exact experimental sign, including 100% of Aro valence, FUS R-&gt;K / Y-&gt;S / 12E, DDX4 salt, Pab1/ELN LCST heat, FUS+ATP, and Pbp1+H2O2.</td><td style="color:#fecaca;">Directional sign holds for large sticker/cosolute perturbations, but subtle single-residue chemistry (Y vs F, cooperative pKa shifts, folded-domain allostery) breaks mean-field additivity.</td><td style="color:#6ee7b7;">Paired turbidity/centrifugation assays testing +/-5 mM ATP, +/-H2O2, and +/-phosphomimetics on 10 previously untested proteome IDRs from the atlas.</td></tr><tr data-tier="Tier A"><td class="mono sky" style="font-weight:700;">C04</td><td><span class="tier-pill tier-a">Tier A · Verified</span></td><td class="mono" style="white-space:nowrap;">Ch. 01 / Ch. 06</td><td style="color:#f8fafc;">Evolved sequence patterning (charge blocks SCD/kappa, aromatic spacing Omega_aro) significantly deviates from composition-matched random chains.</td><td style="color:#cbd5e1;">1,000x exact composition-preserving shuffles across 16 landmarks: 7/16 show order-dependent chi_eff shifts (TARDBP, DDX4, FBL, G3BP1, NUP98, CALR), while 8 show significant SCD/kappa/Omega_aro patterning with composition-dominated chi_eff.</td><td style="color:#fecaca;">For low-charge polar/aromatic PLDs (FUS, TARDBP, PBP1), v2 chi_eff is largely driven by amino-acid composition rather than fine linear sticker spacing.</td><td style="color:#6ee7b7;">Synthesize composition-identical scrambled variants of DDX4, G3BP1, and SNCA; measure c_sat and SAXS Rg shifts relative to WT.</td></tr><tr data-tier="Tier B"><td class="mono sky" style="font-weight:700;">C05</td><td><span class="tier-pill tier-b">Tier B · Directional</span></td><td class="mono" style="white-space:nowrap;">Ch. 03 / Ch. 07</td><td style="color:#f8fafc;">Stress Granule (~9%) and Synapse/PSD (~9%) IDRs are intrinsically enriched ~15-fold for LLPS over bulk Cytosol (~0.6%) independent of length and microenvironment.</td><td style="color:#cbd5e1;">Native-compartment length-matched 1,000x null: SG=8.48% vs Cytosol=0.90% (p=0.0010); PSD=8.79% vs Cytosol=0.84% (p=0.0010). HOWEVER, in IDENTICAL cytosolic buffer: SG drops to 2.68% (3.003x intrinsic, 3.16x microenvironment amplification) and PSD drops to 1.05% (1.235x intrinsic, 8.38x microenvironment amplification)!</td><td style="color:#fecaca;">Adversarial same-buffer control exposes a sharp divergence: Stress Granule IDRs retain genuine 3.0x sequence-intrinsic LLPS enrichment (p=0.001) amplified 3.2x by the SG microenvironment, whereas Synapse/PSD bulk homotypic LLPS enrichment collapses to non-significant 1.24x (p=0.089) in cytosolic buffer — proving 8.4x of the apparent PSD LLPS excess derives from parameterized crowding (0.37) and anionic membrane potential (-40 mV).</td><td style="color:#6ee7b7;">High-throughput droplet assay (e.g., optoDroplet / cell-free reconstitution) of 50 length-matched SG, PSD, and cytosolic IDRs in identical physiological KCl/ATP buffer without crowding agents.</td></tr><tr data-tier="Tier A"><td class="mono sky" style="font-weight:700;">C06</td><td><span class="tier-pill tier-a">Tier A · Verified</span></td><td class="mono" style="white-space:nowrap;">Ch. 03 / Ch. 05</td><td style="color:#f8fafc;">Nucleolar IDRs carry the highest eukaryotic FCR (~0.34-0.35), Endolysosomal IDRs are strongly acidic (NCPR ~ -0.041), and Halophile IDRs undergo extreme acidic adaptation (NCPR ~ -0.135).</td><td style="color:#cbd5e1;">1,000x length-matched nulls: Nucleolus FCR=0.3416 vs null 0.2728 (Z=+36.7, p=0.0010); Endolysosome NCPR=-0.0422 vs null -0.0069 (Z=-10.5, p=0.0010); Halobacterium NCPR=-0.1347 vs prokaryotes +0.0227 (Z=-10.8, p=0.0010).</td><td style="color:#fecaca;">UniProt subcellular localization keywords can assign multi-localized proteins to a single primary compartment; extreme archaea (Halobacterium n=119 IDRs) rely on smaller proteome sample sizes.</td><td style="color:#6ee7b7;">Cross-check against proximity-labeling organellar proteomes (APEX2/BioID nucleolus &amp; lysosome) and 10 additional halophilic archaeal proteomes.</td></tr><tr data-tier="Tier F"><td class="mono sky" style="font-weight:700;">C07</td><td><span class="tier-pill tier-f">Tier F · Falsified/Limit</span></td><td class="mono" style="white-space:nowrap;">Ch. 08</td><td style="color:#f8fafc;">Track 1 HPA+GTEx RNA-to-protein copy-number calibration accurately estimates absolute HeLa cellular protein abundance within 3x.</td><td style="color:#cbd5e1;">HeLa mass-spec audit (n=44 vs Kulak 2014 / Hein 2015 / Beck 2011): rank correlation is solid (Pearson r=0.707, Spearman rho=0.702), BUT median fold ratio est/MS=0.203x (~4.9x systematic underestimation), slope=0.470, only 36.4% within 3x (81.8% within 10x).</td><td style="color:#fecaca;">Sublinear exponent (nTPM^0.82) compresses dynamic range for abundant long-lived structural/RNP proteins, and GTEx cultured fibroblasts misrepresent epithelial HeLa keratins; consequently Track 1 absolute c_cell is systematically low for abundant scaffolds.</td><td style="color:#6ee7b7;">Replace RNA-inferred copy numbers with direct DIA-MS Proteomic Ruler quantification across matched primary human neurons, hepatocytes, T-cells, and HeLa cells.</td></tr><tr data-tier="Tier A"><td class="mono sky" style="font-weight:700;">C08</td><td><span class="tier-pill tier-a">Tier A · Verified</span></td><td class="mono" style="white-space:nowrap;">Ch. 08</td><td style="color:#f8fafc;">Synaptic/neuronal IDRs (SNCA, SYN1, KCNH1) exhibit orders-of-magnitude higher supersaturation S in excitatory neurons than hepatocytes, while LAT selectively switches in T-cells.</td><td style="color:#cbd5e1;">2,000-draw MC survival of selective cell-type ordering (P(S_primary &gt; S_hepatocyte)): SNCA PSD=100.0%, SYN1 PSD=100.0%, KCNH1 PM=100.0% (PSD=100.0%), LAT T-cell=100.0%.</td><td style="color:#fecaca;">Cross-cell-type relative ratios cancel systematic c_sat scale error and are &gt;99% MC-robust, but exact single-cell-type vulnerability class boundaries (S &gt;= 1 vs S &gt;= 5) remain sensitive to chi_eff uncertainty (accounting for most log10(S) variance!).</td><td style="color:#6ee7b7;">Quantitative fluorescence correlation spectroscopy (FCS) measuring endogenous local concentration and droplet thresholds of tagged SNCA/SYN1 in iPSC neurons vs primary hepatocytes, and LAT in T-cells.</td></tr><tr data-tier="Tier B"><td class="mono sky" style="font-weight:700;">C09</td><td><span class="tier-pill tier-b">Tier B · Directional</span></td><td class="mono" style="white-space:nowrap;">Ch. 08</td><td style="color:#f8fafc;">Exact absolute cellular vulnerability classifications (Subsaturated vs Poised vs Supersaturated) for individual landmarks are quantitatively robust to parameter uncertainty.</td><td style="color:#cbd5e1;">2,000-draw MC class retention probability: FUS_nuc_homeo=58.5%, FUS_nuc_starv=63.2%, SNCA_psd_homeo=51.1%, KCNH1_pm_homeo=47.9%, LAT_tcell_homeo=15.6%, G3BP1_sg_homeo=100.0%.</td><td style="color:#fecaca;">Exponential amplification of +/-25% chi_eff through the Flory-Huggins binodal spans 2-5 orders of magnitude in c_sat for borderline regimes (SNCA homeo, KCNH1 PM, LAT homeo), making exact S-tier labels uncertain.</td><td style="color:#6ee7b7;">Measure intracellular phase-boundary dilution curves via OptoDroplet / Corelet titration in live cells under fed vs 2-deoxyglucose ATP-depleted states.</td></tr><tr data-tier="Tier B"><td class="mono sky" style="font-weight:700;">C10</td><td><span class="tier-pill tier-b">Tier B · Directional</span></td><td class="mono" style="white-space:nowrap;">Ch. 09</td><td style="color:#f8fafc;">Multicomponent client partitioning K_p accurately classifies enriched vs excluded clients across nucleolus, stress granules, NPC, PSD, and PKA condensates.</td><td style="color:#cbd5e1;">Client K_p benchmark (n=23): Full model (IDR + STRING/Reactome PPI) achieves F1=0.923, accuracy=91.3%, Spearman rho=0.726, RMSE=1.06 dex. Sequence-only ablation (ppi=0): Spearman rho=0.652, BUT F1 collapses to 0.444 (recall drops 85.7% -&gt; 28.6%)!</td><td style="color:#fecaca;">Pure IDR sequence physics predicts exclusion reliably but misses folded-domain/SLiM client recruitment (PRKACA, PDE4D, SYNGAP1, CAPRIN1) without STRING PPI anchoring; exponential exp(-N_blob*dmu) also over-predicts extreme K_p values (&gt;1,000x for NUP98-NUP153 and G3BP1-CAPRIN1).</td><td style="color:#6ee7b7;">Quantitative two-color confocal partition assay (c_in/c_out) for 15 untested client pairs with vs without folded-domain PPI mutations (e.g., G3BP1 NTF2L mutant, PKA AKAP-disrupting Ht31 peptide).</td></tr><tr data-tier="Tier B"><td class="mono sky" style="font-weight:700;">C11</td><td><span class="tier-pill tier-b">Tier B · Directional</span></td><td class="mono" style="white-space:nowrap;">Ch. 09</td><td style="color:#f8fafc;">Nucleolar multiphase immiscibility (NPM1 GC vs FBL DFC core-shell demixing, I_immisc &gt; I_crit) holds robustly across interaction-energy uncertainty.</td><td style="color:#cbd5e1;">Baseline I_immisc=0.288 vs I_crit=0.029. 2,000-draw MC survival: 100.0% under correlated scale uncertainty, 94.5% under independent +/-25% perturbations across chi_11, chi_22, chi_12.</td><td style="color:#fecaca;">NPM1 homotypic binodal relies on explicit empirical oligomerization boost (assembly_chi=+0.36, valency=5) rather than first-principles pentamer + rRNA coacervation; strong independent +/-25% perturbations can flip chi_12 above 0.5*(chi_11+chi_22) in ~5.4% of draws.</td><td style="color:#6ee7b7;">Reconstitute NPM1 pentamer + FBL GAR-domain + rRNA droplets under systematic salt/RNA titration and measure interfacial tensions gamma_DFC, gamma_GC, and gamma_DFC-GC via micropipette aspiration.</td></tr><tr data-tier="Tier C"><td class="mono sky" style="font-weight:700;">C12</td><td><span class="tier-pill tier-c">Tier C · Hypothesis</span></td><td class="mono" style="white-space:nowrap;">Ch. 09</td><td style="color:#f8fafc;">Zwicker active ATP-fueled turnover arrests condensate Ostwald ripening at mesoscopic radii (~200-800 nm) and ATP depletion drives runaway coarsening.</td><td style="color:#cbd5e1;">2,000-draw MC survival of R_ss(0.1 mM ATP) &gt; R_ss(3.5 mM ATP): G3BP1=100.0% (baseline 3.03x), FUS=100.0% (3.15x), NPM1=100.0%, FBL=100.0%.</td><td style="color:#fecaca;">Active turnover constants (k_max ~ 0.25-0.48 s^-1, K_m ~ 0.65 mM) are literature-plausible estimates rather than measured per-condensate enzyme fluxes; alternative viscoelastic/chromatin-caging arrest mechanisms can also halt ripening without ATP hydrolysis.</td><td style="color:#6ee7b7;">Live-cell time-lapse imaging of G3BP1/FUS/NPM1 droplet radius distributions under acute ATP depletion (2-DG + oligomycin) vs non-hydrolyzable AMP-PNP (separating ATP hydrotrope binding from active enzymatic turnover).</td></tr><tr data-tier="Tier F"><td class="mono sky" style="font-weight:700;">C13</td><td><span class="tier-pill tier-f">Tier F · Falsified/Limit</span></td><td class="mono" style="white-space:nowrap;">Ch. 11</td><td style="color:#f8fafc;">Single-point bulk polymer-physics deltas (|delta_chi|, |log10_csat_ratio|, |delta_ncpr|) discriminate ClinVar Pathogenic from Benign IDR missense variants.</td><td style="color:#cbd5e1;">Real ClinVar IDR missense benchmark (n_path=92 vs n_benign=407 across 14 genes): ROC-AUC |delta_chi|=0.617 (95% CI [0.5518, 0.6815], p=4.40e-04), |log10_csat_ratio|=0.601 (p=1.24e-03), |delta_ncpr|=0.630, |delta_maturation_risk|=0.749.</td><td style="color:#fecaca;">A single missense change in a 150-500 aa IDR shifts bulk mean-field chi_eff by only ~0.001-0.02 (indistinguishable from benign polymorphisms); even the higher pooled |delta_maturation_risk| AUC (0.749) is a cross-gene baseline confounder that collapses within genes (HNRNPA1=0.609, MECP2=0.577, SNCA=0.200). Clinical missense pathogenicity in IDRs is driven primarily by local SLiMs, steric-zipper amyloid cores (SNCA A53T, TARDBP M337V), and karyopherin motifs.</td><td style="color:#6ee7b7;">Deep mutational scanning (DMS) + cell-based condensate aggregation assay across all 19 substitutions at 50 positions in TDP-43 LCD and FUS PLD comparing mean-field delta_chi vs local amyloid zipper predictors.</td></tr><tr data-tier="Tier A"><td class="mono sky" style="font-weight:700;">C14</td><td><span class="tier-pill tier-a">Tier A · Verified</span></td><td class="mono" style="white-space:nowrap;">Ch. 11</td><td style="color:#f8fafc;">Motif-specific Kap-beta2 PY-NLS disruption and truncating frameshift/nonsense hits provide high-specificity mechanistic calls for ALS/FTD &amp; neurodevelopmental IDR variants.</td><td style="color:#cbd5e1;">ClinVar IDR missense PY-NLS disruption: specificity=100.0% (TP=16, FP=0, PPV=1.0, Fisher p=5.69e-13); All-coding (incl. frameshifts/nonsense) |delta_chi| ROC-AUC=0.795 (p=3.13e-41).</td><td style="color:#fecaca;">High specificity comes at low genome-wide sensitivity (only applies to proteins carrying PY-NLS motifs or major IDR truncations; misses amyloidogenic missense variants outside PY-NLS).</td><td style="color:#6ee7b7;">Measure Kap-beta2 binding affinity (ITC/FP) and nuclear-to-cytoplasmic ratio for every ClinVar VUS hitting predicted [RK].{2,8}PY motifs across FUS, EWSR1, TAF15, and hnRNPA1.</td></tr><tr data-tier="Tier C"><td class="mono sky" style="font-weight:700;">C15</td><td><span class="tier-pill tier-c">Tier C · Hypothesis</span></td><td class="mono" style="white-space:nowrap;">Ch. 10</td><td style="color:#f8fafc;">Folded-domain oligomerization amplifies effective IDR polymer length via star-polymer scaling (N_eff = N * v^0.85), rescuing condensation of monomeric-soluble scaffolds (e.g., NPM1 pentamer, SHANK3 SAM, STIM1).</td><td style="color:#cbd5e1;">Theoretical polymer scaling (Track 3 structural_atlas.json: 16/28 oligomeric landmarks, mean AlphaFold pLDDT agreement with MobiDB-lite validated); indirectly supported by Benchmark 3 showing NPM1/G3BP1/SHANK3 require oligomeric valency + PPI to achieve observed partitioning.</td><td style="color:#fecaca;">Exact c_sat(v) power law depends on linker flexibility, geometric steric crowding around the oligomerization core, and inter-domain autoinhibition (which can suppress LLPS despite high valency, as in PKA RIalpha holoenzyme).</td><td style="color:#6ee7b7;">Fuse identical FUS/A1-LCD IDR sequences to engineered de novo homo-oligomers of valency v=1, 2, 3, 4, 6, 12 (e.g., Baker lab designed scaffolds) and measure exact c_sat(v) to fit the empirical exponent alpha.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <footer>
+    <div>Data Grounding &amp; Licenses: UniProtKB (CC BY 4.0) &bull; Human Protein Atlas (CC BY-SA 3.0) &bull; GTEx v10 &bull; AlphaFold DB v6 (CC BY 4.0) &bull; STRING v12 (CC BY 4.0) &bull; Reactome (CC0) &bull; NCBI ClinVar &amp; dbSNP</div>
+    <div style="display:flex; gap:14px; flex-wrap:wrap;">
+      <a href="index.html">&larr; Research Hub</a>
+      <a href="preprints.html">Unpublished Preprints Portal &rarr;</a>
+      <a href="https://my-scientist.carrd.co" target="_blank" rel="noopener">my-scientist.carrd.co &nearr;</a>
+    </div>
+  </footer>
+</div>
+
+<script>
+function toggleInlineReader() {
+  const box = document.getElementById("readerBox");
+  const frame = document.getElementById("bookInlineFrame");
+  const btn = document.getElementById("toggleReaderBtn");
+  const open = box.style.display === "block";
+  if (!open) {
+    if (!frame.getAttribute("src")) {
+      frame.setAttribute("src", "assets/atlas_book/output/IDR_LLPS_Cell_Atlas_Book.html");
+    }
+    box.style.display = "block";
+    btn.textContent = "Hide Inline Book Preview";
+  } else {
+    box.style.display = "none";
+    btn.textContent = "Preview Book Inline Below";
+  }
+}
+function filterTier(tier, btn) {
+  document.querySelectorAll("#tierFilters .f-pill").forEach(b => b.classList.remove("active"));
+  if (btn) btn.classList.add("active");
+  document.querySelectorAll("#ledgerBody tr").forEach(tr => {
+    tr.style.display = (tier === "all" || tr.dataset.tier === tier) ? "" : "none";
+  });
+}
+</script>
+</body>
+</html>

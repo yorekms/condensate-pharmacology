@@ -1,0 +1,1034 @@
+{
+  "format_version": "2.1",
+  "version": "2.0",
+  "name": "hell_signalosome_wt_spine_nanodomain",
+  "title": "Hell beta2AR-Cav1.2-AKAP5-PKA-PDE4D Active Nanodomain Signalosome (WT)",
+  "description": "Reality-grounded cellPACK v2 mesoscale recipe of Johannes W. Hell's neuronal postsynaptic spine inner-leaflet beta2AR-AKAP5-PKA RIalpha/RIIbeta-PDE4D-Calcineurin-AC5-Cav1.2 signaling nanodomain (160x160x120 nm patch). Transmembrane ADRB2, CACNA1C, and ADCY5 are surface-anchored at the z=0 PIP2 bilayer (-38 mV); AKAP5 polybasic IDRs prewet the membrane and tether PKA/PP2B/PDE4D while cAMP-gated PRKAR1A nanodroplets buffer cAMP diffusivity (300 -> 9.46 um^2/s) to enforce 8.21x spatial confinement and 13.26x local Ser1928 vs off-target bulk phosphorylation specificity.",
+  "units": {
+    "length": "nm",
+    "concentration": "uM",
+    "temperature": "K",
+    "energy": "kBT"
+  },
+  "bounding_box": [
+    [
+      0.0,
+      0.0,
+      0.0
+    ],
+    [
+      160.0,
+      160.0,
+      120.0
+    ]
+  ],
+  "randomness_seed": 42,
+  "grid_file_path": null,
+  "packing_constraints": {
+    "avoid_overlap": true,
+    "use_periodicity": false,
+    "packing_method": "random_gradient_partner",
+    "max_attempts": 5000,
+    "membrane_plane_z_nm": 0.0,
+    "lipid_potential_mV": -38.0,
+    "temperature_K": 310.15,
+    "ionic_strength_mM": 145.0,
+    "atp_mM": 3.5,
+    "camp_core_peak_uM": 4.747,
+    "camp_confinement_ratio": 8.212,
+    "d_eff_core_um2_s": 9.46,
+    "local_to_bulk_p1928_specificity": 13.258
+  },
+  "objects": {
+    "inner_leaflet_pip2_bilayer": {
+      "type": "mesh",
+      "name": "Inner-Leaflet PIP2 Plasma Membrane Patch",
+      "geometry": {
+        "shape": "plane",
+        "plane_z_nm": 0.0,
+        "extent_nm": [
+          160.0,
+          160.0
+        ],
+        "thickness_nm": 4.0,
+        "normal": [
+          0.0,
+          0.0,
+          1.0
+        ]
+      },
+      "color": [
+        0.0549,
+        0.4549,
+        0.5647
+      ],
+      "color_hex": "#0e7490",
+      "surface_potential_mV": -38.0,
+      "pip2_mol_percent": 3.5
+    },
+    "signalosome_nanodomain_volume": {
+      "type": "mesh",
+      "name": "Postsynaptic Spine Nanodomain Cytosolic Volume",
+      "geometry": {
+        "shape": "box",
+        "min_nm": [
+          0.0,
+          0.0,
+          4.0
+        ],
+        "max_nm": [
+          160.0,
+          160.0,
+          120.0
+        ],
+        "nanodomain_core_center_nm": [
+          80.0,
+          80.0,
+          26.0
+        ],
+        "nanodomain_core_radius_nm": 30.0
+      },
+      "color": [
+        0.1176,
+        0.1608,
+        0.2314
+      ],
+      "color_hex": "#1e293b"
+    },
+    "ADRB2": {
+      "type": "single_sphere",
+      "name": "ADRB2",
+      "alias": "beta2AR",
+      "role": "Beta-2 AR GPCR (TM)",
+      "membrane_topology": "7-TM integral membrane GPCR",
+      "radius": 3.4,
+      "hydrodynamic_radius_nm": 3.4,
+      "idr_rg_nm": 1.0,
+      "oligomer_valency": 2.0,
+      "diffusion_coeff_rel": 1.2,
+      "color": [
+        0.2196,
+        0.7412,
+        0.9725
+      ],
+      "color_hex": "#38bdf8",
+      "placement_mode": "surface",
+      "principal_vector": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "jitter_max": [
+        0.5,
+        0.5,
+        0.15
+      ],
+      "molarity_uM": 0.135037,
+      "physiological_molarities": {
+        "neuronal_spine_uM": 0.135037,
+        "neuronal_spine_S": 0.000713252,
+        "cardiac_dyad_uM": 0.343684,
+        "cardiac_dyad_S": 0.00082854,
+        "hepatocyte_uM": 0.400732
+      },
+      "copy_count_in_box": 6,
+      "packing_priority": 1,
+      "representations": {
+        "packing": {
+          "type": "sphere",
+          "radius_nm": 3.4,
+          "chain_beads": 1
+        },
+        "atomic": {
+          "uniprot_accession": "P07550",
+          "alphafold_model_id": "AF-P07550-F1",
+          "alphafold_version": "v6",
+          "mmcif_relpath": "data/structures/P07550/AF-P07550-F1-model_v6.cif",
+          "local_mmcif_exists": true,
+          "remote_mmcif_url": "https://alphafold.ebi.ac.uk/files/AF-P07550-F1-model_v6.cif",
+          "remote_pdb_url": "https://alphafold.ebi.ac.uk/files/AF-P07550-F1-model_v6.pdb",
+          "format": "mmcif"
+        }
+      },
+      "uniprot_accession": "P07550",
+      "alphafold_model_id": "AF-P07550-F1",
+      "alphafold_plddt_mean": 79.12
+    },
+    "CACNA1C": {
+      "type": "single_sphere",
+      "name": "CACNA1C",
+      "alias": "Cav1.2",
+      "role": "Cav1.2 Ca2+ Channel (TM)",
+      "membrane_topology": "24-TM integral membrane L-type Ca2+ channel",
+      "radius": 4.2,
+      "hydrodynamic_radius_nm": 4.2,
+      "idr_rg_nm": 0.95,
+      "oligomer_valency": 1.0,
+      "diffusion_coeff_rel": 0.9,
+      "color": [
+        0.9765,
+        0.451,
+        0.0863
+      ],
+      "color_hex": "#f97316",
+      "placement_mode": "surface",
+      "principal_vector": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "jitter_max": [
+        0.5,
+        0.5,
+        0.15
+      ],
+      "molarity_uM": 0.429569,
+      "physiological_molarities": {
+        "neuronal_spine_uM": 0.429569,
+        "neuronal_spine_S": 0.00197585,
+        "cardiac_dyad_uM": 1.08631,
+        "cardiac_dyad_S": 0.00449706,
+        "hepatocyte_uM": 0.00294406
+      },
+      "copy_count_in_box": 6,
+      "packing_priority": 1,
+      "representations": {
+        "packing": {
+          "type": "sphere",
+          "radius_nm": 4.2,
+          "chain_beads": 1
+        },
+        "atomic": {
+          "uniprot_accession": "Q13936",
+          "alphafold_model_id": "AF-Q13936-F1",
+          "alphafold_version": "v6",
+          "mmcif_relpath": "data/structures/Q13936/AF-Q13936-F1-model_v6.cif",
+          "local_mmcif_exists": true,
+          "remote_mmcif_url": "https://alphafold.ebi.ac.uk/files/AF-Q13936-F1-model_v6.cif",
+          "remote_pdb_url": "https://alphafold.ebi.ac.uk/files/AF-Q13936-F1-model_v6.pdb",
+          "format": "mmcif"
+        }
+      },
+      "uniprot_accession": "Q13936",
+      "alphafold_model_id": "AF-Q13936-F1",
+      "alphafold_plddt_mean": 61.94
+    },
+    "ADCY5": {
+      "type": "single_sphere",
+      "name": "ADCY5",
+      "alias": "AC5",
+      "role": "Adenylate Cyclase 5 (TM)",
+      "membrane_topology": "12-TM integral membrane adenylate cyclase",
+      "radius": 3.6,
+      "hydrodynamic_radius_nm": 3.6,
+      "idr_rg_nm": 3.1,
+      "oligomer_valency": 2.0,
+      "diffusion_coeff_rel": 1.0,
+      "color": [
+        0.6588,
+        0.3333,
+        0.9686
+      ],
+      "color_hex": "#a855f7",
+      "placement_mode": "surface",
+      "principal_vector": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "jitter_max": [
+        0.5,
+        0.5,
+        0.15
+      ],
+      "molarity_uM": 1.68953,
+      "physiological_molarities": {
+        "neuronal_spine_uM": 1.68953,
+        "neuronal_spine_S": 1.31835,
+        "cardiac_dyad_uM": 3.85451,
+        "cardiac_dyad_S": 0.130769,
+        "hepatocyte_uM": 0.164166
+      },
+      "copy_count_in_box": 6,
+      "packing_priority": 1,
+      "representations": {
+        "packing": {
+          "type": "sphere",
+          "radius_nm": 3.6,
+          "chain_beads": 1
+        },
+        "atomic": {
+          "uniprot_accession": "O95622",
+          "alphafold_model_id": "AF-O95622-F1",
+          "alphafold_version": "v6",
+          "mmcif_relpath": "data/structures/O95622/AF-O95622-F1-model_v6.cif",
+          "local_mmcif_exists": true,
+          "remote_mmcif_url": "https://alphafold.ebi.ac.uk/files/AF-O95622-F1-model_v6.cif",
+          "remote_pdb_url": "https://alphafold.ebi.ac.uk/files/AF-O95622-F1-model_v6.pdb",
+          "format": "mmcif"
+        }
+      },
+      "uniprot_accession": "O95622",
+      "alphafold_model_id": "AF-O95622-F1",
+      "alphafold_plddt_mean": 73.19
+    },
+    "AKAP5": {
+      "type": "multi_sphere",
+      "name": "AKAP5",
+      "alias": "AKAP79/150",
+      "role": "AKAP79 Disordered Scaffold",
+      "membrane_topology": "Peripheral PIP2-prewetted & palmitoylated disordered scaffold",
+      "radius": 2.4,
+      "hydrodynamic_radius_nm": 2.4,
+      "idr_rg_nm": 2.43,
+      "oligomer_valency": 2.0,
+      "diffusion_coeff_rel": 3.8,
+      "color": [
+        0.1333,
+        0.7725,
+        0.3686
+      ],
+      "color_hex": "#22c55e",
+      "placement_mode": "interior",
+      "principal_vector": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "jitter_max": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "molarity_uM": 1.22429,
+      "physiological_molarities": {
+        "neuronal_spine_uM": 1.22429,
+        "neuronal_spine_S": 0.0093651,
+        "cardiac_dyad_uM": 0.00638208,
+        "cardiac_dyad_S": 4.30408e-06,
+        "hepatocyte_uM": 0.00468816
+      },
+      "copy_count_in_box": 40,
+      "packing_priority": 2,
+      "representations": {
+        "packing": {
+          "type": "sphere",
+          "radius_nm": 2.4,
+          "chain_beads": 4
+        },
+        "atomic": {
+          "uniprot_accession": "P24588",
+          "alphafold_model_id": "AF-P24588-F1",
+          "alphafold_version": "v6",
+          "mmcif_relpath": "data/structures/P24588/AF-P24588-F1-model_v6.cif",
+          "local_mmcif_exists": true,
+          "remote_mmcif_url": "https://alphafold.ebi.ac.uk/files/AF-P24588-F1-model_v6.cif",
+          "remote_pdb_url": "https://alphafold.ebi.ac.uk/files/AF-P24588-F1-model_v6.pdb",
+          "format": "mmcif"
+        }
+      },
+      "uniprot_accession": "P24588",
+      "alphafold_model_id": "AF-P24588-F1",
+      "alphafold_plddt_mean": 54.25,
+      "pip2_prewetting_score_spine": 0.351,
+      "pip2_prewetting_score_dyad": 0.392
+    },
+    "PRKAR1A": {
+      "type": "single_sphere",
+      "name": "PRKAR1A",
+      "alias": "PKA RIalpha",
+      "role": "PKA RIalpha (LLPS Hub)",
+      "membrane_topology": "Cytosolic / AKAP-recruited cAMP-gated condensate hub",
+      "radius": 2.8,
+      "hydrodynamic_radius_nm": 2.8,
+      "idr_rg_nm": 1.23,
+      "oligomer_valency": 2.0,
+      "diffusion_coeff_rel": 4.2,
+      "color": [
+        0.9255,
+        0.2824,
+        0.6
+      ],
+      "color_hex": "#ec4899",
+      "placement_mode": "interior",
+      "principal_vector": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "jitter_max": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "molarity_uM": 3.42851,
+      "physiological_molarities": {
+        "neuronal_spine_uM": 3.42851,
+        "neuronal_spine_S": 0.0197478,
+        "cardiac_dyad_uM": 5.41014,
+        "cardiac_dyad_S": 0.025435,
+        "hepatocyte_uM": 0.00188332
+      },
+      "copy_count_in_box": 54,
+      "packing_priority": 3,
+      "representations": {
+        "packing": {
+          "type": "sphere",
+          "radius_nm": 2.8,
+          "chain_beads": 1
+        },
+        "atomic": {
+          "uniprot_accession": "P10644",
+          "alphafold_model_id": "AF-P10644-F1",
+          "alphafold_version": "v6",
+          "mmcif_relpath": "data/structures/P10644/AF-P10644-F1-model_v6.cif",
+          "local_mmcif_exists": true,
+          "remote_mmcif_url": "https://alphafold.ebi.ac.uk/files/AF-P10644-F1-model_v6.cif",
+          "remote_pdb_url": "https://alphafold.ebi.ac.uk/files/AF-P10644-F1-model_v6.pdb",
+          "format": "mmcif"
+        }
+      },
+      "uniprot_accession": "P10644",
+      "alphafold_model_id": "AF-P10644-F1",
+      "alphafold_plddt_mean": 87.75
+    },
+    "PRKAR2B": {
+      "type": "single_sphere",
+      "name": "PRKAR2B",
+      "alias": "PKA RIIbeta",
+      "role": "PKA RIIbeta (AKAP-Docked)",
+      "membrane_topology": "AKAP5-tethered peripheral regulatory dimer",
+      "radius": 2.8,
+      "hydrodynamic_radius_nm": 2.8,
+      "idr_rg_nm": 1.51,
+      "oligomer_valency": 2.0,
+      "diffusion_coeff_rel": 3.6,
+      "color": [
+        0.9569,
+        0.2471,
+        0.3686
+      ],
+      "color_hex": "#f43f5e",
+      "placement_mode": "interior",
+      "principal_vector": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "jitter_max": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "molarity_uM": 1.85883,
+      "physiological_molarities": {
+        "neuronal_spine_uM": 1.85883,
+        "neuronal_spine_S": 0.0211191,
+        "cardiac_dyad_uM": 0.112542,
+        "cardiac_dyad_S": 0.000923922,
+        "hepatocyte_uM": 0.000471169
+      },
+      "copy_count_in_box": 20,
+      "packing_priority": 3,
+      "representations": {
+        "packing": {
+          "type": "sphere",
+          "radius_nm": 2.8,
+          "chain_beads": 1
+        },
+        "atomic": {
+          "uniprot_accession": "P31323",
+          "alphafold_model_id": "AF-P31323-F1",
+          "alphafold_version": "v6",
+          "mmcif_relpath": "data/structures/P31323/AF-P31323-F1-model_v6.cif",
+          "local_mmcif_exists": true,
+          "remote_mmcif_url": "https://alphafold.ebi.ac.uk/files/AF-P31323-F1-model_v6.cif",
+          "remote_pdb_url": "https://alphafold.ebi.ac.uk/files/AF-P31323-F1-model_v6.pdb",
+          "format": "mmcif"
+        }
+      },
+      "uniprot_accession": "P31323",
+      "alphafold_model_id": "AF-P31323-F1",
+      "alphafold_plddt_mean": 78.69
+    },
+    "PRKACA": {
+      "type": "single_sphere",
+      "name": "PRKACA",
+      "alias": "PKA Calpha",
+      "role": "PKA Calpha Kinase",
+      "membrane_topology": "N-myristoylated catalytic kinase (RIalpha/RIIbeta-sequestered)",
+      "radius": 2.6,
+      "hydrodynamic_radius_nm": 2.6,
+      "idr_rg_nm": 1.41,
+      "oligomer_valency": 1.0,
+      "diffusion_coeff_rel": 5.0,
+      "color": [
+        0.9176,
+        0.702,
+        0.0314
+      ],
+      "color_hex": "#eab308",
+      "placement_mode": "interior",
+      "principal_vector": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "jitter_max": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "molarity_uM": 4.32666,
+      "physiological_molarities": {
+        "neuronal_spine_uM": 4.32666,
+        "neuronal_spine_S": 0.00024965,
+        "cardiac_dyad_uM": 4.58273,
+        "cardiac_dyad_S": 0.030883,
+        "hepatocyte_uM": 0.00617655
+      },
+      "copy_count_in_box": 28,
+      "packing_priority": 3,
+      "representations": {
+        "packing": {
+          "type": "sphere",
+          "radius_nm": 2.6,
+          "chain_beads": 1
+        },
+        "atomic": {
+          "uniprot_accession": "P17612",
+          "alphafold_model_id": "AF-P17612-F1",
+          "alphafold_version": "v6",
+          "mmcif_relpath": "data/structures/P17612/AF-P17612-F1-model_v6.cif",
+          "local_mmcif_exists": true,
+          "remote_mmcif_url": "https://alphafold.ebi.ac.uk/files/AF-P17612-F1-model_v6.cif",
+          "remote_pdb_url": "https://alphafold.ebi.ac.uk/files/AF-P17612-F1-model_v6.pdb",
+          "format": "mmcif"
+        }
+      },
+      "uniprot_accession": "P17612",
+      "alphafold_model_id": "AF-P17612-F1",
+      "alphafold_plddt_mean": 95.5
+    },
+    "PDE4D": {
+      "type": "single_sphere",
+      "name": "PDE4D",
+      "alias": "PDE4D",
+      "role": "PDE4D cAMP Sink",
+      "membrane_topology": "Cytosolic / beta2AR-arrestin & AKAP5-recruited boundary sink",
+      "radius": 3.1,
+      "hydrodynamic_radius_nm": 3.1,
+      "idr_rg_nm": 2.27,
+      "oligomer_valency": 2.0,
+      "diffusion_coeff_rel": 3.0,
+      "color": [
+        0.9373,
+        0.2667,
+        0.2667
+      ],
+      "color_hex": "#ef4444",
+      "placement_mode": "interior",
+      "principal_vector": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "jitter_max": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "molarity_uM": 0.293082,
+      "physiological_molarities": {
+        "neuronal_spine_uM": 0.293082,
+        "neuronal_spine_S": 0.0313892,
+        "cardiac_dyad_uM": 0.760768,
+        "cardiac_dyad_S": 0.000249517,
+        "hepatocyte_uM": 0.0807817
+      },
+      "copy_count_in_box": 18,
+      "packing_priority": 3,
+      "representations": {
+        "packing": {
+          "type": "sphere",
+          "radius_nm": 3.1,
+          "chain_beads": 1
+        },
+        "atomic": {
+          "uniprot_accession": "Q08499",
+          "alphafold_model_id": "AF-Q08499-F1",
+          "alphafold_version": "v6",
+          "mmcif_relpath": "data/structures/Q08499/AF-Q08499-F1-model_v6.cif",
+          "local_mmcif_exists": true,
+          "remote_mmcif_url": "https://alphafold.ebi.ac.uk/files/AF-Q08499-F1-model_v6.cif",
+          "remote_pdb_url": "https://alphafold.ebi.ac.uk/files/AF-Q08499-F1-model_v6.pdb",
+          "format": "mmcif"
+        }
+      },
+      "uniprot_accession": "Q08499",
+      "alphafold_model_id": "AF-Q08499-F1",
+      "alphafold_plddt_mean": 67.44
+    },
+    "PPP3CA": {
+      "type": "single_sphere",
+      "name": "PPP3CA",
+      "alias": "Calcineurin A (PP2B)",
+      "role": "Calcineurin A Phosphatase",
+      "membrane_topology": "AKAP5-anchored peripheral Ca2+-gated phosphatase",
+      "radius": 2.9,
+      "hydrodynamic_radius_nm": 2.9,
+      "idr_rg_nm": 1.48,
+      "oligomer_valency": 1.0,
+      "diffusion_coeff_rel": 3.5,
+      "color": [
+        0.0784,
+        0.7216,
+        0.651
+      ],
+      "color_hex": "#14b8a6",
+      "placement_mode": "interior",
+      "principal_vector": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "jitter_max": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "molarity_uM": 8.70013,
+      "physiological_molarities": {
+        "neuronal_spine_uM": 8.70013,
+        "neuronal_spine_S": 0.0341369,
+        "cardiac_dyad_uM": 0.0780397,
+        "cardiac_dyad_S": 0.000258307,
+        "hepatocyte_uM": 0.00536441
+      },
+      "copy_count_in_box": 12,
+      "packing_priority": 3,
+      "representations": {
+        "packing": {
+          "type": "sphere",
+          "radius_nm": 2.9,
+          "chain_beads": 1
+        },
+        "atomic": {
+          "uniprot_accession": "Q08209",
+          "alphafold_model_id": "AF-Q08209-F1",
+          "alphafold_version": "v6",
+          "mmcif_relpath": "data/structures/Q08209/AF-Q08209-F1-model_v6.cif",
+          "local_mmcif_exists": true,
+          "remote_mmcif_url": "https://alphafold.ebi.ac.uk/files/AF-Q08209-F1-model_v6.cif",
+          "remote_pdb_url": "https://alphafold.ebi.ac.uk/files/AF-Q08209-F1-model_v6.pdb",
+          "format": "mmcif"
+        }
+      },
+      "uniprot_accession": "Q08209",
+      "alphafold_model_id": "AF-Q08209-F1",
+      "alphafold_plddt_mean": 85.5
+    },
+    "cAMP": {
+      "type": "single_sphere",
+      "name": "cAMP",
+      "alias": "cAMP",
+      "role": "cAMP Second Messenger",
+      "membrane_topology": "Diffusible cyclic nucleotide second messenger",
+      "radius": 1.3,
+      "hydrodynamic_radius_nm": 1.3,
+      "idr_rg_nm": null,
+      "oligomer_valency": 1.0,
+      "diffusion_coeff_rel": 11.0,
+      "color": [
+        0.9922,
+        0.8784,
+        0.2784
+      ],
+      "color_hex": "#fde047",
+      "placement_mode": "interior",
+      "principal_vector": [
+        1.0,
+        0.0,
+        0.0
+      ],
+      "jitter_max": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "molarity_uM": 4.747,
+      "physiological_molarities": {
+        "neuronal_spine_core_peak_uM": 4.747,
+        "neuronal_spine_bulk_uM": 0.707,
+        "cardiac_dyad_core_peak_uM": 5.572,
+        "cardiac_dyad_bulk_uM": 0.776
+      },
+      "copy_count_in_box": 50,
+      "packing_priority": 3,
+      "representations": {
+        "packing": {
+          "type": "sphere",
+          "radius_nm": 1.3,
+          "chain_beads": 1
+        }
+      }
+    }
+  },
+  "compartments": {
+    "inner_leaflet_pip2_bilayer": {
+      "object": "inner_leaflet_pip2_bilayer",
+      "placement_mode": "surface",
+      "surface": [
+        {
+          "object": "ADRB2",
+          "count": 6,
+          "molarity_uM": 0.135037,
+          "placement_mode": "surface",
+          "packing_mode": "random",
+          "avoid_overlap": true,
+          "z_bounds_nm": [
+            3.5,
+            6.0
+          ]
+        },
+        {
+          "object": "CACNA1C",
+          "count": 6,
+          "molarity_uM": 0.429569,
+          "placement_mode": "surface",
+          "packing_mode": "random",
+          "avoid_overlap": true,
+          "z_bounds_nm": [
+            3.5,
+            6.0
+          ]
+        },
+        {
+          "object": "ADCY5",
+          "count": 6,
+          "molarity_uM": 1.68953,
+          "placement_mode": "surface",
+          "packing_mode": "random",
+          "avoid_overlap": true,
+          "z_bounds_nm": [
+            3.5,
+            6.0
+          ]
+        }
+      ],
+      "interior": [],
+      "microenvironment": {
+        "compartment_id": "synapse_psd",
+        "ph": 7.2,
+        "lipid_potential_mV": -38.0,
+        "ca2_burst_uM": 15.0
+      }
+    },
+    "signalosome_nanodomain_interior": {
+      "object": "signalosome_nanodomain_volume",
+      "placement_mode": "interior",
+      "surface": [],
+      "interior": [
+        {
+          "object": "AKAP5",
+          "count": 40,
+          "molarity_uM": 1.22429,
+          "placement_mode": "interior",
+          "packing_mode": "close_partner",
+          "avoid_overlap": true,
+          "partners": [
+            "ADRB2",
+            "CACNA1C",
+            "ADCY5"
+          ],
+          "z_bounds_nm": [
+            4.0,
+            26.0
+          ]
+        },
+        {
+          "object": "PRKAR1A",
+          "count": 54,
+          "molarity_uM": 3.42851,
+          "placement_mode": "interior",
+          "packing_mode": "gradient",
+          "avoid_overlap": true,
+          "partners": [
+            "AKAP5"
+          ],
+          "z_bounds_nm": [
+            6.0,
+            56.0
+          ]
+        },
+        {
+          "object": "PRKAR2B",
+          "count": 20,
+          "molarity_uM": 1.85883,
+          "placement_mode": "interior",
+          "packing_mode": "close_partner",
+          "avoid_overlap": true,
+          "partners": [
+            "AKAP5"
+          ],
+          "z_bounds_nm": [
+            6.0,
+            56.0
+          ]
+        },
+        {
+          "object": "PRKACA",
+          "count": 28,
+          "molarity_uM": 4.32666,
+          "placement_mode": "interior",
+          "packing_mode": "close_partner",
+          "avoid_overlap": true,
+          "partners": [
+            "AKAP5"
+          ],
+          "z_bounds_nm": [
+            6.0,
+            56.0
+          ]
+        },
+        {
+          "object": "PDE4D",
+          "count": 18,
+          "molarity_uM": 0.293082,
+          "placement_mode": "interior",
+          "packing_mode": "close_partner",
+          "avoid_overlap": true,
+          "partners": [
+            "AKAP5",
+            "PRKAR1A"
+          ],
+          "z_bounds_nm": [
+            8.0,
+            62.0
+          ]
+        },
+        {
+          "object": "PPP3CA",
+          "count": 12,
+          "molarity_uM": 8.70013,
+          "placement_mode": "interior",
+          "packing_mode": "close_partner",
+          "avoid_overlap": true,
+          "partners": [
+            "AKAP5",
+            "PRKAR1A"
+          ],
+          "z_bounds_nm": [
+            8.0,
+            62.0
+          ]
+        },
+        {
+          "object": "cAMP",
+          "count": 50,
+          "molarity_uM": 4.747,
+          "placement_mode": "interior",
+          "packing_mode": "gradient",
+          "avoid_overlap": true,
+          "source_partner": "ADCY5",
+          "sink_partner": "PDE4D",
+          "z_bounds_nm": [
+            4.0,
+            115.0
+          ]
+        }
+      ],
+      "microenvironment": {
+        "compartment_id": "synapse_psd",
+        "ph": 7.2,
+        "ionic_strength_mM": 145.0,
+        "crowding_phi": 0.28,
+        "atp_mM": 3.5,
+        "spine_nanodomain_volume_fL": 0.08,
+        "cardiac_dyad_volume_fL": 0.05
+      }
+    }
+  },
+  "composition": {
+    "space": {
+      "regions": {
+        "surface": [
+          "inner_leaflet_pip2_bilayer"
+        ],
+        "interior": [
+          "signalosome_nanodomain_interior"
+        ]
+      },
+      "total_explicit_molecules": 240,
+      "surface_ingredients": [
+        {
+          "object": "ADRB2",
+          "count": 6,
+          "molarity_uM": 0.135037,
+          "placement_mode": "surface",
+          "packing_mode": "random",
+          "avoid_overlap": true,
+          "z_bounds_nm": [
+            3.5,
+            6.0
+          ]
+        },
+        {
+          "object": "CACNA1C",
+          "count": 6,
+          "molarity_uM": 0.429569,
+          "placement_mode": "surface",
+          "packing_mode": "random",
+          "avoid_overlap": true,
+          "z_bounds_nm": [
+            3.5,
+            6.0
+          ]
+        },
+        {
+          "object": "ADCY5",
+          "count": 6,
+          "molarity_uM": 1.68953,
+          "placement_mode": "surface",
+          "packing_mode": "random",
+          "avoid_overlap": true,
+          "z_bounds_nm": [
+            3.5,
+            6.0
+          ]
+        }
+      ],
+      "interior_ingredients": [
+        {
+          "object": "AKAP5",
+          "count": 40,
+          "molarity_uM": 1.22429,
+          "placement_mode": "interior",
+          "packing_mode": "close_partner",
+          "avoid_overlap": true,
+          "partners": [
+            "ADRB2",
+            "CACNA1C",
+            "ADCY5"
+          ],
+          "z_bounds_nm": [
+            4.0,
+            26.0
+          ]
+        },
+        {
+          "object": "PRKAR1A",
+          "count": 54,
+          "molarity_uM": 3.42851,
+          "placement_mode": "interior",
+          "packing_mode": "gradient",
+          "avoid_overlap": true,
+          "partners": [
+            "AKAP5"
+          ],
+          "z_bounds_nm": [
+            6.0,
+            56.0
+          ]
+        },
+        {
+          "object": "PRKAR2B",
+          "count": 20,
+          "molarity_uM": 1.85883,
+          "placement_mode": "interior",
+          "packing_mode": "close_partner",
+          "avoid_overlap": true,
+          "partners": [
+            "AKAP5"
+          ],
+          "z_bounds_nm": [
+            6.0,
+            56.0
+          ]
+        },
+        {
+          "object": "PRKACA",
+          "count": 28,
+          "molarity_uM": 4.32666,
+          "placement_mode": "interior",
+          "packing_mode": "close_partner",
+          "avoid_overlap": true,
+          "partners": [
+            "AKAP5"
+          ],
+          "z_bounds_nm": [
+            6.0,
+            56.0
+          ]
+        },
+        {
+          "object": "PDE4D",
+          "count": 18,
+          "molarity_uM": 0.293082,
+          "placement_mode": "interior",
+          "packing_mode": "close_partner",
+          "avoid_overlap": true,
+          "partners": [
+            "AKAP5",
+            "PRKAR1A"
+          ],
+          "z_bounds_nm": [
+            8.0,
+            62.0
+          ]
+        },
+        {
+          "object": "PPP3CA",
+          "count": 12,
+          "molarity_uM": 8.70013,
+          "placement_mode": "interior",
+          "packing_mode": "close_partner",
+          "avoid_overlap": true,
+          "partners": [
+            "AKAP5",
+            "PRKAR1A"
+          ],
+          "z_bounds_nm": [
+            8.0,
+            62.0
+          ]
+        },
+        {
+          "object": "cAMP",
+          "count": 50,
+          "molarity_uM": 4.747,
+          "placement_mode": "interior",
+          "packing_mode": "gradient",
+          "avoid_overlap": true,
+          "source_partner": "ADCY5",
+          "sink_partner": "PDE4D",
+          "z_bounds_nm": [
+            4.0,
+            115.0
+          ]
+        }
+      ]
+    }
+  },
+  "provenance": {
+    "atlas_version": "3.0",
+    "source_files": [
+      "data/processed/hell_signalosome_atlas.json",
+      "data/processed/mesoscale_trajectories.json"
+    ],
+    "databases": [
+      "UniProt",
+      "AlphaFold DB v6",
+      "HPA",
+      "GTEx v10",
+      "STRING v12",
+      "ClinVar"
+    ],
+    "references": [
+      "Davare et al. 2001 Science (beta2AR-Cav1.2-AC-PKA-PP2A macromolecular signaling complex)",
+      "Patriarchi, Qian, Hell et al. 2016 EMBO J / 2018 JBC (AKAP5/Cav1.2 Ser1928 nanodomain signaling)",
+      "Zhang et al. 2020 Cell (PKA RIalpha cAMP-gated LLPS buffering & DNAJB1-PRKACA oncofusion disruption)",
+      "Zwicker et al. 2015 Phys Rev E (Active non-equilibrium droplet Ostwald arrest)"
+    ]
+  }
+}

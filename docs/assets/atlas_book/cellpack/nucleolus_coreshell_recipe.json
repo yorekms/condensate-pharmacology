@@ -1,0 +1,390 @@
+{
+  "format_version": "2.1",
+  "version": "2.0",
+  "name": "nucleolus_fbl_npm1_coreshell",
+  "title": "Multiphase Nucleolus Core-Shell (FBL DFC Core inside NPM1 GC Outer Shell + rRNA)",
+  "description": "Reality-grounded cellPACK v2 mesoscale recipe of the immiscible multiphase eukaryotic nucleolus (160x160x160 nm). High-surface-tension Fibrillarin (FBL, GAR-domain R/G-rich cation-pi + rRNA binding) condenses into an inner Dense Fibrillar Component (DFC) core (steady-state r_FBL = 21.03 nm), wetted by an outer Granular Component (GC) shell of pentameric Nucleophosmin (NPM1, r_NPM1 = 35.17 nm; shell/core ratio = 1.672x; Feric et al. 2016 Cell).",
+  "units": {
+    "length": "nm",
+    "concentration": "uM",
+    "temperature": "K",
+    "energy": "kBT"
+  },
+  "bounding_box": [
+    [
+      0.0,
+      0.0,
+      0.0
+    ],
+    [
+      160.0,
+      160.0,
+      160.0
+    ]
+  ],
+  "randomness_seed": 42,
+  "grid_file_path": null,
+  "packing_constraints": {
+    "avoid_overlap": true,
+    "use_periodicity": false,
+    "packing_method": "nested_core_shell_gradient",
+    "max_attempts": 5000,
+    "steady_r_fbl_nm": 21.03,
+    "steady_r_npm1_nm": 35.17,
+    "steady_r_rrna_nm": 20.01,
+    "shell_to_core_radial_ratio": 1.672,
+    "immiscibility_chi_npm1_fbl_mc_robustness": 0.9455,
+    "temperature_K": 310.15,
+    "ph": 7.25,
+    "ionic_strength_mM": 150.0
+  },
+  "objects": {
+    "dfc_core_shell_boundary": {
+      "type": "mesh",
+      "name": "Dense Fibrillar Component (DFC) Inner Core",
+      "geometry": {
+        "shape": "sphere",
+        "center_nm": [
+          80.0,
+          80.0,
+          80.0
+        ],
+        "radius_nm": 25.0,
+        "steady_state_fbl_mean_radius_nm": 21.03
+      },
+      "color": [
+        0.9569,
+        0.2471,
+        0.3686
+      ],
+      "color_hex": "#f43f5e",
+      "interfacial_tension_rel": 2.4
+    },
+    "gc_outer_shell_boundary": {
+      "type": "mesh",
+      "name": "Granular Component (GC) Outer Shell",
+      "geometry": {
+        "shape": "spherical_shell",
+        "center_nm": [
+          80.0,
+          80.0,
+          80.0
+        ],
+        "inner_radius_nm": 24.0,
+        "outer_radius_nm": 48.0,
+        "steady_state_npm1_mean_radius_nm": 35.17
+      },
+      "color": [
+        0.2196,
+        0.7412,
+        0.9725
+      ],
+      "color_hex": "#38bdf8",
+      "interfacial_tension_rel": 1.0
+    },
+    "FBL": {
+      "type": "single_sphere",
+      "name": "FBL",
+      "role": "Fibrillarin (DFC Core, High Surface Tension)",
+      "radius": 3.0,
+      "hydrodynamic_radius_nm": 3.0,
+      "idr_rg_nm": 2.0,
+      "oligomer_valency": 1.0,
+      "diffusion_coeff_rel": 3.4,
+      "color": [
+        0.9569,
+        0.2471,
+        0.3686
+      ],
+      "color_hex": "#f43f5e",
+      "placement_mode": "interior",
+      "principal_vector": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "jitter_max": [
+        0.8,
+        0.8,
+        0.8
+      ],
+      "molarity_uM": 10.918,
+      "physiological_molarities": {
+        "hela_nucleolus_uM": 10.918,
+        "hela_nucleolus_S": 155.97,
+        "neuron_nucleolus_uM": 2.662,
+        "neuron_nucleolus_S": 38.03
+      },
+      "copy_count_in_box": 72,
+      "packing_priority": 1,
+      "representations": {
+        "packing": {
+          "type": "sphere",
+          "radius_nm": 3.0,
+          "chain_beads": 1
+        },
+        "atomic": {
+          "uniprot_accession": "P22087",
+          "alphafold_model_id": "AF-P22087-F1",
+          "alphafold_version": "v6",
+          "mmcif_relpath": "data/structures/P22087/AF-P22087-F1-model_v6.cif",
+          "local_mmcif_exists": true,
+          "remote_mmcif_url": "https://alphafold.ebi.ac.uk/files/AF-P22087-F1-model_v6.cif",
+          "remote_pdb_url": "https://alphafold.ebi.ac.uk/files/AF-P22087-F1-model_v6.pdb",
+          "format": "mmcif"
+        }
+      },
+      "uniprot_accession": "P22087",
+      "alphafold_model_id": "AF-P22087-F1"
+    },
+    "NPM1": {
+      "type": "single_sphere",
+      "name": "NPM1",
+      "role": "Nucleophosmin (GC Outer Shell, Pentamer)",
+      "radius": 3.4,
+      "hydrodynamic_radius_nm": 3.4,
+      "idr_rg_nm": 3.21,
+      "oligomer_valency": 5.0,
+      "diffusion_coeff_rel": 3.8,
+      "color": [
+        0.2196,
+        0.7412,
+        0.9725
+      ],
+      "color_hex": "#38bdf8",
+      "placement_mode": "surface",
+      "principal_vector": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "jitter_max": [
+        0.8,
+        0.8,
+        0.8
+      ],
+      "molarity_uM": 39.54,
+      "physiological_molarities": {
+        "hela_nucleolus_uM": 39.54,
+        "hela_nucleolus_S": 0.077,
+        "neuron_nucleolus_uM": 12.5,
+        "neuron_nucleolus_S": 0.024,
+        "pentamer_valency_note": "Oligomerization domain pentamer (v=5) lowers effective c_sat into physiological nucleolar LLPS regime"
+      },
+      "copy_count_in_box": 108,
+      "packing_priority": 3,
+      "representations": {
+        "packing": {
+          "type": "sphere",
+          "radius_nm": 3.4,
+          "chain_beads": 1
+        },
+        "atomic": {
+          "uniprot_accession": "P06748",
+          "alphafold_model_id": "AF-P06748-F1",
+          "alphafold_version": "v6",
+          "mmcif_relpath": "data/structures/P06748/AF-P06748-F1-model_v6.cif",
+          "local_mmcif_exists": true,
+          "remote_mmcif_url": "https://alphafold.ebi.ac.uk/files/AF-P06748-F1-model_v6.cif",
+          "remote_pdb_url": "https://alphafold.ebi.ac.uk/files/AF-P06748-F1-model_v6.pdb",
+          "format": "mmcif"
+        }
+      },
+      "uniprot_accession": "P06748",
+      "alphafold_model_id": "AF-P06748-F1"
+    },
+    "rRNA": {
+      "type": "multi_sphere",
+      "name": "rRNA",
+      "role": "Nascent rRNA Polyanion Chain",
+      "radius": 2.2,
+      "hydrodynamic_radius_nm": 2.2,
+      "idr_rg_nm": null,
+      "oligomer_valency": 1.0,
+      "diffusion_coeff_rel": 4.4,
+      "color": [
+        0.6588,
+        0.3333,
+        0.9686
+      ],
+      "color_hex": "#a855f7",
+      "placement_mode": "interior",
+      "principal_vector": [
+        0.0,
+        0.0,
+        1.0
+      ],
+      "jitter_max": [
+        0.8,
+        0.8,
+        0.8
+      ],
+      "molarity_uM": 18.0,
+      "physiological_molarities": {
+        "nucleolar_nascent_pre_rrna_uM": 18.0,
+        "rna_mass_conc_ng_uL": 2400.0
+      },
+      "copy_count_in_box": 60,
+      "packing_priority": 2,
+      "representations": {
+        "packing": {
+          "type": "sphere",
+          "radius_nm": 2.2,
+          "chain_beads": 5
+        }
+      }
+    }
+  },
+  "compartments": {
+    "dfc_core": {
+      "object": "dfc_core_shell_boundary",
+      "placement_mode": "interior",
+      "surface": [],
+      "interior": [
+        {
+          "object": "FBL",
+          "count": 72,
+          "molarity_uM": 10.918,
+          "placement_mode": "interior",
+          "packing_mode": "random",
+          "avoid_overlap": true,
+          "radial_bounds_nm": [
+            0.0,
+            26.0
+          ]
+        },
+        {
+          "object": "rRNA",
+          "count": 60,
+          "molarity_uM": 18.0,
+          "placement_mode": "interior",
+          "packing_mode": "random",
+          "avoid_overlap": true,
+          "radial_bounds_nm": [
+            0.0,
+            26.0
+          ]
+        }
+      ],
+      "microenvironment": {
+        "compartment_id": "nucleolus",
+        "subcompartment": "DFC",
+        "ph": 7.25,
+        "rna_ng_uL": 2400.0,
+        "crowding_phi": 0.34
+      }
+    },
+    "gc_outer_shell": {
+      "object": "gc_outer_shell_boundary",
+      "placement_mode": "surface",
+      "surface": [
+        {
+          "object": "NPM1",
+          "count": 108,
+          "molarity_uM": 39.54,
+          "placement_mode": "surface",
+          "packing_mode": "gradient",
+          "avoid_overlap": true,
+          "radial_bounds_nm": [
+            24.0,
+            48.0
+          ]
+        }
+      ],
+      "interior": [
+        {
+          "object": "NPM1",
+          "count": 108,
+          "molarity_uM": 39.54,
+          "placement_mode": "surface",
+          "packing_mode": "gradient",
+          "avoid_overlap": true,
+          "radial_bounds_nm": [
+            24.0,
+            48.0
+          ]
+        }
+      ],
+      "microenvironment": {
+        "compartment_id": "nucleolus",
+        "subcompartment": "GC",
+        "ph": 7.25,
+        "rna_ng_uL": 1400.0,
+        "crowding_phi": 0.28,
+        "nucleolar_volume_hela_fL": 14.0,
+        "nucleolar_volume_neuron_fL": 10.0
+      }
+    }
+  },
+  "composition": {
+    "space": {
+      "regions": {
+        "interior": [
+          "dfc_core",
+          "gc_outer_shell"
+        ],
+        "surface": [
+          "gc_outer_shell"
+        ]
+      },
+      "total_explicit_molecules": 240,
+      "dfc_core_ingredients": [
+        {
+          "object": "FBL",
+          "count": 72,
+          "molarity_uM": 10.918,
+          "placement_mode": "interior",
+          "packing_mode": "random",
+          "avoid_overlap": true,
+          "radial_bounds_nm": [
+            0.0,
+            26.0
+          ]
+        },
+        {
+          "object": "rRNA",
+          "count": 60,
+          "molarity_uM": 18.0,
+          "placement_mode": "interior",
+          "packing_mode": "random",
+          "avoid_overlap": true,
+          "radial_bounds_nm": [
+            0.0,
+            26.0
+          ]
+        }
+      ],
+      "gc_shell_ingredients": [
+        {
+          "object": "NPM1",
+          "count": 108,
+          "molarity_uM": 39.54,
+          "placement_mode": "surface",
+          "packing_mode": "gradient",
+          "avoid_overlap": true,
+          "radial_bounds_nm": [
+            24.0,
+            48.0
+          ]
+        }
+      ]
+    }
+  },
+  "provenance": {
+    "atlas_version": "3.0",
+    "source_files": [
+      "data/processed/mesoscale_trajectories.json",
+      "data/processed/supersaturation_atlas.json",
+      "data/processed/structural_atlas.json"
+    ],
+    "databases": [
+      "UniProt",
+      "AlphaFold DB v6",
+      "HPA",
+      "GTEx v10"
+    ],
+    "references": [
+      "Feric et al. 2016 Cell (Multiphase Nucleolar Subcompartments)"
+    ]
+  }
+}

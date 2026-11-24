@@ -25,6 +25,15 @@
   header .sub { font-size:13.5px; color:var(--muted); max-width:920px; margin-top:6px; }
   .badge { display:inline-block; padding:4px 10px; border-radius:999px; font-size:11.5px; font-weight:700; background:rgba(56,189,248,0.14); color:var(--accent); border:1px solid rgba(56,189,248,0.3); margin-bottom:8px; }
 
+  .site-tabs { display:flex; flex-wrap:wrap; gap:8px; margin-bottom:20px; padding-bottom:14px; border-bottom:1px solid var(--border); }
+  a.site-tab { display:inline-flex; align-items:center; gap:7px; padding:8px 15px; border-radius:10px; font-size:13px; font-weight:700; text-decoration:none; color:#cbd5e1; background:#0f172a; border:1px solid #334155; transition:all .15s ease; }
+  a.site-tab:hover { border-color:var(--accent); color:#fff; background:#16233d; }
+  a.site-tab.active { background:linear-gradient(135deg,#0ea5e9,#2563eb); border-color:#38bdf8; color:#fff; box-shadow:0 4px 14px rgba(14,165,233,0.28); }
+  a.site-tab.book { border-color:rgba(167,139,250,0.45); color:#ddd6fe; background:rgba(76,29,149,0.28); }
+  a.site-tab.book:hover { border-color:#a78bfa; color:#fff; background:rgba(91,33,182,0.48); }
+  a.site-tab.bio { border-color:rgba(16,185,129,0.45); color:#6ee7b7; background:rgba(6,78,59,0.28); }
+  a.site-tab.bio:hover { border-color:#10b981; color:#ecfdf5; background:rgba(6,95,70,0.48); }
+
   .pill-bar { display:flex; flex-wrap:wrap; gap:9px; margin-top:16px; }
   a.carrd-pill { display:inline-flex; align-items:center; gap:7px; padding:7px 14px; border-radius:999px; font-size:12.5px; font-weight:700; text-decoration:none; color:#cbd5e1; background:#0f172a; border:1px solid #334155; transition:all .16s ease; }
   a.carrd-pill:hover { border-color:#38bdf8; color:#fff; transform:translateY(-1px); background:#16233d; }
@@ -64,13 +73,21 @@
     <button onclick="unlock()">Unlock Research Portal</button>
     <div id="err"></div>
     <div class="gate-links">
-      <a class="carrd-pill featured" href="https://my-scientist.carrd.co" target="_blank" rel="noopener">&#x1F310; my-scientist.carrd.co</a>
+      <a class="carrd-pill featured" href="atlas-book.html">Open-Access Monograph Book &rarr;</a>
       <a class="carrd-pill" href="index.html">← Research Hub</a>
+      <a class="carrd-pill" href="https://my-scientist.carrd.co" target="_blank" rel="noopener">&#x1F310; my-scientist.carrd.co</a>
     </div>
   </div>
 </div>
 
 <div id="portal">
+  <nav class="site-tabs" aria-label="Portal sections">
+    <a class="site-tab" href="index.html">Research Hub</a>
+    <a class="site-tab book" href="atlas-book.html">Monograph Book: IDR &amp; LLPS Cell Atlas (Open Access)</a>
+    <a class="site-tab active" href="preprints.html">Unpublished Preprints Portal (Papers #1–#2)</a>
+    <a class="site-tab bio" href="https://yorekms.github.io/seizure-transcriptomics-workbench/" target="_blank" rel="noopener">Seizure Bioinformatics Portal &nearr;</a>
+  </nav>
+
   <header>
     <div class="head-top">
       <div>

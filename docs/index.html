@@ -23,13 +23,24 @@
   a.carrd-pill.bio { border-color:rgba(16,185,129,0.45); color:#6ee7b7; background:rgba(6,78,59,0.28); }
   a.carrd-pill.bio:hover { border-color:#10b981; color:#ecfdf5; background:rgba(6,95,70,0.48); }
 
+  .site-tabs { display:flex; flex-wrap:wrap; gap:8px; margin-bottom:24px; padding-bottom:16px; border-bottom:1px solid var(--border); }
+  a.site-tab { display:inline-flex; align-items:center; gap:7px; padding:8px 15px; border-radius:10px; font-size:13px; font-weight:700; text-decoration:none; color:#cbd5e1; background:#0f172a; border:1px solid #334155; transition:all .15s ease; }
+  a.site-tab:hover { border-color:var(--sky); color:#fff; background:#16233d; }
+  a.site-tab.active { background:linear-gradient(135deg,#0ea5e9,#2563eb); border-color:#38bdf8; color:#fff; box-shadow:0 4px 14px rgba(14,165,233,0.28); }
+  a.site-tab.book { border-color:rgba(167,139,250,0.45); color:#ddd6fe; background:rgba(76,29,149,0.28); }
+  a.site-tab.book:hover { border-color:#a78bfa; color:#fff; background:rgba(91,33,182,0.48); }
+  a.site-tab.bio { border-color:rgba(16,185,129,0.45); color:#6ee7b7; background:rgba(6,78,59,0.28); }
+  a.site-tab.bio:hover { border-color:#10b981; color:#ecfdf5; background:rgba(6,95,70,0.48); }
+
   .section-label { font-size:12px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; color:var(--sky); margin-bottom:14px; }
-  .grid3 { display:grid; grid-template-columns:repeat(auto-fit,minmax(320px,1fr)); gap:22px; margin-bottom:30px; }
+  .grid3 { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:22px; margin-bottom:30px; }
+  @media (max-width:820px) { .grid3 { grid-template-columns:1fr; } }
   .card { background:var(--card); border:1px solid var(--border); border-radius:16px; padding:24px; display:flex; flex-direction:column; justify-content:space-between; transition:.18s; }
   .card:hover { border-color:#334155; transform:translateY(-2px); box-shadow:0 16px 36px rgba(0,0,0,0.45); }
   .tag { display:inline-block; font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.05em; padding:3px 9px; border-radius:999px; margin-bottom:10px; }
   .tag.sky { background:rgba(56,189,248,0.14); color:var(--sky); border:1px solid rgba(56,189,248,0.3); }
   .tag.rose { background:rgba(244,63,94,0.14); color:#fb7185; border:1px solid rgba(244,63,94,0.3); }
+  .tag.violet { background:rgba(167,139,250,0.16); color:#c4b5fd; border:1px solid rgba(167,139,250,0.35); }
   .tag.emerald { background:rgba(16,185,129,0.14); color:#34d399; border:1px solid rgba(16,185,129,0.3); }
   .card h2 { font-size:19px; color:#f8fafc; line-height:1.3; margin-bottom:8px; }
   .authors { font-size:12.5px; color:var(--amber); font-weight:600; margin-bottom:12px; }
@@ -41,6 +52,7 @@
   a.btn:hover { filter:brightness(1.12); }
   a.btn.primary { background:linear-gradient(135deg,#0284c7,#2563eb); border:none; }
   a.btn.rose { background:linear-gradient(135deg,#e11d48,#be123c); border:none; }
+  a.btn.violet { background:linear-gradient(135deg,#7c3aed,#2563eb); border:none; }
   a.btn.emerald { background:linear-gradient(135deg,#059669,#047857); border:none; }
   .lock-note { font-size:11.5px; color:var(--muted); text-align:center; margin-top:4px; }
   footer { border-top:1px solid var(--border); padding-top:20px; margin-top:20px; font-size:12.5px; color:var(--muted); display:flex; justify-content:space-between; flex-wrap:wrap; gap:12px; align-items:center; }
@@ -49,11 +61,18 @@
 </head>
 <body>
 <div class="wrap">
+  <nav class="site-tabs" aria-label="Portal sections">
+    <a class="site-tab active" href="index.html">Research Hub</a>
+    <a class="site-tab book" href="atlas-book.html">Monograph Book: IDR &amp; LLPS Cell Atlas (Open Access)</a>
+    <a class="site-tab" href="preprints.html">Unpublished Preprints Portal (Papers #1–#2)</a>
+    <a class="site-tab bio" href="https://yorekms.github.io/seizure-transcriptomics-workbench/" target="_blank" rel="noopener">Seizure Bioinformatics Portal &nearr;</a>
+  </nav>
+
   <header>
     <div class="eyebrow">Computational Biophysics • Theoretical Pharmacology • Seizure Bioinformatics</div>
-    <h1>Matthew S. Yorek, M.S. — Research Preprints &amp; Software Hub</h1>
+    <h1>Matthew S. Yorek, M.S. — Research Preprints, Monograph &amp; Software Hub</h1>
     <div class="cred">Research Scientist, Department of Anesthesiology, University of Virginia (Charlottesville, VA)</div>
-    <p class="sub">Central link-out directory uniting two companion preprints on <strong>Phase-Partitioned Allosteric Pharmacology &amp; Condensate Drug Design</strong> (with interactive offline 3D PDB viewers and datasets) alongside our posted <strong>Seizure Transcriptomics &amp; Epilepsy Bioinformatics</strong> research suite.</p>
+    <p class="sub">Central directory uniting two companion preprints on <strong>Phase-Partitioned Allosteric Pharmacology &amp; Condensate Drug Design</strong>, our open-access working monograph <strong>The Cross-Species IDR &amp; LLPS Cell Atlas</strong> (with 14 chapters, 13 print plates, and live 1-click 3D Simularium trajectories), and our posted <strong>Seizure Transcriptomics &amp; Epilepsy Bioinformatics</strong> research suite.</p>
     <div class="pill-bar">
       <a class="carrd-pill featured" href="https://my-scientist.carrd.co" target="_blank" rel="noopener">&#x1F310; my-scientist.carrd.co</a>
       <a class="carrd-pill" href="https://my-scientific-software.carrd.co" target="_blank" rel="noopener">my-scientific-software.carrd.co</a>
@@ -104,7 +123,27 @@
       </div>
     </article>
 
-    <!-- CARD 3: POSTED SEIZURE BIOINFORMATICS PAPER -->
+    <!-- CARD 3: OPEN-ACCESS MONOGRAPH BOOK -->
+    <article class="card">
+      <div>
+        <span class="tag violet">Open-Access Working Monograph • 14 Chapters &amp; Live 3D Simularium</span>
+        <h2>The Cross-Species IDR &amp; LLPS Cell Atlas: Polymer Physics, Microenvironments &amp; Active Signalosomes</h2>
+        <div class="authors">Conceived &amp; Directed by Matthew S. Yorek, M.S. • AI-Assisted Computational Synthesis (Working Draft v3.1)</div>
+        <p>A 62-page, 14-chapter biophysical monograph surveying 93,793 proteins and 70,184 strict MobiDB-lite IDRs across 16 proteomes, 18 cellular compartments, 12 metabolic regimes, HPA/GTEx supersaturation maps, AlphaFold DB v6 oligomer coupling, wet-lab falsification (Tier A–F), and 3D Hell signalosome &amp; nucleolar simulations.</p>
+        <ul class="highlights">
+          <li>Interactive HTML Book, 62-page Master PDF, 14 standalone chapter PDFs &amp; 13 Print-Light 300-DPI plates</li>
+          <li>Live 1-click 3D Simularium WebGL trajectories (Hell WT + AKAP5 fibers, DNAJB1 ablation, Nucleolus core–shell)</li>
+          <li>Transparent 15-claim Epistemic Confidence Ledger (4 Tier A, 6 Tier B, 2 Tier C, 3 explicit Tier F limits)</li>
+        </ul>
+      </div>
+      <div class="btn-col">
+        <a class="btn violet" href="atlas-book.html">Open Monograph Hub, 14 Chapters &amp; Live 3D Simularium</a>
+        <a class="btn" href="assets/atlas_book/output/IDR_LLPS_Cell_Atlas_Book.html" target="_blank">Read Full Interactive HTML Book &nearr;</a>
+        <a class="btn" href="assets/atlas_book/pdf/IDR_LLPS_Cell_Atlas_Complete_Book.pdf" target="_blank">Download Complete Book PDF (62 pp)</a>
+      </div>
+    </article>
+
+    <!-- CARD 4: POSTED SEIZURE BIOINFORMATICS PAPER -->
     <article class="card">
       <div>
         <span class="tag emerald">Posted Public Research • Seizure Bioinformatics &amp; Transcriptomics</span>
@@ -130,6 +169,7 @@
     <div>© 2026 Matthew S. Yorek, M.S. — Department of Anesthesiology, University of Virginia</div>
     <div style="display:flex;gap:14px;flex-wrap:wrap">
       <a href="https://my-scientist.carrd.co" target="_blank" rel="noopener">my-scientist.carrd.co ↗</a>
+      <a href="atlas-book.html">Open-Access Monograph Book →</a>
       <a href="preprints.html">Direct Preprint Review Login →</a>
     </div>
   </footer>

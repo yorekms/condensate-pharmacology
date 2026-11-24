@@ -1,0 +1,920 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Editorial Figure Review Workbench — IDR &amp; LLPS Cell Atlas v3</title>
+  <style>
+:root {
+  --bg: #f1f5f9;
+  --card: #ffffff;
+  --ink: #0f172a;
+  --muted: #475569;
+  --subtle: #64748b;
+  --rule: #cbd5e1;
+  --accent: #005a8d;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: Arial, "Segoe UI", -apple-system, sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  line-height: 1.5;
+}
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  background: #ffffff;
+  border-bottom: 1px solid var(--rule);
+  padding: 14px 28px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.topbar h1 { margin: 0; font-size: 18px; }
+.topbar .sub { font-size: 12px; color: var(--muted); }
+.toolbar { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+.pill {
+  padding: 6px 12px;
+  border-radius: 6px;
+  border: 1px solid var(--rule);
+  background: #f8fafc;
+  color: var(--ink);
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+}
+.pill:hover, .pill.active { background: var(--accent); color: #ffffff; border-color: var(--accent); }
+
+.wrap { max-width: 1440px; margin: 24px auto 64px; padding: 0 24px; }
+
+.summary-strip {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin-bottom: 22px;
+}
+.stat-box {
+  background: var(--card);
+  border: 1px solid var(--rule);
+  border-radius: 8px;
+  padding: 12px 16px;
+}
+.stat-num { font-size: 22px; font-weight: 800; color: var(--accent); }
+.stat-lbl { font-size: 12px; color: var(--muted); }
+
+.plate-card {
+  background: var(--card);
+  border: 1px solid var(--rule);
+  border-radius: 10px;
+  margin-bottom: 24px;
+  overflow: hidden;
+  box-shadow: 0 2px 10px rgba(15, 23, 42, 0.04);
+  break-inside: avoid;
+}
+.card-head {
+  padding: 14px 20px;
+  background: #f8fafc;
+  border-bottom: 1px solid var(--rule);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.card-id-group { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.badge-id {
+  background: var(--ink);
+  color: #ffffff;
+  font-family: Consolas, monospace;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 3px 9px;
+  border-radius: 5px;
+}
+.badge-status {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 9px;
+  border-radius: 99px;
+  text-transform: uppercase;
+}
+.badge-ready { background: #dcfce7; color: #166534; }
+.badge-pending { background: #fef3c7; color: #92400e; }
+.card-title { font-size: 15.5px; font-weight: 700; color: var(--ink); }
+
+.card-body {
+  display: grid;
+  grid-template-columns: 1.65fr 1fr;
+  gap: 0;
+}
+.preview-pane {
+  padding: 18px;
+  background: #ffffff;
+  border-right: 1px solid #e2e8f0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.preview-dual {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+.preview-dual.show-dark { grid-template-columns: 1fr 1fr; }
+.preview-box {
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  padding: 8px;
+  background: #ffffff;
+}
+.preview-box.dark-box { background: #0b1020; color: #e2e8f0; display: none; }
+.preview-dual.show-dark .preview-box.dark-box { display: block; }
+.preview-label {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--subtle);
+  margin-bottom: 6px;
+}
+.preview-box.dark-box .preview-label { color: #94a3b8; }
+.preview-box img {
+  width: 100%;
+  height: auto;
+  display: block;
+  cursor: zoom-in;
+  border-radius: 3px;
+}
+.pending-canvas {
+  border: 2px dashed #d97706;
+  border-radius: 8px;
+  background: #fffbeb;
+  padding: 36px 24px;
+  text-align: center;
+  color: #78350f;
+}
+
+.meta-pane {
+  padding: 18px 20px;
+  background: #fcfdff;
+  font-size: 13px;
+}
+.meta-row { margin-bottom: 10px; }
+.meta-k {
+  font-size: 10.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--subtle);
+  margin-bottom: 2px;
+}
+.meta-v { color: var(--ink); }
+.file-links { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 4px; }
+.file-btn {
+  display: inline-block;
+  padding: 4px 9px;
+  border-radius: 5px;
+  font-size: 11.5px;
+  font-weight: 600;
+  text-decoration: none;
+  border: 1px solid var(--rule);
+  background: #ffffff;
+  color: var(--accent);
+}
+.file-btn:hover { background: #e0f2fe; border-color: var(--accent); }
+.cmd-code {
+  display: block;
+  font-family: Consolas, monospace;
+  font-size: 11px;
+  background: #f1f5f9;
+  border: 1px solid #cbd5e1;
+  padding: 6px 8px;
+  border-radius: 5px;
+  color: #0f172a;
+  overflow-x: auto;
+}
+
+/* Lightbox modal */
+.lightbox {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.88);
+  z-index: 100;
+  padding: 24px;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+.lightbox.open { display: flex; }
+.lightbox img { max-width: 96vw; max-height: 88vh; background: #ffffff; border-radius: 6px; padding: 6px; }
+.lightbox-cap { color: #f8fafc; font-size: 13px; margin-top: 10px; }
+
+@media (max-width: 1024px) {
+  .card-body { grid-template-columns: 1fr; }
+  .preview-pane { border-right: none; border-bottom: 1px solid #e2e8f0; }
+  .summary-strip { grid-template-columns: repeat(2, 1fr); }
+}
+@media print {
+  .topbar, .no-print { display: none !important; }
+  body { background: #ffffff; }
+  .wrap { max-width: none; margin: 0; padding: 0; }
+  .plate-card { box-shadow: none; page-break-after: always; }
+}
+</style>
+</head>
+<body>
+  <header class="topbar no-print">
+    <div>
+      <h1>Editorial Figure Review Workbench</h1>
+      <div class="sub">The Cross-Species IDR &amp; LLPS Cell Atlas · Spec Manifest: <code>book/figure_specs.json</code></div>
+    </div>
+    <div class="toolbar">
+      <button class="pill active" onclick="filterCards('all', this)">All (13)</button>
+      <button class="pill" onclick="filterCards('ready', this)">Rendered (13)</button>
+      <button class="pill" onclick="filterCards('pending', this)">Phase B Slots (0)</button>
+      
+      <button class="pill" onclick="window.print()">Print Proof Sheet</button>
+      <a class="pill" href="IDR_LLPS_Cell_Atlas_Book.html">Open Full Book</a>
+      <a class="pill" href="../../../atlas-book.html">&larr; Back to Book Hub</a>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="summary-strip">
+      <div class="stat-box"><div class="stat-num">13 / 13</div><div class="stat-lbl">Plates Rendered (Print-Light)</div></div>
+      <div class="stat-box"><div class="stat-num">14 Chapters</div><div class="stat-lbl">Chapters 00–13 Compiled</div></div>
+      <div class="stat-box"><div class="stat-num">62 Pages</div><div class="stat-lbl">Press-Ready Master PDF</div></div>
+      <div class="stat-box"><div class="stat-num">300 DPI</div><div class="stat-lbl">Archival Print Raster Resolution</div></div>
+    </section>
+
+    
+        <article class="plate-card" id="card-fig01" data-status="ready">
+          <div class="card-head">
+            <div class="card-id-group">
+              <span class="badge-id">fig01</span>
+              <span class="badge-status badge-ready">Ready (PNG + SVG + PDF)</span>
+              <span class="card-title">Plate 01 — Cross-Species Full-Proteome IDR Architecture Across the Tree of Life</span>
+            </div>
+            <div class="toolbar">
+              
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="preview-pane">
+              <div class="preview-dual" data-dual="fig01">  <div class="preview-box">    <div class="preview-label">Print-Light Archival Press Preview (300 DPI)</div>    <img src="../figures/print_light/fig01_cross_species_disorder_landscape.png" alt="Cross-Species Full-Proteome IDR Architecture Across the Tree of Life" onclick="openLightbox(this.src, 'Plate 01: Cross-Species Full-Proteome IDR Architecture Across the Tree of Life')"/>  </div>  </div>
+            </div>
+            <div class="meta-pane">
+              <div class="meta-row">
+                <div class="meta-k">Editorial Spec Reference</div>
+                <div class="meta-v"><code>book/figure_specs.json → plates[0] (id: "fig01")</code></div>
+              </div>
+              <div class="meta-row">
+                <div class="meta-k">Chapter & Dimensions</div>
+                <div class="meta-v">Chapter 05 (<code>05_cross_species_evolutionary_survey.md</code>) · 13.6 × 9.6 in @ 300 DPI · Font: Arial</div>
+              </div>
+              <div class="meta-row">
+                <div class="meta-k">Palette & Panel Layout</div>
+                <div class="meta-v"><code>okabe_ito_categorical</code> — 2x2 grid (A: Disorder prevalence bars; B: Mean FCR vs NCPR bubble plot; C: Stacked Das-Pappu R1-R5 bars; D: Fed vs ATP-starvation LLPS recruitment)</div>
+              </div>
+              <div class="meta-row">
+                <div class="meta-k">Caption</div>
+                <div class="meta-v">Comparative disorder prevalence, evolutionary FCR–NCPR electrostatic divergence (highlighting halophilic acidification in H. salinarum), Das–Pappu state partitioning (R1–R5), and global LLPS recruitment under ATP starvation across six core reference proteomes.</div>
+              </div>
+              <div class="meta-row">
+                <div class="meta-k">Editorial Direction / Notes</div>
+                <div class="meta-v">Remove top/right spines on bar/scatter axes; use deep Okabe-Ito inks with crisp leader lines in Panel B; print exact percentage annotations above bars with zero overlap.</div>
+              </div>
+              <div class="meta-row">
+                <div class="meta-k">Vector & Raster Deliverables</div>
+                <div class="file-links"><a class="file-btn" href="../figures/print_light/fig01_cross_species_disorder_landscape.png" target="_blank">300-DPI PNG (565 KB)</a><a class="file-btn" href="IDR_LLPS_Cell_Atlas_Book.html#plate-fig01">Jump to Book Context</a></div>
+              </div>
+              <div class="meta-row">
+                <div class="meta-k">Re-Render Command</div>
+                <code class="cmd-code">python book/render_plates.py --theme print_light --plates 1</code>
+              </div>
+            </div>
+          </div>
+        </article>
+        
+        <article class="plate-card" id="card-fig02" data-status="ready">
+          <div class="card-head">
+            <div class="card-id-group">
+              <span class="badge-id">fig02</span>
+              <span class="badge-status badge-ready">Ready (PNG + SVG + PDF)</span>
+              <span class="card-title">Plate 02 — Human Proteome IDR Ensemble Landscape: Das–Pappu Diagram &amp; Flory Scaling</span>
+            </div>
+            <div class="toolbar">
+              
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="preview-pane">
+              <div class="preview-dual" data-dual="fig02">  <div class="preview-box">    <div class="preview-label">Print-Light Archival Press Preview (300 DPI)</div>    <img src="../figures/print_light/fig02_das_pappu_and_flory_scaling.png" alt="Human Proteome IDR Ensemble Landscape: Das–Pappu Diagram &amp; Flory Scaling" onclick="openLightbox(this.src, 'Plate 02: Human Proteome IDR Ensemble Landscape: Das–Pappu Diagram &amp; Flory Scaling')"/>  </div>  </div>
+            </div>
+            <div class="meta-pane">
+              <div class="meta-row">
+                <div class="meta-k">Editorial Spec Reference</div>
+                <div class="meta-v"><code>book/figure_specs.json → plates[1] (id: "fig02")</code></div>
+              </div>
+              <div class="meta-row">
+                <div class="meta-k">Chapter & Dimensions</div>
+                <div class="meta-v">Chapter 05 (<code>05_cross_species_evolutionary_survey.md</code>) · 14.2 × 6.4 in @ 300 DPI · Font: Arial</div>
+              </div>
+              <div class="meta-row">
+                <div class="meta-k">Palette & Panel Layout</div>
+                <div class="meta-v"><code>rdbu_r_and_plasma_trunc</code> — 1x2 side-by-side scatter (A: Das-Pappu R1-R5 diagram; B: Flory nu vs aromatic sticker density)</div>
+              </div>
+              <div class="meta-row">
+                <div class="meta-k">Caption</div>
+                <div class="meta-v">21,263 human proteome IDRs mapped onto the Das–Pappu (f+, f-) phase diagram colored by homeostatic phase-driving margin (chi_eff - chi_crit) and onto aromatic sticker fraction vs. apparent Flory scaling exponent (nu) colored by |NCPR|, with 8 canonical landmark IDRs annotated.</div>
+              </div>
+              <div class="meta-row">
+                <div class="meta-k">Editorial Direction / Notes</div>
+                <div class="meta-v">Rasterize 21k background scatter points cleanly inside vector SVG/PDF so vector files stay lightweight (&lt;2 MB) while axes, boundaries, and landmark callouts remain 100% editable vector text; use dark charcoal outlines with warm amber fill on landmark dots and crisp ivory pill backgrounds on labels for zero contrast loss on white paper.</div>
+              </div>
+              <div class="meta-row">
+                <div class="meta-k">Vector & Raster Deliverables</div>
+                <div class="file-links"><a class="file-btn" href="../figures/print_light/fig02_das_pappu_and_flory_scaling.png" target="_blank">300-DPI PNG (2114 KB)</a><a class="file-btn" href="IDR_LLPS_Cell_Atlas_Book.html#plate-fig02">Jump to Book Context</a></div>
+              </div>
+              <div class="meta-row">
+                <div class="meta-k">Re-Render Command</div>
+                <code class="cmd-code">python book/render_plates.py --theme print_light --plates 2</code>
+              </div>
+            </div>
+          </div>
+        </article>
+        
+        <article class="plate-card" id="card-fig03" data-status="ready">
+          <div class="card-head">
+            <div class="card-id-group">
+              <span class="badge-id">fig03</span>
+              <span class="badge-status badge-ready">Ready (PNG + SVG + PDF)</span>
+              <span class="card-title">Plate 03 — Cellular Compartment Microenvironments vs. Resident Proteome IDR Biophysics</span>
+            </div>
+            <div class="toolbar">
+              
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="preview-pane">
+              <div class="preview-dual" data-dual="fig03">  <div class="preview-box">    <div class="preview-label">Print-Light Archival Press Preview (300 DPI)</div>    <img src="../figures/print_light/fig03_compartment_idr_biophysics_heatmap.png" alt="Cellular Compartment Microenvironments vs. Resident Proteome IDR Biophysics" onclick="openLightbox(this.src, 'Plate 03: Cellular Compartment Microenvironments vs. Resident Proteome IDR Biophysics')"/>  </div>  </div>
+            </div>
+            <div class="meta-pane">
+              <div class="meta-row">
+                <div class="meta-k">Editorial Spec Reference</div>
+                <div class="meta-v"><code>book/figure_specs.json → plates[2] (id: "fig03")</code></div>
+              </div>
+              <div class="meta-row">
+                <div class="meta-k">Chapter & Dimensions</div>
+                <div class="meta-v">Chapter 03 (<code>03_cellular_compartment_microenvironments.md</code>) · 15.6 × 8.8 in @ 300 DPI · Font: Arial</div>
+              </div>
+              <div class="meta-row">
+                <div class="meta-k">Palette & Panel Layout</div>
+                <div class="meta-v"><code>rdbu_r_and_viridis</code> — 1x2 shared-y dual heatmap with dedicated horizontal or right-aligned colorbars (A: Microenvironment Z-score; B: Resident IDR biophysical signature Z-score)</div>
+              </div>
+              <div class="meta-row">
+                <div class="meta-k">Caption</div>
+                <div class="meta-v">Side-by-side Z-scored heatmaps across all 18 cellular compartments pairing physicochemical microenvironments (pH, salt, crowding, ATP, RNA, Ca2+, redox, lipid potential) with evolved resident IDR sequence chemistry, Flory scaling, phosphorylation density, and stress-induced LLPS recruitment.</div>
+              </div>
+              <div class="meta-row">
+                <div class="meta-k">Editorial Direction / Notes</div>
+                <div class="meta-v">Use RdBu_r (Panel A) and Viridis (Panel B) with adaptive luminance-checked text ink (dark #0f172a on light cells, pure #ffffff on dark saturated cells) and clean Z-score colorbars beneath each panel.</div>
+              </div>
+              <div class="meta-row">
+                <div class="meta-k">Vector & Raster Deliverables</div>
+                <div class="file-links"><a class="file-btn" href="../figures/print_light/fig03_compartment_idr_biophysics_heatmap.png" target="_blank">300-DPI PNG (757 KB)</a><a class="file-btn" href="IDR_LLPS_Cell_Atlas_Book.html#plate-fig03">Jump to Book Context</a></div>
+              </div>
+              <div class="meta-row">
+                <div class="meta-k">Re-Render Command</div>
+                <code class="cmd-code">python book/render_plates.py --theme print_light --plates 3</code>
+              </div>
+            </div>
+          </div>
+        </article>
+        
+        <article class="plate-card" id="card-fig04" data-status="ready">
+          <div class="card-head">
+            <div class="card-id-group">
+              <span class="badge-id">fig04</span>
+              <span class="badge-status badge-ready">Ready (PNG + SVG + PDF)</span>
+              <span class="card-title">Plate 04 — Quantitative Substrate &amp; Microenvironment Phase-Boundary Titration Curves</span>
+            </div>
+            <div class="toolbar">
+              
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="preview-pane">
+              <div class="preview-dual" data-dual="fig04">  <div class="preview-box">    <div class="preview-label">Print-Light Archival Press Preview (300 DPI)</div>    <img src="../figures/print_light/fig04_substrate_phase_diagrams.png" alt="Quantitative Substrate &amp; Microenvironment Phase-Boundary Titration Curves" onclick="openLightbox(this.src, 'Plate 04: Quantitative Substrate &amp; Microenvironment Phase-Boundary Titration Curves')"/>  </div>  </div>
+            </div>
+            <div class="meta-pane">
+              <div class="meta-row">
+                <div class="meta-k">Editorial Spec Reference</div>
+                <div class="meta-v"><code>book/figure_specs.json → plates[3] (id: "fig04")</code></div>
+              </div>
+              <div class="meta-row">
+                <div class="meta-k">Chapter & Dimensions</div>
+                <div class="meta-v">Chapter 02 (<code>02_polymer_physics_and_llps_theory.md</code>) · 15.6 × 9.4 in @ 300 DPI · Font: Arial</div>
+              </div>
+              <div class="meta-row">
+                <div class="meta-k">Palette & Panel Layout</div>
+                <div class="meta-v"><code>okabe_ito_lines_and_stacked</code> — 2x3 grid (A: RNA; B: ATP; C: pH; D: Ionic strength; E: Temperature UCST/LCST; F: Stacked Delta-chi force decomposition)</div>
+              </div>
+              <div class="meta-row">
+                <div class="meta-k">Caption</div>
+                <div class="meta-v">Continuous phase-driving margin titrations across five cellular control axes (re-entrant RNA coacervation, ATP hydrotrope solubilization, organellar pH gradient, ionic-strength screening vs. salting-out, and UCST vs. LCST temperature divergence) paired with per-force thermodynamic Delta-chi decomposition for six iconic landmarks.</div>
+              </div>
+              <div class="meta-row">
+                <div class="meta-k">Editorial Direction / Notes</div>
+                <div class="meta-v">Distinguish line series with both Okabe-Ito print hues and distinct marker shapes for monochrome/colorblind accessibility; mark chi_eff = chi_crit phase boundary with a crisp crimson dashed line.</div>
+              </div>
+              <div class="meta-row">
+                <div class="meta-k">Vector & Raster Deliverables</div>
+                <div class="file-links"><a class="file-btn" href="../figures/print_light/fig04_substrate_phase_diagrams.png" target="_blank">300-DPI PNG (846 KB)</a><a class="file-btn" href="IDR_LLPS_Cell_Atlas_Book.html#plate-fig04">Jump to Book Context</a></div>
+              </div>
+              <div class="meta-row">
+                <div class="meta-k">Re-Render Command</div>
+                <code class="cmd-code">python book/render_plates.py --theme print_light --plates 4</code>
+              </div>
+            </div>
+          </div>
+        </article>
+        
+        <article class="plate-card" id="card-fig05" data-status="ready">
+          <div class="card-head">
+            <div class="card-id-group">
+              <span class="badge-id">fig05</span>
+              <span class="badge-status badge-ready">Ready (PNG + SVG + PDF)</span>
+              <span class="card-title">Plate 05 — Cross-Species Landmark IDR Phase-Driving Margin Across 12 Substrate Regimes</span>
+            </div>
+            <div class="toolbar">
+              
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="preview-pane">
+              <div class="preview-dual" data-dual="fig05">  <div class="preview-box">    <div class="preview-label">Print-Light Archival Press Preview (300 DPI)</div>    <img src="../figures/print_light/fig05_metabolic_perturbation_shifts.png" alt="Cross-Species Landmark IDR Phase-Driving Margin Across 12 Substrate Regimes" onclick="openLightbox(this.src, 'Plate 05: Cross-Species Landmark IDR Phase-Driving Margin Across 12 Substrate Regimes')"/>  </div>  </div>
+            </div>
+            <div class="meta-pane">
+              <div class="meta-row">
+                <div class="meta-k">Editorial Spec Reference</div>
+                <div class="meta-v"><code>book/figure_specs.json → plates[4] (id: "fig05")</code></div>
+              </div>
+              <div class="meta-row">
+                <div class="meta-k">Chapter & Dimensions</div>
+                <div class="meta-v">Chapter 04 (<code>04_substrate_availability_and_metabolic_gating.md</code>) · 14.8 × 11.2 in @ 300 DPI · Font: Arial</div>
+              </div>
+              <div class="meta-row">
+                <div class="meta-k">Palette & Panel Layout</div>
+                <div class="meta-v"><code>rdbu_r_diverging</code> — Single full-page matrix heatmap (34 landmarks x 12 regimes) with crisp numeric cell annotations and diverging colorbar</div>
+              </div>
+              <div class="meta-row">
+                <div class="meta-k">Caption</div>
+                <div class="meta-v">Heatmap of absolute phase-driving margin (chi_eff - chi_crit) for 34 diverse cross-species landmark IDRs evaluated across 12 physiological, energetic, osmotic, oxidative, and PTM-gating regimes (red &gt; 0 condensed; blue &lt; 0 soluble).</div>
+              </div>
+              <div class="meta-row">
+                <div class="meta-k">Editorial Direction / Notes</div>
+                <div class="meta-v">Maintain crisp 6.8pt tabular numerals with dark ink near zero and white ink for |margin| &gt; 0.28; subtle hairline cell gridlines enhance row tracking across 12 columns.</div>
+              </div>
+              <div class="meta-row">
+                <div class="meta-k">Vector & Raster Deliverables</div>
+                <div class="file-links"><a class="file-btn" href="../figures/print_light/fig05_metabolic_perturbation_shifts.png" target="_blank">300-DPI PNG (1171 KB)</a><a class="file-btn" href="IDR_LLPS_Cell_Atlas_Book.html#plate-fig05">Jump to Book Context</a></div>
+              </div>
+              <div class="meta-row">
+                <div class="meta-k">Re-Render Command</div>
+                <code class="cmd-code">python book/render_plates.py --theme print_light --plates 5</code>
+              </div>
+            </div>
+          </div>
+        </article>
+        
+        <article class="plate-card" id="card-fig06" data-status="ready">
+          <div class="card-head">
+            <div class="card-id-group">
+              <span class="badge-id">fig06</span>
+              <span class="badge-status badge-ready">Ready (PNG + SVG + PDF)</span>
+              <span class="card-title">Plate 06 — Cell-Type-Specific Supersaturation Landscape (S = c_cell / c_sat) Across 6 Human Cell Types</span>
+            </div>
+            <div class="toolbar">
+              
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="preview-pane">
+              <div class="preview-dual" data-dual="fig06">  <div class="preview-box">    <div class="preview-label">Print-Light Archival Press Preview (300 DPI)</div>    <img src="../figures/print_light/fig06_celltype_supersaturation_landscape.png" alt="Cell-Type-Specific Supersaturation Landscape (S = c_cell / c_sat) Across 6 Human Cell Types" onclick="openLightbox(this.src, 'Plate 06: Cell-Type-Specific Supersaturation Landscape (S = c_cell / c_sat) Across 6 Human Cell Types')"/>  </div>  </div>
+            </div>
+            <div class="meta-pane">
+              <div class="meta-row">
+                <div class="meta-k">Editorial Spec Reference</div>
+                <div class="meta-v"><code>book/figure_specs.json → plates[5] (id: "fig06")</code></div>
+              </div>
+              <div class="meta-row">
+                <div class="meta-k">Chapter & Dimensions</div>
+                <div class="meta-v">Chapter 08 (<code>08_cellular_supersaturation_and_vulnerability.md</code>) · 16.0 × 9.2 in @ 300 DPI · Font: Arial</div>
+              </div>
+              <div class="meta-row">
+                <div class="meta-k">Palette & Panel Layout</div>
+                <div class="meta-v"><code>rdbu_r_and_okabe_ito</code> — 1x2 asymmetric split [1.42 : 1.0] (A: 20x8 log10(S) heatmap with stress crossover frames; B: Grouped 6-cell-type cohort % bars + S-ratio summary box)</div>
+              </div>
+              <div class="meta-row">
+                <div class="meta-k">Caption</div>
+                <div class="meta-v">HPA + GTEx v10 calibrated cellular supersaturation log10(S) for 20 iconic human landmarks across 6 canonical cell types plus neuronal ATP starvation and T-cell Ca2+ activation, paired with 192-protein cohort supersaturation (S &gt;= 1) and deep vulnerability (S &gt;= 5) burdens.</div>
+              </div>
+              <div class="meta-row">
+                <div class="meta-k">Editorial Direction / Notes</div>
+                <div class="meta-v">Replace dark-mode neon yellow frame with crisp amber-gold (#d97706) / charcoal double emphasis on crossover cells; place Neuron-vs-Hepatocyte S-ratio box cleanly in upper-right clear zone of Panel B without touching legend or bars.</div>
+              </div>
+              <div class="meta-row">
+                <div class="meta-k">Vector & Raster Deliverables</div>
+                <div class="file-links"><a class="file-btn" href="../figures/print_light/fig06_celltype_supersaturation_landscape.png" target="_blank">300-DPI PNG (777 KB)</a><a class="file-btn" href="IDR_LLPS_Cell_Atlas_Book.html#plate-fig06">Jump to Book Context</a></div>
+              </div>
+              <div class="meta-row">
+                <div class="meta-k">Re-Render Command</div>
+                <code class="cmd-code">python book/render_plates.py --theme print_light --plates 6</code>
+              </div>
+            </div>
+          </div>
+        </article>
+        
+        <article class="plate-card" id="card-fig07" data-status="ready">
+          <div class="card-head">
+            <div class="card-id-group">
+              <span class="badge-id">fig07</span>
+              <span class="badge-status badge-ready">Ready (PNG + SVG + PDF)</span>
+              <span class="card-title">Plate 07 — Multicomponent Co-Condensation, Multiphase Demixing &amp; Zwicker Active ATP-Driven Droplet Arrest</span>
+            </div>
+            <div class="toolbar">
+              
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="preview-pane">
+              <div class="preview-dual" data-dual="fig07">  <div class="preview-box">    <div class="preview-label">Print-Light Archival Press Preview (300 DPI)</div>    <img src="../figures/print_light/fig07_multicomponent_kp_and_active_droplets.png" alt="Multicomponent Co-Condensation, Multiphase Demixing &amp; Zwicker Active ATP-Driven Droplet Arrest" onclick="openLightbox(this.src, 'Plate 07: Multicomponent Co-Condensation, Multiphase Demixing &amp; Zwicker Active ATP-Driven Droplet Arrest')"/>  </div>  </div>
+            </div>
+            <div class="meta-pane">
+              <div class="meta-row">
+                <div class="meta-k">Editorial Spec Reference</div>
+                <div class="meta-v"><code>book/figure_specs.json → plates[6] (id: "fig07")</code></div>
+              </div>
+              <div class="meta-row">
+                <div class="meta-k">Chapter & Dimensions</div>
+                <div class="meta-v">Chapter 09 (<code>09_multicomponent_co_condensation_and_active_droplets.md</code>) · 16.8 × 11.2 in @ 300 DPI · Font: Arial</div>
+              </div>
+              <div class="meta-row">
+                <div class="meta-k">Palette & Panel Layout</div>
+                <div class="meta-v"><code>rdbu_r_and_okabe_ito</code> — 2-row GridSpec (Top row full-width Panel A: 13x20 log10(K_p) heatmap; Bottom row 3 panels: B1 Nucleolus 2D ternary; B2 Stress Granule 2D ternary; C Zwicker ATP arrest log-x curves)</div>
+              </div>
+              <div class="meta-row">
+                <div class="meta-k">Caption</div>
+                <div class="meta-v">Heterotypic client partitioning log10(K_p) across 13 STRING/Reactome-anchored scaffolds x 20 clients, exact 2D ternary lower-convex-hull phase portraits contrasting immiscible Nucleolus (NPM1 vs FBL, 3-phase triangle) against miscible Stress Granules (G3BP1 vs FUS), and Zwicker active ATP steady-state droplet radius R_ss vs [ATP].</div>
+              </div>
+              <div class="meta-row">
+                <div class="meta-k">Editorial Direction / Notes</div>
+                <div class="meta-v">Crucial print-light contrast check in B1 &amp; B2: replace neon yellow tie-lines with deep amber-ochre (#b45309) / forest green (#009e73) so tie-lines and the 3-phase coexistence triangle read crisply on white paper; verify legends never collide with stats boxes.</div>
+              </div>
+              <div class="meta-row">
+                <div class="meta-k">Vector & Raster Deliverables</div>
+                <div class="file-links"><a class="file-btn" href="../figures/print_light/fig07_multicomponent_kp_and_active_droplets.png" target="_blank">300-DPI PNG (1608 KB)</a><a class="file-btn" href="IDR_LLPS_Cell_Atlas_Book.html#plate-fig07">Jump to Book Context</a></div>
+              </div>
+              <div class="meta-row">
+                <div class="meta-k">Re-Render Command</div>
+                <code class="cmd-code">python book/render_plates.py --theme print_light --plates 7</code>
+              </div>
+            </div>
+          </div>
+        </article>
+        
+        <article class="plate-card" id="card-fig08" data-status="ready">
+          <div class="card-head">
+            <div class="card-id-group">
+              <span class="badge-id">fig08</span>
+              <span class="badge-status badge-ready">Ready (PNG + SVG + PDF)</span>
+              <span class="card-title">Plate 08 — AlphaFold DB v6 Per-Residue Structural Boundaries &amp; Star-Polymer Oligomer Valency Coupling</span>
+            </div>
+            <div class="toolbar">
+              
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="preview-pane">
+              <div class="preview-dual" data-dual="fig08">  <div class="preview-box">    <div class="preview-label">Print-Light Archival Press Preview (300 DPI)</div>    <img src="../figures/print_light/fig08_alphafold_plddt_and_oligomer_valency.png" alt="AlphaFold DB v6 Per-Residue Structural Boundaries &amp; Star-Polymer Oligomer Valency Coupling" onclick="openLightbox(this.src, 'Plate 08: AlphaFold DB v6 Per-Residue Structural Boundaries &amp; Star-Polymer Oligomer Valency Coupling')"/>  </div>  </div>
+            </div>
+            <div class="meta-pane">
+              <div class="meta-row">
+                <div class="meta-k">Editorial Spec Reference</div>
+                <div class="meta-v"><code>book/figure_specs.json → plates[7] (id: "fig08")</code></div>
+              </div>
+              <div class="meta-row">
+                <div class="meta-k">Chapter & Dimensions</div>
+                <div class="meta-v">Chapter 10 (<code>10_structural_valency_and_alphafold_coupling.md</code>) · 16.0 × 7.6 in @ 300 DPI · Font: Arial</div>
+              </div>
+              <div class="meta-row">
+                <div class="meta-k">Palette & Panel Layout</div>
+                <div class="meta-v"><code>plasma_trunc_and_okabe_ito</code> — 1x2 split (A: AFDB vs MobiDB scatter with MobiDB under-annotation zone; B: Broken-y two-subpanel star-polymer valency curves with native oligomer stars)</div>
+              </div>
+              <div class="meta-row">
+                <div class="meta-k">Caption</div>
+                <div class="meta-v">AlphaFold DB v6 disordered fraction (% pLDDT &lt; 50) vs. UniProt MobiDB-lite annotation across 28 cross-species landmarks colored by conditional MoRF fraction (% pLDDT 50–70), paired with broken-axis star-polymer saturation curves log10(c_sat(v)) across oligomerization valencies v = 1..12.</div>
+              </div>
+              <div class="meta-row">
+                <div class="meta-k">Editorial Direction / Notes</div>
+                <div class="meta-v">Use truncated plasma (0.05..0.88) in Panel A so high-MoRF bubbles retain deep contrast against white background; outline native valency stars in dark charcoal with rich gold fill; ensure zero overlap among all 16 landmark annotations.</div>
+              </div>
+              <div class="meta-row">
+                <div class="meta-k">Vector & Raster Deliverables</div>
+                <div class="file-links"><a class="file-btn" href="../figures/print_light/fig08_alphafold_plddt_and_oligomer_valency.png" target="_blank">300-DPI PNG (857 KB)</a><a class="file-btn" href="IDR_LLPS_Cell_Atlas_Book.html#plate-fig08">Jump to Book Context</a></div>
+              </div>
+              <div class="meta-row">
+                <div class="meta-k">Re-Render Command</div>
+                <code class="cmd-code">python book/render_plates.py --theme print_light --plates 8</code>
+              </div>
+            </div>
+          </div>
+        </article>
+        
+        <article class="plate-card" id="card-fig09" data-status="ready">
+          <div class="card-head">
+            <div class="card-id-group">
+              <span class="badge-id">fig09</span>
+              <span class="badge-status badge-ready">Ready (PNG + SVG + PDF)</span>
+              <span class="card-title">Plate 09 — Expanded Tree of Life: Proteome-Wide IDR Prevalence &amp; Extremophile Electrostatic Evolution</span>
+            </div>
+            <div class="toolbar">
+              
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="preview-pane">
+              <div class="preview-dual" data-dual="fig09">  <div class="preview-box">    <div class="preview-label">Print-Light Archival Press Preview (300 DPI)</div>    <img src="../figures/print_light/fig09_15_proteomes_tree_of_life_extremophiles.png" alt="Expanded Tree of Life: Proteome-Wide IDR Prevalence &amp; Extremophile Electrostatic Evolution" onclick="openLightbox(this.src, 'Plate 09: Expanded Tree of Life: Proteome-Wide IDR Prevalence &amp; Extremophile Electrostatic Evolution')"/>  </div>  </div>
+            </div>
+            <div class="meta-pane">
+              <div class="meta-row">
+                <div class="meta-k">Editorial Spec Reference</div>
+                <div class="meta-v"><code>book/figure_specs.json → plates[8] (id: "fig09")</code></div>
+              </div>
+              <div class="meta-row">
+                <div class="meta-k">Chapter & Dimensions</div>
+                <div class="meta-v">Chapter 11 (<code>11_expanded_tree_of_life_and_variant_biophysics.md</code>) · 16.5 × 8.6 in @ 300 DPI · Font: Arial</div>
+              </div>
+              <div class="meta-row">
+                <div class="meta-k">Palette & Panel Layout</div>
+                <div class="meta-v"><code>clade_print_categorical</code> — 1x2 split [1.18 : 1.0] (A: Horizontal paired protein/residue disorder bars for 15 proteomes; B: Evolutionary FCR vs NCPR bubble plot with 3 ecological regime bands)</div>
+              </div>
+              <div class="meta-row">
+                <div class="meta-k">Caption</div>
+                <div class="meta-v">46-fold disorder expansion across 15 complete/reviewed UniProtKB Swiss-Prot proteomes (93,793 proteins, 70,184 IDRs) from 85 °C hyperthermophilic and pH 2 thermoacidophilic archaea to vertebrates, paired with clade-resolved mean FCR vs. NCPR separation highlighting halophilic acidification, archaeal basicity, and the eukaryotic neutral switching band.</div>
+              </div>
+              <div class="meta-row">
+                <div class="meta-k">Editorial Direction / Notes</div>
+                <div class="meta-v">Use deep print-legible clade inks (zero pastel yellows/cyans) and crisp dark value labels in Panel A; ensure all 15 proteome callouts in Panel B have non-overlapping leader offsets and stay well inside axes bounds.</div>
+              </div>
+              <div class="meta-row">
+                <div class="meta-k">Vector & Raster Deliverables</div>
+                <div class="file-links"><a class="file-btn" href="../figures/print_light/fig09_15_proteomes_tree_of_life_extremophiles.png" target="_blank">300-DPI PNG (666 KB)</a><a class="file-btn" href="IDR_LLPS_Cell_Atlas_Book.html#plate-fig09">Jump to Book Context</a></div>
+              </div>
+              <div class="meta-row">
+                <div class="meta-k">Re-Render Command</div>
+                <code class="cmd-code">python book/render_plates.py --theme print_light --plates 9</code>
+              </div>
+            </div>
+          </div>
+        </article>
+        
+        <article class="plate-card" id="card-fig10" data-status="ready">
+          <div class="card-head">
+            <div class="card-id-group">
+              <span class="badge-id">fig10</span>
+              <span class="badge-status badge-ready">Ready (PNG + SVG + PDF)</span>
+              <span class="card-title">Plate 10 — Clinical Human IDR Variant Phase Perturbations (1,010 Variants; ClinVar GRCh38) &amp; 12-Landmark DMS</span>
+            </div>
+            <div class="toolbar">
+              
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="preview-pane">
+              <div class="preview-dual" data-dual="fig10">  <div class="preview-box">    <div class="preview-label">Print-Light Archival Press Preview (300 DPI)</div>    <img src="../figures/print_light/fig10_clinical_idr_variant_phase_shifts.png" alt="Clinical Human IDR Variant Phase Perturbations (1,010 Variants; ClinVar GRCh38) &amp; 12-Landmark DMS" onclick="openLightbox(this.src, 'Plate 10: Clinical Human IDR Variant Phase Perturbations (1,010 Variants; ClinVar GRCh38) &amp; 12-Landmark DMS')"/>  </div>  </div>
+            </div>
+            <div class="meta-pane">
+              <div class="meta-row">
+                <div class="meta-k">Editorial Spec Reference</div>
+                <div class="meta-v"><code>book/figure_specs.json → plates[9] (id: "fig10")</code></div>
+              </div>
+              <div class="meta-row">
+                <div class="meta-k">Chapter & Dimensions</div>
+                <div class="meta-v">Chapter 11 (<code>11_expanded_tree_of_life_and_variant_biophysics.md</code>) · 16.6 × 8.0 in @ 300 DPI · Font: Arial</div>
+              </div>
+              <div class="meta-row">
+                <div class="meta-k">Palette & Panel Layout</div>
+                <div class="meta-v"><code>okabe_ito_and_rdbu_r</code> — 1x2 split [1.15 : 1.0] (A: Variant Delta-chi vs Delta-maturation scatter with GRCh38 callout pills; B: 12x4 DMS log10(c_sat_mut / c_sat_WT) heatmap)</div>
+              </div>
+              <div class="meta-row">
+                <div class="meta-k">Caption</div>
+                <div class="meta-v">Biophysical phase shift (Delta chi_eff) vs. viscoelastic maturation-risk shift across 1,010 clinical human IDR variants highlighting 46 ClinVar GRCh38-anchored alleles (including FUS P525L, HNRNPA1 D314V, SNCA E46K, TARDBP A315T/G348C, SHANK3 A1289fs/Y1636*), paired with 12-landmark deep mutational scans across Arg-&gt;Lys, Aro-&gt;Ser, S/T-&gt;E, and S/T-&gt;A sweeps.</div>
+              </div>
+              <div class="meta-row">
+                <div class="meta-k">Editorial Direction / Notes</div>
+                <div class="meta-v">In Panel A print_light, give ClinVar GRCh38-enriched rings crisp dark charcoal borders (#0f172a), spotlight the 10 labeled alleles with warm gold diamonds/circles and white-ivory bordered callout cards, and verify zero text overlap with legend or scatter clouds.</div>
+              </div>
+              <div class="meta-row">
+                <div class="meta-k">Vector & Raster Deliverables</div>
+                <div class="file-links"><a class="file-btn" href="../figures/print_light/fig10_clinical_idr_variant_phase_shifts.png" target="_blank">300-DPI PNG (880 KB)</a><a class="file-btn" href="IDR_LLPS_Cell_Atlas_Book.html#plate-fig10">Jump to Book Context</a></div>
+              </div>
+              <div class="meta-row">
+                <div class="meta-k">Re-Render Command</div>
+                <code class="cmd-code">python book/render_plates.py --theme print_light --plates 10</code>
+              </div>
+            </div>
+          </div>
+        </article>
+        
+        <article class="plate-card" id="card-fig11" data-status="ready">
+          <div class="card-head">
+            <div class="card-id-group">
+              <span class="badge-id">fig11</span>
+              <span class="badge-status badge-ready">Ready (PNG + SVG + PDF)</span>
+              <span class="card-title">Plate 11 — Out-of-Sample Wet-Lab Benchmarks, Adversarial Falsification &amp; 15-Claim Epistemic Confidence Ledger</span>
+            </div>
+            <div class="toolbar">
+              
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="preview-pane">
+              <div class="preview-dual" data-dual="fig11">  <div class="preview-box">    <div class="preview-label">Print-Light Archival Press Preview (300 DPI)</div>    <img src="../figures/print_light/fig11_wetlab_benchmarks_and_falsification.png" alt="Out-of-Sample Wet-Lab Benchmarks, Adversarial Falsification &amp; 15-Claim Epistemic Confidence Ledger" onclick="openLightbox(this.src, 'Plate 11: Out-of-Sample Wet-Lab Benchmarks, Adversarial Falsification &amp; 15-Claim Epistemic Confidence Ledger')"/>  </div>  </div>
+            </div>
+            <div class="meta-pane">
+              <div class="meta-row">
+                <div class="meta-k">Editorial Spec Reference</div>
+                <div class="meta-v"><code>book/figure_specs.json → plates[10] (id: "fig11")</code></div>
+              </div>
+              <div class="meta-row">
+                <div class="meta-k">Chapter & Dimensions</div>
+                <div class="meta-v">Chapter 12 (<code>12_empirical_validation_and_falsification.md</code>) · 16.6 × 11.4 in @ 300 DPI · Font: Arial</div>
+              </div>
+              <div class="meta-row">
+                <div class="meta-k">Palette & Panel Layout</div>
+                <div class="meta-v"><code>okabe_ito_validation</code> — 2x2 composite grid (A: SAXS Rg parity by R1-R5; B: Wet-lab log10 c_sat 5-fold CV with failure callouts; C1/C2: ClinVar ROC curves + same-buffer SG vs PSD bar; D: 15-claim Epistemic Tier A/B/C/F scorecard)</div>
+              </div>
+              <div class="meta-row">
+                <div class="meta-k">Caption</div>
+                <div class="meta-v">Strict zero-circularity empirical audit pairing (A) experimental SAXS/smFRET single-chain Rg (n=46, rho=0.852) colored by Das-Pappu R1-R5 exposing R1-R3 over-compaction vs R4-R5 over-expansion, (B) wet-lab c_sat (n=35; raw RMSE 4.02 dex vs 5-fold CV 0.765 dex) annotating FG|GF regex leak, Sup35 pH, and RIalpha +cAMP failure modes, (C) ClinVar Pathogenic vs 407 Benign IDR ROC curves (missense AUC 0.617 vs all-coding 0.853 vs PY-NLS 100% specificity) and same-buffer SG (3.00x) vs PSD (1.24x) controls, and (D) the 15-claim Epistemic Confidence Scorecard (4 Tier A, 6 Tier B, 2 Tier C, 3 Tier F).</div>
+              </div>
+              <div class="meta-row">
+                <div class="meta-k">Editorial Direction / Notes</div>
+                <div class="meta-v">Surface Tier F failure modes and exact residual biases candidly; ensure all 15 scorecard rows and failure callouts remain crisp and non-overlapping in both print_light and dark_obs themes.</div>
+              </div>
+              <div class="meta-row">
+                <div class="meta-k">Vector & Raster Deliverables</div>
+                <div class="file-links"><a class="file-btn" href="../figures/print_light/fig11_wetlab_benchmarks_and_falsification.png" target="_blank">300-DPI PNG (1475 KB)</a><a class="file-btn" href="IDR_LLPS_Cell_Atlas_Book.html#plate-fig11">Jump to Book Context</a></div>
+              </div>
+              <div class="meta-row">
+                <div class="meta-k">Re-Render Command</div>
+                <code class="cmd-code">python book/render_plates.py --theme print_light --plates 11</code>
+              </div>
+            </div>
+          </div>
+        </article>
+        
+        <article class="plate-card" id="card-fig12" data-status="ready">
+          <div class="card-head">
+            <div class="card-id-group">
+              <span class="badge-id">fig12</span>
+              <span class="badge-status badge-ready">Ready (PNG + SVG + PDF)</span>
+              <span class="card-title">Plate 12 — Johannes W. Hell β2AR–AKAP5–PKA–PDE4D–Cav1.2 Signalosome: 2D Active PDE Ablations &amp; Ostwald Arrest</span>
+            </div>
+            <div class="toolbar">
+              
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="preview-pane">
+              <div class="preview-dual" data-dual="fig12">  <div class="preview-box">    <div class="preview-label">Print-Light Archival Press Preview (300 DPI)</div>    <img src="../figures/print_light/fig12_hell_signalosome_nanodomain_ablations.png" alt="Johannes W. Hell β2AR–AKAP5–PKA–PDE4D–Cav1.2 Signalosome: 2D Active PDE Ablations &amp; Ostwald Arrest" onclick="openLightbox(this.src, 'Plate 12: Johannes W. Hell β2AR–AKAP5–PKA–PDE4D–Cav1.2 Signalosome: 2D Active PDE Ablations &amp; Ostwald Arrest')"/>  </div>  </div>
+            </div>
+            <div class="meta-pane">
+              <div class="meta-row">
+                <div class="meta-k">Editorial Spec Reference</div>
+                <div class="meta-v"><code>book/figure_specs.json → plates[11] (id: "fig12")</code></div>
+              </div>
+              <div class="meta-row">
+                <div class="meta-k">Chapter & Dimensions</div>
+                <div class="meta-v">Chapter 13 (<code>13_hell_signalosome_and_mesoscale_3d_simulation.md</code>) · 17.0 × 11.4 in @ 300 DPI · Font: Arial</div>
+              </div>
+              <div class="meta-row">
+                <div class="meta-k">Palette & Panel Layout</div>
+                <div class="meta-v"><code>inferno_and_okabe_ito</code> — 2x2 composite grid (A: 2x2 log-scaled 160x160 nm cAMP confinement heatmaps; B: Spine &amp; Cardiac Dyad Ser1928 vs bulk phosphorylation curves; C: 9-protein Spine/Dyad/Hepatocyte concentration bars + STRING hub inset; D: 2D Active Cahn-Hilliard R(t)/N_drop(t) curves + final 32x32 droplet thumbnails)</div>
+              </div>
+              <div class="meta-row">
+                <div class="meta-k">Caption</div>
+                <div class="meta-v">Spatiotemporal nanodomain physics of the 9-protein beta2AR-AKAP5-PKA-PDE4D-Cav1.2 signalosome: (A) 2D peak spatial cAMP confinement across 4 ablations (WT 8.2x vs Dilute 1.0x vs Rolipram PDE4D-block 4.3x bulk flooding vs DNAJB1-PRKACA 1.06x), (B) temporal Cav1.2 Ser1928 vs off-target bulk phosphorylation in Neuronal Spine (13.3x specificity) and Cardiac Dyad (13.8x), (C) HPA/GTEx v10 local concentration profile across Spine, Dyad, and Hepatocyte anchored by the STRING v12 AKAP5 8/8 hub, and (D) 2D Active Cahn-Hilliard Zwicker ATP Ostwald arrest (3.5 mM ATP: 19 droplets, 8.6 nm vs 0.1 mM ATP: 2 droplets, 38.4 nm).</div>
+              </div>
+              <div class="meta-row">
+                <div class="meta-k">Editorial Direction / Notes</div>
+                <div class="meta-v">Use shared LogNorm colorbar across all 4 ablation maps in Panel A with r=25 nm core circle; verify twin-axis labels and droplet inset thumbnails in Panel D never collide.</div>
+              </div>
+              <div class="meta-row">
+                <div class="meta-k">Vector & Raster Deliverables</div>
+                <div class="file-links"><a class="file-btn" href="../figures/print_light/fig12_hell_signalosome_nanodomain_ablations.png" target="_blank">300-DPI PNG (1187 KB)</a><a class="file-btn" href="IDR_LLPS_Cell_Atlas_Book.html#plate-fig12">Jump to Book Context</a></div>
+              </div>
+              <div class="meta-row">
+                <div class="meta-k">Re-Render Command</div>
+                <code class="cmd-code">python book/render_plates.py --theme print_light --plates 12</code>
+              </div>
+            </div>
+          </div>
+        </article>
+        
+        <article class="plate-card" id="card-fig13" data-status="ready">
+          <div class="card-head">
+            <div class="card-id-group">
+              <span class="badge-id">fig13</span>
+              <span class="badge-status badge-ready">Ready (PNG + SVG + PDF)</span>
+              <span class="card-title">Plate 13 — Explicit 3D Brownian/Langevin Mesoscale Packing Storyboards: Hell Signalosome &amp; Nucleolar Core–Shell</span>
+            </div>
+            <div class="toolbar">
+              
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="preview-pane">
+              <div class="preview-dual" data-dual="fig13">  <div class="preview-box">    <div class="preview-label">Print-Light Archival Press Preview (300 DPI)</div>    <img src="../figures/print_light/fig13_mesoscale_3d_cellpack_storyboards.png" alt="Explicit 3D Brownian/Langevin Mesoscale Packing Storyboards: Hell Signalosome &amp; Nucleolar Core–Shell" onclick="openLightbox(this.src, 'Plate 13: Explicit 3D Brownian/Langevin Mesoscale Packing Storyboards: Hell Signalosome &amp; Nucleolar Core–Shell')"/>  </div>  </div>
+            </div>
+            <div class="meta-pane">
+              <div class="meta-row">
+                <div class="meta-k">Editorial Spec Reference</div>
+                <div class="meta-v"><code>book/figure_specs.json → plates[12] (id: "fig13")</code></div>
+              </div>
+              <div class="meta-row">
+                <div class="meta-k">Chapter & Dimensions</div>
+                <div class="meta-v">Chapter 13 (<code>13_hell_signalosome_and_mesoscale_3d_simulation.md</code>) · 17.2 × 11.6 in @ 300 DPI · Font: Arial</div>
+              </div>
+              <div class="meta-row">
+                <div class="meta-k">Palette & Panel Layout</div>
+                <div class="meta-v"><code>okabe_ito_3d_species</code> — 3x4 storyboard grid (3 rows: Hell WT, Hell DNAJB1-PRKACA Ablation, Nucleolus FBL/NPM1/rRNA Core-Shell; Cols 1-3: 3D orthographic snapshots at t=0, mid, end; Col 4: quantitative kinetic metrics + unified bottom species legend)</div>
+              </div>
+              <div class="meta-row">
+                <div class="meta-k">Caption</div>
+                <div class="meta-v">Multi-timestamp 3D discrete-molecule trajectories (240 particles, 90 frames) contrasting basal (t=0), peak surge (t=mid), and late resolution (t=end) states for (Row 1) membrane-anchored WT Hell Signalosome nanodroplet assembly, (Row 2) DNAJB1-PRKACA oncofusion dispersal (7.35x loss of 3D cAMP confinement within 30 nm; RIalpha Rg 25.9 vs 50.5 nm), and (Row 3) immiscible Nucleolar FBL DFC core + rRNA condensing inside an NPM1 GC outer shell (1.67x shell-to-core radial ratio), paired with quantitative 3D kinetic traces.</div>
+              </div>
+              <div class="meta-row">
+                <div class="meta-k">Editorial Direction / Notes</div>
+                <div class="meta-v">Render crisp PIP2 z=0 membrane bilayer and AKAP5 tether bonds in Rows 1-2; use rich amber-gold (#d97706) for cAMP in print_light so particles pop cleanly on white paper; keep 3D axis tick labels concise.</div>
+              </div>
+              <div class="meta-row">
+                <div class="meta-k">Vector & Raster Deliverables</div>
+                <div class="file-links"><a class="file-btn" href="../figures/print_light/fig13_mesoscale_3d_cellpack_storyboards.png" target="_blank">300-DPI PNG (2358 KB)</a><a class="file-btn" href="IDR_LLPS_Cell_Atlas_Book.html#plate-fig13">Jump to Book Context</a></div>
+              </div>
+              <div class="meta-row">
+                <div class="meta-k">Re-Render Command</div>
+                <code class="cmd-code">python book/render_plates.py --theme print_light --plates 13</code>
+              </div>
+            </div>
+          </div>
+        </article>
+        
+  </main>
+
+  <div class="lightbox" id="lightbox" onclick="closeLightbox()">
+    <img id="lb-img" src="" alt="Zoomed plate"/>
+    <div class="lightbox-cap" id="lb-cap"></div>
+  </div>
+
+  <script>
+    function filterCards(mode, btn) {
+      document.querySelectorAll('.topbar .pill').forEach(b => b.classList.remove('active'));
+      if (btn) btn.classList.add('active');
+      document.querySelectorAll('.plate-card').forEach(card => {
+        const st = card.getAttribute('data-status');
+        card.style.display = (mode === 'all' || st === mode) ? '' : 'none';
+      });
+    }
+    function toggleDark(pid) {
+      const el = document.querySelector('[data-dual="' + pid + '"]');
+      if (el) el.classList.toggle('show-dark');
+    }
+    let allDarkOn = false;
+    function toggleAllDark() {
+      allDarkOn = !allDarkOn;
+      document.querySelectorAll('.preview-dual').forEach(el => {
+        el.classList.toggle('show-dark', allDarkOn);
+      });
+    }
+    function openLightbox(src, cap) {
+      document.getElementById('lb-img').src = src;
+      document.getElementById('lb-cap').textContent = cap;
+      document.getElementById('lightbox').classList.add('open');
+    }
+    function closeLightbox() {
+      document.getElementById('lightbox').classList.remove('open');
+    }
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
+  </script>
+</body>
+</html>
